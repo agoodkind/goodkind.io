@@ -1,0 +1,43 @@
+title: agoodkind
+logo: https://avatars0.githubusercontent.com/u/1017680?v=3&u=16073409aa4b61c227b6d0c79fd20252e37a5d3a&s=400
+description:
+show_downloads: false
+google_analytics: UA-119910141-1
+theme: jekyll-theme-minimal
+paginate: 1
+paginate_path: "/blog/page/:num/"
+permalink: /:year/:month/:day/:slug
+title: Alexander Goodkind
+tagline: agoodkind
+author: Alexander Goodkind
+first: Alexander
+last: Goodkind
+
+description: I am a computer science student and I recently finished a Summer Software Engineering Internship @Tumblr where I worked on the Site Reliability Systems team to improve server automation. I am now currently a mentee @OutInTech and a Coding Bootcamp Teaching Assistant @The University of Pennsylvania.
+
+highlighter: rouge
+markdown: kramdown
+
+#  About: '/about/'
+#  Github: 'https://github.com/agoodkind'
+#  LinkedIn: 'https://linkedin.com/in/agoodkind'
+
+pages_list: 
+  - 
+    link: '/resume'
+    icon: <span><i class="fa fa-file-text"></i><i class="fa fa-sub fa-user"></i></span>
+    title: 'Resume'
+  - 
+    link: 'https://linkedin.com/in/agoodkind'
+    icon: '<span><i class="fab fa-linkedin"></i></span>'
+    title: 'LinkedIn'
+  -
+    link: 'https://github.com/agoodkind'
+    icon: <span><i class="fab fa-github"></i></span>
+    title: 'Github'
+  -
+    link: '/about'
+    icon: '<span><i class="fas fa-question-circle"></i></span>'
+    title: 'About'
+
+plugins: [jekyll-paginate]

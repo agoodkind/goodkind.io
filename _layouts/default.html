@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: " en-US " }}" prefix="og: http://ogp.me/ns#">
+
+{% include head.html %}
+
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNRCVXM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="wrapper">
+      <h1>
+        <a href="{{ "/" | absolute_url }}">{{ site.author }}</a>
+      </h1>
+      <header>
+
+        {% if page.title != "Home" %} {% endif %} 
+        {% if site.logo %}
+        <img class="logo" src="{{site.logo | relative_url}}" alt="Logo"/> 
+        {% endif %}
+
+        <div class="intro">
+          <p>I am a computer science &amp; mathematics student. I recently finished a Summer Software Engineering Internship
+            <a href="https://tumblr.com/">@Tumblr</a> where I worked on the Site Reliability Systems team to improve server automation. I am now a mentee
+            <a href="https://outintech.com">@OutInTech</a> and a Coding Bootcamp Teaching Assistant
+            <a href="https://bootcamp.sas.upenn.edu/">@The University of Pennsylvania</a>.</p>
+        </div>
+
+      </header>
+      <section>
+
+        {{ content }}
+
+      </section>
+
+      {% include foot.html %}
+      
+    </div>
+  </body>
+</html>

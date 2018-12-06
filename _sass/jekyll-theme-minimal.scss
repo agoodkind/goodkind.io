@@ -110,6 +110,7 @@ header {
   float:right;
   // position:fixed;
   -webkit-font-smoothing:subpixel-antialiased;
+  border-top: unset !important;
 }
 
 header ul {
@@ -206,6 +207,7 @@ footer {
     margin: 0 auto;
     width: fit-content;
     position:static;
+    border: unset !important;
   }
 
   section {

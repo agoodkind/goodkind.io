@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: " en-US " }}" prefix="og: http://ogp.me/ns#">
+
+{% include head.html %}
+
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNRCVXM" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="wrapper">
+      <h1>
+        <a href="{{ "/" | absolute_url }}">{{ site.author }}</a>
+      </h1>
+
+      {{ content }}
+
+      {% include foot.html %}
+      
+    </div>
+  </body>
+</html>

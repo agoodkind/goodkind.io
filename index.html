@@ -8,17 +8,6 @@ title: Home
         <div class="intro">
             <!-- <h1><a href="{{ "/" | absolute_url }}">{{ site.author }}</a></h1> -->
         </div>
-        <div id="contact" class="contact">
-            <h2>Contact</h2>
-            <ul>
-                <li>goodkind.io/<a href="/docs/resume.pdf">resume</a>
-                </li>
-                <li>github.com/<a href="https://github.com/agoodkind/">agoodkind</a>
-                </li>
-                <li><a href="https://root.tumblr.com">root</a>.tumblr.com</a>
-                </li>
-            </ul>
-        </div>
         <div id="projects" class="projects">
             <h2>Projects</h2>
             <ul>
@@ -45,6 +34,15 @@ title: Home
                         <time datetime="{{ post.date | date_to_xmlschema }}"></time>{{ post.date | date_to_string }}</span>
                 </li>
                 {% endfor %}
+        </div>
+        <div id="contact" class="contact">
+            <h2>Contact</h2>
+            <ul>
+                <li>goodkind.io/<a href="/docs/resume.pdf">resume</a>
+                </li>
+                <li>github.com/<a href="https://github.com/agoodkind/">agoodkind</a>
+                </li>
+            </ul>
         </div>
         
     </div>

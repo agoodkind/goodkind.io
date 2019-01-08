@@ -2,6 +2,7 @@
 layout: post
 title: Haskell Multithreading
 categories: [computer science, haskell, tech, software engineering]
+published: false
 ---
 
 After learning about functional languages, specifically Haskell, and their advantages in my such as the ability to multithread and parallel process my curiosity was peaked. 

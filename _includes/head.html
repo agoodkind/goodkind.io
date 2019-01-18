@@ -1,20 +1,18 @@
 
 <head>
-	<!-- Google Tag Manager -->
+	{%- comment -%} <!-- Google Tag Manager --> {%- endcomment -%}
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 	})(window,document,'script','dataLayer','GTM-KNRCVXM');</script>
-	<!-- End Google Tag Manager -->
-	
+	{%- comment -%} <!-- End Google Tag Manager --> {%- endcomment -%}
 
 	{% if page.title == "Home" %}
 		<meta name="keywords" content="Developer,Python,C++,Ruby,Software Engineering,Tumblr">
 	{% elsif page.layout == 'post' %}
 		<meta name="keywords" content="Developer,Python,C++,Ruby,Software Engineering,Tumblr,{% for category in page.categories %}{{category}},{% endfor %}">
 	{% endif %}
-
 
 
 	<meta charset="UTF-8">
@@ -25,7 +23,7 @@
 	<meta charset="UTF-8">
 	<link href="http://gmpg.org/xfn/11" rel="profile">
 
-	<!-- Enable responsiveness on mobile devices-->
+	{%- comment -%} Enable responsiveness on mobile devices {%- endcomment -%}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<title>
@@ -36,7 +34,7 @@
 		{% endif %}
 	</title>
 
-	<!-- Icons -->
+	{%- comment -%} Icons {%- endcomment -%}
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
 	<link rel="shortcut icon" href="/public/favicon.ico">
 
@@ -64,7 +62,7 @@
     <meta property="profile:last_name" content="{{ site.last }}" />
 	<meta property="profile:username" content="{{ site.title }}" />
 	
-	<!-- socials -->
+	{%- comment -%} socials {%- endcomment -%}
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@goodkindalex" />
@@ -103,12 +101,12 @@
 	<meta name="twitter:description" content="{{ site.description }}">
 	{% endif %}
 
-	<!-- RSS -->
+	{%- comment -%} RSS {%- endcomment -%}
 	<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/atom.xml">
 
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
-	<link rel="stylesheet" href='{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}'>
+	<link rel="stylesheet" href='{{ "/assets/css/style.css" | append: relative_url }}'>
 	
 	<script
 		src="https://code.jquery.com/jquery-3.3.1.min.js"

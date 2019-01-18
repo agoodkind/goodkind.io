@@ -173,8 +173,6 @@ header ul a strong {
 }
 
 section {
-  width:500px;
-  float:none;
   padding-bottom:50px;
 }
 
@@ -208,6 +206,7 @@ footer {
     width: fit-content;
     position:static;
     border: unset !important;
+    padding: 10px;
   }
 
   section {

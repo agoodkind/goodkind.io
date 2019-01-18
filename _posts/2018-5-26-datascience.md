@@ -355,7 +355,7 @@ Take a look here:
 
 Take a look here:
 
-[https://overdose.galex.me/cholor.html](https://overdose.galex.me/cholor.html)
+[https://overdose.goodkind.io/cholor.html](https://overdose.goodkind.io/cholor.html)
 
 Clone the repo and try it with a different dataset:
 

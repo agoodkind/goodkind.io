@@ -15,14 +15,8 @@ h1, h2, h3, h4, h5, h6 {
   // margin:0 0 20px;
 }
 
-p, ul, ol, table, pre, dl {
-  // margin:0 0 20px;
 
-}
 
-h1, h2, h3 {
-
-}
 
 h1 {
   font-size:28px;
@@ -57,7 +51,7 @@ a:hover small {
 }
 
 .wrapper {
-  width:860px;
+  // width:860px;
   margin:0 auto;
 }
 
@@ -111,6 +105,7 @@ header {
   // position:fixed;
   -webkit-font-smoothing:subpixel-antialiased;
   border-top: unset !important;
+  padding: 10px;
 }
 
 header ul {
@@ -197,7 +192,7 @@ footer {
 @media print, screen and (max-width: 960px) {
 
   div.wrapper {
-    width: fit-content;
+    // width: fit-content;
     margin:0;
   }
 

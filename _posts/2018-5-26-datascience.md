@@ -7,9 +7,30 @@ categories: [data science, python, computer science, tech, opioid epidemic, soft
 > **Between 2012 and 2016 the number of overdoses for every 100,000th person went
 > from 8 to 12 causing for an epidemic to be declared on a national level**
 
+<style>
+
+.gif-plot { 
+    display: none;
+}
+
+@media only screen and (max-width: 800px)  {
+
+    .live-plot {
+        display: none;
+    }
+
+    .gif-plot {
+        display: unset;
+    }
+    
+}
+</style>
+
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="7e8fadb3-8c24-415a-805e-1dc19d379da6" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
+<div id="7e8fadb3-8c24-415a-805e-1dc19d379da6" style="height: 100%; width: 100%;" class="plotly-graph-div live-plot"></div>
 <script src="/assets/js/usa_heatmap.js"></script>
+
+<img class="gif-plot" src="/assets/img/datascience.gif">
 
 Data science is about telling a story through data. My approach to this very
 topic was optimistic, I wanted to take my existing knowledge of computer science

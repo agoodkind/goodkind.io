@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Hacker Hour: Understanding the Opioid Crisis Using Data Science - Alexander Goodkind'
+title: 'Rutgers Hacker Hour: Understanding the Opioid Crisis Using Data Science'
 categories: [data science, python, computer science, tech, opioid epidemic, software engineering]
 ---
 

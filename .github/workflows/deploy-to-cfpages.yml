@@ -1,5 +1,5 @@
 on: [push]
-
+name: Build and Deploy
 jobs:
   publish:
     runs-on: ubuntu-latest

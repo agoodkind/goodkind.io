@@ -1,5 +1,5 @@
 on: [push]
-name: Deploy to Cloudflare Pages
+name: Build and Deploy
 jobs:
   publish:
     runs-on: ubuntu-latest

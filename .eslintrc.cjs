@@ -28,6 +28,6 @@ module.exports = {
     sourceType: "module",
     project: "tsconfig.json",
   },
-  ignorePatterns: ["*.css"],
+  ignorePatterns: ["*.css", "vite.config.ts"],
   rules: { "n/no-missing-import": "warn" },
 };

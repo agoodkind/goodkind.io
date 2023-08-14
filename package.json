@@ -32,7 +32,7 @@
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-define-config": "^1.21.0",
+    "eslint-define-config": "^1.23.0",
     "eslint-plugin-css-modules": "^2.11.0",
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-n": "^16.0.1",

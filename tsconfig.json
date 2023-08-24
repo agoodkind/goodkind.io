@@ -8,11 +8,6 @@
     "baseUrl": ".",
     "outDir": "dist",
 
-    /* Path alias config, define additional paths in vite.config.ts */
-    "paths": {
-      "@/*": ["src/*"]
-    },
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -25,8 +20,19 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "checkJs": true,
+    "allowJs": true
   },
-  "include": ["src", ".eslintrc.cjs"],
+
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    ".eslintrc.cjs",
+    "tailwind.config.js",
+    "vite.config.ts",
+    "postcss.config.js"
+  ],
   "references": [{ "path": "./tsconfig.vite.json" }]
 }

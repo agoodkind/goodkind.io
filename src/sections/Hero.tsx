@@ -1,25 +1,36 @@
-import Section from "src/components/Section";
+import Section from "@components/Section";
+
 const hero = {
   title: "Alex Goodkind",
 };
+
 export default function Hero() {
+  const handle;
   return (
-    <Section>
-      <div className="h-32 bg-cover"></div>
+    <Section variant="without-padding">
+      <div className="h-32 bg-cover bg-blue-400"></div>
       <div className="pt-14 p-7 bg-white relative">
-        <span className="status-badge bg-gray-400">Busy</span>
-        <a href="/personal_cv/">
+        <span className="rounded-3xl px-2 py-[0.125rem] bg-gray-400 text-white text-xs font-semibold uppercase top-4 right-7 absolute">
+          Busy
+        </span>
+        <a className="">
           <img
-            src="assets/img/avatar.jpg"
+            src="https://github.com/agoodkind.png"
             alt="Avatar"
-            className="user-photo"
+            className="rounded-lg shadow-md border-2 h-20 border-white border-solid
+            "
           />
         </a>
         <div className="text-lg font-semibold mb-1.5">{hero.title}</div>
-        <div className="text-sm text-gray-400 mb-7">Senior Developer</div>
+        <div className="text-sm text-gray-400 mb-7">Software Engineer</div>
         <div className="flex group">
-          <button className="download-btn">Download CV</button>
-          <button className="download-btn-icon">
+          <button
+            onClick={}
+            className="btn w-full bg-violet-500 hover:bg-violet-600 rounded-s-lg px-5 py-3 text-white"
+          >
+            Download CV
+          </button>
+          <button className="btn bg-violet-500 hover:bg-violet-600 rounded-e-lg py-3  px-5 text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"

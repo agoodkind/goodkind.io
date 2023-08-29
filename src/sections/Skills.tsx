@@ -1,4 +1,4 @@
-import Section from "src/components/Section";
+import Section from "@components/Section";
 
 export default function Skills() {
   return (

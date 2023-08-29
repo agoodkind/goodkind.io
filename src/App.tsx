@@ -1,9 +1,9 @@
-import About from "./sections/About";
-import Education from "./sections/Education";
-import Hero from "./sections/Hero";
-import Information from "./sections/Information";
-import Resume from "./sections/Resume";
-import Skills from "./sections/Skills";
+import About from "@sections/About";
+import Education from "@sections/Education";
+import Hero from "@sections/Hero";
+import Information from "@sections/Information";
+import Resume from "@sections/Resume";
+import Skills from "@sections/Skills";
 
 function App() {
   return (

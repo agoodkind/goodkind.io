@@ -1,5 +1,5 @@
-import Section from "src/components/Section";
-import Title from "src/components/Title";
+import Section from "@components/Section";
+import Title from "@components/Title";
 
 export default function Information() {
   return (

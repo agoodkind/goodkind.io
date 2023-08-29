@@ -22,14 +22,20 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "checkJs": true,
-    "allowJs": true
+    "allowJs": true,
+
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@sections/*": ["src/sections/*"]
+    }
   },
 
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    ".eslintrc.cjs",
     "tailwind.config.js",
     "vite.config.ts",
     "postcss.config.js"

@@ -1,6 +1,10 @@
-import Section from "src/components/Section";
+import Section from "@components/Section";
 
 export default function About() {
+  const emailMe = () => {
+    window.location.href = atob("bWFpbHRvOmFsZXhAZ29vZGtpbmQuaW8=");
+  };
+
   return (
     <Section>
       {/* about me */}
@@ -14,7 +18,9 @@ export default function About() {
       <div className="flex flex-col space-y-4">
         <a href="#0" className="mail-link social-link-hover">
           <i className="bx bx-at text-xl"></i>
-          <span>crisabbott@email.com</span>
+          <button className="btn" onClick={emailMe}>
+            Email Me
+          </button>
         </a>
 
         <ul className="flex space-x-5">

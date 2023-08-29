@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import React from "react";
-import App from "./App";
-import "./styles/main.css";
+import App from "@src/App";
+import "@styles/main.css";
 
 // todo: https://www.npmjs.com/package/favicons
 

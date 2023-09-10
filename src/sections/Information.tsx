@@ -1,6 +1,5 @@
 import Section from "@Components/Section";
 import Title from "@Components/Title";
-import { info } from "console";
 
 const information = [
   {

@@ -1,4 +1,4 @@
-import Section from "@components/Section";
+import Section from "@Components/Section";
 
 export default function Resume() {
   return (

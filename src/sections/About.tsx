@@ -1,14 +1,58 @@
-import Section from "@components/Section";
+import Section from "@Components/Section";
+import BlockTitle from "@Components/BlockTitle";
+import clsx from "clsx";
+
+function AboutHoverableCliffLink({
+  label,
+  active,
+}: {
+  label: string;
+  active: boolean;
+}) {
+  return (
+    <li>
+      <a
+        href="/personal_cv/index.html"
+        className={clsx(
+          active && ["text-violet-500", "border-b-violet-500"],
+          ["hover:text-violet-500", "hover:border-b-violet-500"],
+          [
+            "inline-flex",
+            "border-transparent",
+            "pb-5",
+            "border-b-2",
+            "transition-all",
+          ] // default
+        )}
+      >
+        {label}
+      </a>
+    </li>
+  );
+}
+
+const cliffLinks = [
+  {
+    label: "Resume",
+    active: true,
+  },
+  {
+    label: "GitHub",
+    active: false,
+  },
+];
 
 export default function About() {
   const emailMe = () => {
     window.location.href = atob("bWFpbHRvOmFsZXhAZ29vZGtpbmQuaW8=");
   };
 
+  const isActive = true;
+
   return (
-    <Section>
+    <Section className="pb-0">
       {/* about me */}
-      <h2 className="block-title">About me</h2>
+      <BlockTitle>About me</BlockTitle>
       <p className="text-gray-600 mb-5">
         Libero quas veritatis nulla distinctio fuga nihil temporibus et. Quia
         dicta sapiente qui porro molestiae nobis incidunt voluptatem. Et
@@ -43,30 +87,7 @@ export default function About() {
       </div>
       <div className="border-t border-gray-200 my-5"></div>
       <ul className="flex space-x-8 font-medium">
-        <li>
-          <a
-            href="/personal_cv/index.html"
-            className="menu-link-active menu-link-hover"
-          >
-            Resume
-          </a>
-        </li>
-        <li>
-          <a
-            href="/personal_cv/products.html"
-            className="menu-link menu-link-hover"
-          >
-            Products
-          </a>
-        </li>
-        <li>
-          <a
-            href="/personal_cv/blog.html"
-            className="menu-link menu-link-hover"
-          >
-            Blog
-          </a>
-        </li>
+        {cliffLinks.map(AboutHoverableCliffLink)}
       </ul>
     </Section>
   );

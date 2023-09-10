@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": ".",
@@ -25,10 +25,9 @@
     "allowJs": true,
 
     "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@styles/*": ["src/styles/*"],
-      "@sections/*": ["src/sections/*"]
+      "@Components/*": ["src/Components/*"],
+      "@Styles/*": ["src/Styles/*"],
+      "@Sections/*": ["src/Sections/*"]
     }
   },
 
@@ -36,6 +35,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
+    "src/**/*.json",
     "tailwind.config.js",
     "vite.config.ts",
     "postcss.config.js"

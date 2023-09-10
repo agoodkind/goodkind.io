@@ -4,16 +4,22 @@ import { ReactNode } from "react";
 export default function Section({
   className,
   children,
-  variant,
+  variant = "with-padding",
 }: {
   className?: string;
   children: ReactNode;
-  variant?: "without-padding";
+  variant?: "without-padding" | "with-padding";
 }) {
-  const padding = variant === "without-padding" ? "p-0" : "p-7";
   return (
     <section
-      className={clsx("section rounded-xl bg-white shadow", padding, className)}
+      className={clsx(
+        "section rounded-xl bg-white shadow",
+        {
+          "p-0": variant === "without-padding",
+          "p-7": variant === "with-padding",
+        },
+        className
+      )}
     >
       {children}
     </section>

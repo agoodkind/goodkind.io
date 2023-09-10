@@ -5,14 +5,16 @@ import clsx from "clsx";
 function AboutHoverableCliffLink({
   label,
   active,
+  link,
 }: {
   label: string;
   active: boolean;
+  link: string;
 }) {
   return (
     <li>
       <a
-        href="/personal_cv/index.html"
+        href={link}
         className={clsx(
           active && ["text-violet-500", "border-b-violet-500"],
           ["hover:text-violet-500", "hover:border-b-violet-500"],
@@ -35,10 +37,17 @@ const cliffLinks = [
   {
     label: "Resume",
     active: true,
+    link: "#",
   },
   {
     label: "GitHub",
     active: false,
+    link: "https://github.com/agoodkind",
+  },
+  {
+    label: "LinkedIn",
+    active: false,
+    link: "https://www.linkedin.com/in/agoodkind",
   },
 ];
 
@@ -46,8 +55,6 @@ export default function About() {
   const emailMe = () => {
     window.location.href = atob("bWFpbHRvOmFsZXhAZ29vZGtpbmQuaW8=");
   };
-
-  const isActive = true;
 
   return (
     <Section className="pb-0">

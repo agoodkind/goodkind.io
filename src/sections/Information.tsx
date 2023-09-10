@@ -34,11 +34,7 @@ export default function Information() {
   return (
     <Section>
       <Title>Information</Title>
-      <ul className="space-y-4">
-        {information.map((info) => (
-          <InformationItem {...info} />
-        ))}
-      </ul>
+      <ul className="space-y-4">{information.map(InformationItem)}</ul>
     </Section>
   );
 }

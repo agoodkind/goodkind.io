@@ -9,9 +9,9 @@ const resolve = (dir: string) => {
 // define aliases here
 export const paths = {
 
-  "@Styles": resolve("./src/Styles"),
-  "@Components": resolve("./src/Components"),
-  "@Sections": resolve("./src/Sections"),
+  "@styles": resolve("./src/styles"),
+  "@components": resolve("./src/components"),
+  "@sections": resolve("./src/sections"),
 };
 
 // https://vitejs.dev/config/

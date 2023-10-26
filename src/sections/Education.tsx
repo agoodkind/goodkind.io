@@ -1,4 +1,4 @@
-import Section from "@Components/Section";
+import Section from "@components/Section";
 
 export default function Education() {
   return (

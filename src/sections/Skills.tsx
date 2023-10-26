@@ -1,4 +1,4 @@
-import Section from "@Components/Section";
+import Section from "@components/Section";
 
 const skills = ["JavaScript", "React", "SQL", "HTML/CSS"];
 

@@ -1,5 +1,5 @@
-import Section from "@Components/Section";
-import Title from "@Components/Title";
+import Section from "@components/Section";
+import Title from "@components/Title";
 
 const information = [
   {

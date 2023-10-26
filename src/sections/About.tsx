@@ -1,5 +1,5 @@
-import Section from "@Components/Section";
-import BlockTitle from "@Components/BlockTitle";
+import Section from "@components/Section";
+import BlockTitle from "@components/BlockTitle";
 import clsx from "clsx";
 
 function AboutHoverableCliffLink({

@@ -25,9 +25,9 @@
     "allowJs": true,
 
     "paths": {
-      "@Components/*": ["src/Components/*"],
-      "@Styles/*": ["src/Styles/*"],
-      "@Sections/*": ["src/Sections/*"]
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@sections/*": ["src/sections/*"]
     }
   },
 

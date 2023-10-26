@@ -1,12 +1,12 @@
 import { createRoot } from "react-dom/client";
-import React from "react";
+import {StrictMode} from "react";
 import App from "./App";
-import "@Styles/main.css";
+import "@styles/main.css";
 
 // todo: https://www.npmjs.com/package/favicons
 
 createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>
+  </StrictMode>
 );

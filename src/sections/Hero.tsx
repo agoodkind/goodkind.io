@@ -1,4 +1,4 @@
-import Section from "@Components/Section";
+import Section from "@components/Section";
 
 const hero = {
   name: "Alexander Goodkind",

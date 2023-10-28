@@ -12,12 +12,6 @@
   "engines": {
     "node": ">=20.9.0"
   },
-  "eslintConfig": {
-    "rules": {
-      "no-unused-vars": 0,
-      "@typescript-eslint/no-unused-vars": 0
-    }
-  },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "clsx": "^2.0.0",

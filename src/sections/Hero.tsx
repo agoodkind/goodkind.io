@@ -25,14 +25,12 @@ export default function Hero() {
         </a>
         <div className="text-lg font-semibold mb-1.5">{hero.name}</div>
         <div className="text-sm text-gray-400 mb-7">{hero.role}</div>
-        <div className="flex group">
-          <button
-            onClick={console.log}
-            className="btn w-full bg-violet-500 hover:bg-violet-600 rounded-s-lg px-5 py-3 text-white"
-          >
+
+        <a href="/resume.pdf" download="/resume.pdf" className="flex group">
+          <button className="hover:cursor-pointer text-center btn w-full bg-violet-500 hover:bg-violet-600 rounded-s-lg px-5 py-3 text-white">
             Download CV
           </button>
-          <button className="btn bg-violet-500 hover:bg-violet-600 rounded-e-lg py-3  px-5 text-white">
+          <button className="text-center hover:cursor-pointer btn bg-violet-500 hover:bg-violet-600 rounded-e-lg py-3 px-5 text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -48,7 +46,7 @@ export default function Hero() {
               ></path>
             </svg>
           </button>
-        </div>
+        </a>
       </div>
     </Section>
   );

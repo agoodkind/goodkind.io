@@ -4,7 +4,7 @@ export default function Resume() {
   return (
     <Section>
       <h2 className="block-title">Experience</h2>
-      <div className="mb-5 item-section">
+      <div className="item-section mb-5">
         <div className="company-logo">
           <i className="bx bxl-twitter text-3xl"></i>
         </div>

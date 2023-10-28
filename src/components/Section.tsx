@@ -18,7 +18,7 @@ export default function Section({
           "p-0": variant === "without-padding",
           "p-7": variant === "with-padding",
         },
-        className
+        className,
       )}
     >
       {children}

@@ -18,10 +18,7 @@
         "${workspaceFolder}/node_modules/**"
       ],
       "smartStep": true,
-      "sourceMaps": true,
-      "runtimeArgs": [
-        "--load-extension=${userHome}/Library/Application Support/Google/Chrome/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.28.0_0"
-      ]
+      "sourceMaps": true
     },
     {
       "name": "Dev",

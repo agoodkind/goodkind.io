@@ -1,5 +1,5 @@
-import Section from "@components/Section";
 import BlockTitle from "@components/BlockTitle";
+import Section from "@components/Section";
 import clsx from "clsx";
 
 function AboutHoverableCliffLink({
@@ -17,14 +17,14 @@ function AboutHoverableCliffLink({
         href={href}
         className={clsx(
           active && ["text-violet-500", "border-b-violet-500"],
-          ["hover:text-violet-500", "hover:border-b-violet-500"],
+          ["hover:text-violet-600", "hover:border-b-violet-600"],
           [
             "inline-flex",
             "border-transparent",
             "pb-5",
             "border-b-2",
             "transition-all",
-          ] // default
+          ], // default
         )}
       >
         {label}
@@ -100,7 +100,7 @@ export default function About() {
     <Section className="pb-0">
       {/* about me */}
       <BlockTitle>About me</BlockTitle>
-      <p className="text-gray-600 mb-5">
+      <p className="mb-5 text-gray-600">
         Libero quas veritatis nulla distinctio fuga nihil temporibus et. Quia
         dicta sapiente qui porro molestiae nobis incidunt voluptatem. Et
         voluptas sunt nihil. At perferendis voluptatem dolores nulla. Adipisci
@@ -132,7 +132,7 @@ export default function About() {
           </li>
         </ul>
       </div>
-      <div className="border-t border-gray-200 my-5"></div>
+      <div className="my-5 border-t border-gray-200"></div>
       <ul className="flex space-x-8 font-medium">
         {cliffLinks.map(AboutHoverableCliffLink)}
       </ul>

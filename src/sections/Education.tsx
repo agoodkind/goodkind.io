@@ -1,11 +1,12 @@
+import BlockTitle from "@components/BlockTitle";
 import Section from "@components/Section";
 
 export default function Education() {
   return (
     <Section>
-      <h2 className="block-title">Education</h2>
-      <div className="mb-5 item-section">
-        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-cover"></div>
+      <BlockTitle>Education</BlockTitle>
+      <div className="item-section mb-5">
+        <div className="h-12 w-12 flex-shrink-0 rounded-xl bg-cover"></div>
 
         <div className="w-full space-y-5">
           <div className="item-header items-end">

@@ -24,7 +24,7 @@ function InformationItem({ title, answer }: { title: string; answer: string }) {
   return (
     <li className="flex justify-between">
       <div className="text-gray-400">{title}</div>
-      <div className="font-medium text-right text-gray-600">{answer}</div>
+      <div className="text-right font-medium text-gray-600">{answer}</div>
     </li>
   );
 }

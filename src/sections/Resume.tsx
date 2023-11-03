@@ -1,9 +1,10 @@
+import BlockTitle from "@components/BlockTitle";
 import Section from "@components/Section";
 
 export default function Resume() {
   return (
     <Section>
-      <h2 className="block-title">Experience</h2>
+      <BlockTitle>Experience</BlockTitle>
       <div className="item-section mb-5">
         <div className="company-logo">
           <i className="bx bxl-twitter text-3xl"></i>

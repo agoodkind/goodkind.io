@@ -18,7 +18,8 @@
         "${workspaceFolder}/node_modules/**"
       ],
       "smartStep": true,
-      "sourceMaps": true
+      "sourceMaps": true,
+      "preLaunchTask": "sleep"
     },
     {
       "name": "Dev",

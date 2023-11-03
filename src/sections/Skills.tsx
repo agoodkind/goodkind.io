@@ -1,7 +1,16 @@
 import BlockTitle from "@components/BlockTitle";
 import Section from "@components/Section";
 
-const skills = ["JavaScript", "React", "SQL", "HTML/CSS", "Java", "Python"];
+const skills = [
+  "JavaScript",
+  "React",
+  "SQL",
+  "PHP",
+  "HTML/CSS",
+  "Java",
+  "Python",
+  "C/C++",
+];
 
 export default function Skills() {
   return (

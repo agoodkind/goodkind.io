@@ -25,27 +25,27 @@ export default function Hero() {
         <div className="mb-1.5 text-lg font-semibold">{hero.name}</div>
         <div className="mb-7 text-sm text-gray-400">{hero.role}</div>
 
-        <a href="/resume.pdf" download="/resume.pdf" className="group flex">
-          <button className="btn w-full rounded-s-lg bg-violet-500 px-5 py-3 text-center font-semibold text-white hover:cursor-pointer hover:bg-violet-600">
-            Download CV
-          </button>
-          <button className="btn rounded-e-lg bg-violet-600 px-5 py-3 text-center text-white hover:cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.8"
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-              ></path>
-            </svg>
-          </button>
-        </a>
+        {/*<a href="/resume.pdf" download="/resume.pdf" className="group flex">*/}
+        {/*  <button className="btn w-full rounded-s-lg bg-violet-500 px-5 py-3 text-center font-semibold text-white hover:cursor-pointer hover:bg-violet-600">*/}
+        {/*    Download CV*/}
+        {/*  </button>*/}
+        {/*  <button className="btn rounded-e-lg bg-violet-600 px-5 py-3 text-center text-white hover:cursor-pointer">*/}
+        {/*    <svg*/}
+        {/*      xmlns="http://www.w3.org/2000/svg"*/}
+        {/*      className="h-6 w-6"*/}
+        {/*      fill="none"*/}
+        {/*      viewBox="0 0 24 24"*/}
+        {/*      stroke="currentColor"*/}
+        {/*    >*/}
+        {/*      <path*/}
+        {/*        stroke-linecap="round"*/}
+        {/*        stroke-linejoin="round"*/}
+        {/*        stroke-width="1.8"*/}
+        {/*        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"*/}
+        {/*      ></path>*/}
+        {/*    </svg>*/}
+        {/*  </button>*/}
+        {/*</a>*/}
       </div>
     </Section>
   );

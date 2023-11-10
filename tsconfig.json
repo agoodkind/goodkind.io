@@ -1,17 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": ".",
     "outDir": "dist",
-
-    /* Path alias config, define additional paths in vite.config.ts */
-    "paths": {
-      "@/*": ["src/*"]
-    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,10 +18,27 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "checkJs": true,
+    "allowJs": true,
+
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@sections/*": ["src/sections/*"]
+    }
   },
-  "include": ["src", ".eslintrc.cjs"],
+
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.json",
+    "tailwind.config.js",
+    "vite.config.ts",
+    "postcss.config.js"
+  ],
   "references": [{ "path": "./tsconfig.vite.json" }]
 }

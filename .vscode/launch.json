@@ -7,8 +7,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome",
-      "url": "http://localhost:5173",
+      "name": "Chrome",
+      "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {
         "webpack:///./src/*": "${webRoot}/*"
@@ -19,9 +19,9 @@
       ],
       "smartStep": true,
       "sourceMaps": true,
-      "runtimeArgs": [
-        "--load-extension=${userHome}/Library/Application Support/Google/Chrome/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.28.0_0"
-      ]
+      "preLaunchTask": "sleep",
+      "userDataDir": "${workspaceFolder}/goodkind-io-chrome-debug",
+      "internalConsoleOptions": "openOnSessionStart"
     },
     {
       "name": "Dev",
@@ -31,13 +31,21 @@
       "command": "npm run dev",
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
+      "serverReadyAction": {
+        "action": "startDebugging",
+        "name": "Chrome",
+        "killOnServerStop": true
+      }
     }
   ],
   "compounds": [
     {
-      "name": "Debug",
-      "configurations": ["Dev", "Launch Chrome"],
+      "name": "Dev + Chrome",
+      "configurations": ["Dev", "Chrome"],
       "stopAll": true,
       "presentation": {
         "hidden": false,

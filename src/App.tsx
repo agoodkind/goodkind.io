@@ -1,44 +1,23 @@
-function goResume() {
-  window.location.href = atob(
-    "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xNXdwN1NuVGN3Nk5VaE9VdnZKa1NueEVUSER4WC1TQXovdmlldz91c3A9c2hhcmVfbGluaw=="
-  );
-}
-
-function goContact() {
-  window.location.href = atob("bWFpbHRvOmFsZXhAZ29vZGtpbmQuaW8=");
-}
+import Section from "@components/Section";
+import Title from "@components/Title";
+import Hero from "@sections/Hero";
+import Information from "@sections/Information";
+import Skills from "@sections/Skills";
 
 function App() {
   return (
-    <>
-      <div className="container d-flex w-100 p-3 mx-auto flex-column">
-        <header className="mb-auto mt-auto">
-          <h3 className="p-3">Alex Goodkind</h3>
-          <p className="h-fyi fst-italic opacity-75">
-            This website is a work in progress, more coming soon.
-          </p>
-        </header>
-
-        <main className="h-50">
-          <div className="button-container d-grid gap-2 col-3 mx-auto">
-            <button
-              type="button"
-              className="btn btn-outline-*"
-              onClick={goResume}
-            >
-              Resume
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={goContact}
-            >
-              Contact
-            </button>
-          </div>
-        </main>
+    <main className="container mx-auto w-full max-w-5xl p-4 sm:max-w-[640px] sm:p-5 md:max-w-3xl">
+      <div className="grid gap-5">
+        <div className="space-y-5">
+          <Hero />
+          <Information />
+          <Skills />
+          <Section>
+            <Title>Rest coming soon...</Title>
+          </Section>
+        </div>
       </div>
-    </>
+    </main>
   );
 }
 

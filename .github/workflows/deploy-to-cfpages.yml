@@ -1,4 +1,4 @@
-on: [push]
+on: [pull_request_target]
 name: Build and Deploy
 jobs:
   publish:
@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -26,4 +26,3 @@ jobs:
           projectName: goodkind-io
           directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-      

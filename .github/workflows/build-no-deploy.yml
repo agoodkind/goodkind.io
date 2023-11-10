@@ -1,7 +1,7 @@
 on: [push]
-name: Build no Deploy
+name: No-deploy sanity check
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read

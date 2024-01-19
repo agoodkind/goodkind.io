@@ -1,8 +1,8 @@
-import Section from "@components/Section";
-import Title from "@components/Title";
-import Hero from "@sections/Hero";
-import Information from "@sections/Information";
-import Skills from "@sections/Skills";
+import Section from "@components/section";
+import Title from "@components/title";
+import Hero from "@sections/hero";
+import Information from "@sections/information";
+import Skills from "@sections/skills";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
-import BlockTitle from "@components/BlockTitle";
-import Section from "@components/Section";
+import BlockTitle from "@components/block-title";
+import Section from "@components/section";
 
 const skills = [
   "JavaScript",

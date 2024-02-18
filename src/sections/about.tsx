@@ -92,7 +92,7 @@ function SocialLinkIconListItem({
   );
 }
 
-export default function About() {
+export function About() {
   const emailMe = () => {
     window.location.href = atob("bWFpbHRvOmFsZXhAZ29vZGtpbmQuaW8=");
   };

@@ -1,8 +1,6 @@
-import Section from "@components/section";
-import Title from "@components/title";
-import Hero from "@sections/hero";
-import Information from "@sections/information";
-import Skills from "@sections/skills";
+import { Hero } from "@sections/hero";
+import { Information } from "@sections/information";
+import { Skills } from "@sections/skills";
 
 function App() {
   return (
@@ -12,9 +10,6 @@ function App() {
           <Hero />
           <Information />
           <Skills />
-          <Section>
-            <Title>Rest coming soon...</Title>
-          </Section>
         </div>
       </div>
     </main>

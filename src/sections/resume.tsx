@@ -1,7 +1,7 @@
-import BlockTitle from "@components/block-title";
-import Section from "@components/section";
+import { BlockTitle } from "@components/block-title";
+import { Section } from "@components/section";
 
-export default function Resume() {
+export function Resume() {
   return (
     <Section>
       <BlockTitle>Experience</BlockTitle>

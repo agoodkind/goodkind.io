@@ -1,5 +1,5 @@
-import BlockTitle from "@components/block-title";
-import Section from "@components/section";
+import { BlockTitle } from "@components/block-title";
+import { Section } from "@components/section";
 
 const skills = [
   "JavaScript",
@@ -12,7 +12,7 @@ const skills = [
   "C/C++",
 ];
 
-export default function Skills() {
+export function Skills() {
   return (
     <Section>
       <BlockTitle>Skills</BlockTitle>

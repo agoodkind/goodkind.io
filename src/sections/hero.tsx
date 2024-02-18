@@ -1,4 +1,5 @@
-import Section from "@components/section";
+import { Section } from "@components/section";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 const hero = {
   name: "Alexander Goodkind",
@@ -6,8 +7,7 @@ const hero = {
   avatar: "https://github.com/agoodkind.png",
 };
 
-export default function Hero() {
-  // const handle;
+export function Hero() {
   return (
     <Section variant="without-padding" className="overflow-hidden">
       <div className="h-32 bg-violet-500 bg-cover"></div>
@@ -15,7 +15,7 @@ export default function Hero() {
         <span className="absolute right-7 top-4 rounded-3xl bg-gray-400 px-2 py-[0.125rem] text-xs font-semibold uppercase text-white">
           Busy
         </span>
-        <a className="">
+        <a className="#">
           <img
             src={hero.avatar}
             alt="Avatar"
@@ -31,23 +31,10 @@ export default function Hero() {
           className="group flex"
         >
           <button className="btn w-full rounded-s-lg bg-violet-500 px-5 py-3 text-center font-semibold text-white hover:cursor-pointer hover:bg-violet-600">
-            Download CV
+            LinkedIn
           </button>
           <button className="btn rounded-e-lg bg-violet-600 px-5 py-3 text-center text-white hover:cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.8"
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-              ></path>
-            </svg>
+            <ArrowTopRightOnSquareIcon className="h-5 w-5" />
           </button>
         </a>
       </div>

@@ -1,5 +1,5 @@
-import Section from "@components/section";
-import Title from "@components/title";
+import { Section } from "@components/section";
+import { Title } from "@components/title";
 
 const information = [
   {
@@ -29,7 +29,7 @@ function InformationItem({ title, answer }: { title: string; answer: string }) {
   );
 }
 
-export default function Information() {
+export function Information() {
   return (
     <Section>
       <Title>Information</Title>

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-export default function Section({
+export function Section({
   className,
   children,
   variant = "with-padding",

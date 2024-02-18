@@ -8,6 +8,7 @@
     "composite": true,
     "baseUrl": ".",
     "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -29,17 +30,17 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
-      "@sections/*": ["src/sections/*"]
-    }
+      "@sections/*": ["src/sections/*"],
+    },
   },
-
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.json",
+    ".eslintrc.cjs",
     "tailwind.config.js",
+    "postcss.config.js",
     "vite.config.ts",
-    "postcss.config.js"
   ],
 }

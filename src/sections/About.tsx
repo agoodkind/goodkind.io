@@ -1,5 +1,5 @@
-import BlockTitle from "@components/BlockTitle";
-import Section from "@components/Section";
+import BlockTitle from "@components/block-title";
+import Section from "@components/section";
 import clsx from "clsx";
 import React from "react";
 

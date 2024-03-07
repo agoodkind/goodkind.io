@@ -40,7 +40,7 @@
     "src/**/*.json",
     ".eslintrc.cjs",
     "tailwind.config.ts",
-    "postcss.config.ts",
+    "postcss.config.js",
     "vite.config.ts",
   ],
 }

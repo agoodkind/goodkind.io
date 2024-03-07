@@ -1,5 +1,5 @@
-import { Section } from "@components/section";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import { Section } from "../components/section";
 
 const hero = {
   name: "Alexander Goodkind",

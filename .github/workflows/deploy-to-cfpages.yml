@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Static Build
-        run: npm run static:build 
+        run: npm run static:build
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:

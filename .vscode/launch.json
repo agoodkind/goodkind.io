@@ -42,17 +42,24 @@
       }
     },
     {
-      "name": "Build",
+      "name": "Static Build",
       "cwd": "${workspaceFolder}",
       "request": "launch",
       "type": "node-terminal",
-      "command": "npm run build",
+      "command": "npm run static:build",
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": [
-        "<node_internals>/**",
-        "${workspaceFolder}/node_modules/**"
-      ]
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
+    },
+    {
+      "name": "Watch Static Build",
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "npm run static:dev",
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     }
   ],
   "compounds": [

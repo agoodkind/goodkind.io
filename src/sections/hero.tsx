@@ -4,7 +4,7 @@ import { Section } from "../components/section";
 const hero = {
   name: "Alexander Goodkind",
   role: "Software Engineer",
-  avatar: "https://github.com/agoodkind.png",
+  avatar: "https://avatars.githubusercontent.com/u/1017680?s=300"
 };
 
 export function Hero() {
@@ -17,6 +17,7 @@ export function Hero() {
         </span>
         <a className="#">
           <img
+            fetchPriority="high"
             src={hero.avatar}
             alt="Avatar"
             className="absolute -top-10 h-20 rounded-lg border-2 border-solid border-white shadow-md"

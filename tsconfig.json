@@ -114,5 +114,11 @@
       "@sections/*": ["./src/sections/*"]
     }
   },
-  "include": ["src/**/*", "static-build.ts"]
+  "include": [
+    "src/**/*",
+    "build.ts",
+    "tailwind.config.ts",
+    "static.config.ts",
+    "postcss.config.ts"
+  ]
 }

@@ -2,12 +2,12 @@
   "name": "goodkind.io",
   "private": true,
   "version": "3.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "NO_COLOR=true vite",
-    "build": "tsc && vite build",
+    "static:build": "ts-node static-build.ts",
+    "static:dev": "nodemon",
+    "vite:build": "vite build",
+    "vite:dev": "NO_COLOR=true vite",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
     "clean": "find . -type d -name node_modules -prune -o -name dist -exec rm -rf {} \\+"
   },
   "exports": {
@@ -16,12 +16,16 @@
   "engines": {
     "node": ">=20.9.0"
   },
+
   "dependencies": {
     "@heroicons/react": "^2.1.1",
+    "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.18",
     "clsx": "^2.1.0",
+    "cssnano": "^6.1.0",
     "favicons": "^7.1.5",
     "postcss": "^8.4.35",
+    "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.4.1",
@@ -32,8 +36,7 @@
     "@types/node": "^20.11.25",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
-    "@vitejs/plugin-react": "^4.2.1",
-    "prettier": "^3.2.5",
+    "nodemon": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "ts-node": "^10.9.2"

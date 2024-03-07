@@ -40,6 +40,19 @@
         "name": "Chrome",
         "killOnServerStop": true
       }
+    },
+    {
+      "name": "Build",
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "npm run build",
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ]
     }
   ],
   "compounds": [

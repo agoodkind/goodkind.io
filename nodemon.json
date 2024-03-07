@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "static-build.ts"],
+  "ext": "ts,tsx",
+  "exec": "ts-node static-build.ts"
+}

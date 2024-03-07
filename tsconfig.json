@@ -39,8 +39,8 @@
     "src/**/*.tsx",
     "src/**/*.json",
     ".eslintrc.cjs",
-    "tailwind.config.js",
-    "postcss.config.js",
+    "tailwind.config.ts",
+    "postcss.config.ts",
     "vite.config.ts",
   ],
 }

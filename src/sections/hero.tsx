@@ -17,7 +17,8 @@ export function Hero() {
         </span>
         <a className="#">
           <img
-            fetchPriority="high"
+            // @ts-ignore
+            fetchpriority="high"
             src={hero.avatar}
             alt="Avatar"
             className="absolute -top-10 h-20 rounded-lg border-2 border-solid border-white shadow-md"

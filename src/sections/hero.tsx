@@ -4,8 +4,7 @@ import { Section } from "../components/section";
 const hero = {
   name: "Alexander Goodkind",
   role: "Software Engineer",
-  avatar:
-    "https://raw.githubusercontent.com/agoodkind/goodkind.io/5610169c28649226c7741b04b5369adb67d18260/assets/avi.webp"
+  avatar: "/assets/avi.webp"
 };
 
 export function Hero() {

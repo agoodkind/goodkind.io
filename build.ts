@@ -5,13 +5,18 @@ import { renderToString } from "react-dom/server";
 import postcssConfig from "./postcss.config";
 import { app } from "./src/app";
 
+// input assets
+const inputAssets = path.join(process.cwd(), "assets");
+
 // Define the output directories
 const distDir = path.join(process.cwd(), "dist");
 const stylesDir = path.join(distDir, "styles");
+const assetsDir = path.join(distDir, "assets");
 
 // Ensure the output directories exist
 fs.mkdirSync(distDir, { recursive: true });
 fs.mkdirSync(stylesDir, { recursive: true });
+fs.mkdirSync(assetsDir, { recursive: true });
 
 // Render the app to a string
 const html = renderToString(app());
@@ -34,3 +39,5 @@ postcss(postcssConfig.plugins)
     const cssOutputPath = path.join(stylesDir, "main.css");
     fs.writeFileSync(cssOutputPath, css);
   });
+
+fs.cpSync(inputAssets, assetsDir, { recursive: true });

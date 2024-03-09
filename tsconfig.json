@@ -119,6 +119,7 @@
     "build.ts",
     "tailwind.config.ts",
     "static.config.ts",
-    "postcss.config.ts"
+    "postcss.config.ts",
+    ".eslintrc.js"
   ]
 }

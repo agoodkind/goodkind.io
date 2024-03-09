@@ -5,35 +5,33 @@ import { renderToStaticMarkup } from "react-dom/server";
 import postcssConfig from "./postcss.config";
 import { app } from "./src/app";
 
-// inputs
-const assets = path.join(process.cwd(), "src/assets");
-const cssPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
-const staticHtml = renderToStaticMarkup(app());
-
-//  outputs
 const distDir = path.join(process.cwd(), "dist");
-const stylesDir = path.join(distDir, "styles");
-const assetsDir = path.join(distDir, "assets");
 
-// Ensure the output directories exist
-Promise.all([distDir, stylesDir, assetsDir].map((dir) => {
-	return fs.promises.mkdir(dir, { recursive: true });
-}));
+const processHtml = async () => {
+	const html = renderToStaticMarkup(app());
+	return await fs.promises.writeFile("dist/index.html", html);
+};
 
-// Write the rendered app to the output HTML file
-const htmlOutputPath = path.join(distDir, "index.html");
-fs.writeFileSync(htmlOutputPath, staticHtml);
+const processCss = async () => {
+	const cssSrcPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
+	const cssOutPath = path.join(distDir, "styles/main.css");
 
-// Define the input CSS file path
-const cssOutPath = path.join(stylesDir, "main.css");
+	const unprocessedCss = await fs.promises.readFile(cssSrcPath, "utf-8");
+	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss);
 	
-fs.promises.readFile(cssPath).then((css) => postcss(postcssConfig.plugins)
-	.process(css)
-	.then(({ css }) => {
-		fs.writeFileSync(cssOutPath, css);
-	})).then(() => {
-	console.log("Build complete");
-});
+	await fs.promises.writeFile(cssOutPath, processedCss);
+};
 
-// copy assets
-fs.cpSync(assets, assetsDir, { recursive: true });
+const processAssets = async () => {
+	const assetsIn = path.join(process.cwd(), "src/assets");
+	const assetsOut = path.join(distDir, "assets");
+
+	await fs.promises.cp(assetsIn, assetsOut, { recursive: true });
+};
+
+
+Promise.all([processHtml(), processCss(), processAssets()]).then(() => {
+	console.log("Build complete");
+}).catch((err) => {
+	console.error("Build failed", err);
+});

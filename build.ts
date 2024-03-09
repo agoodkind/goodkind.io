@@ -20,29 +20,20 @@ Promise.all([distDir, stylesDir, assetsDir].map((dir) => {
 	return fs.promises.mkdir(dir, { recursive: true });
 }));
 
-
-fs.mkdirSync(distDir, { recursive: true });
-fs.mkdirSync(stylesDir, { recursive: true });
-fs.mkdirSync(assetsDir, { recursive: true });
-
-// Render the app to a string
-
 // Write the rendered app to the output HTML file
 const htmlOutputPath = path.join(distDir, "index.html");
 fs.writeFileSync(htmlOutputPath, staticHtml);
 
 // Define the input CSS file path
-
-// Read the input CSS file
-const cssInput = fs.readFileSync(cssPath);
-
-// Process the CSS with PostCSS
-postcss(postcssConfig.plugins)
-	.process(cssInput)
+const cssOutPath = path.join(stylesDir, "main.css");
+	
+fs.promises.readFile(cssPath).then((css) => postcss(postcssConfig.plugins)
+	.process(css)
 	.then(({ css }) => {
-		// Write the processed CSS to the output CSS file
-		const cssOutputPath = path.join(stylesDir, "main.css");
-		fs.writeFileSync(cssOutputPath, css);
-	});
+		fs.writeFileSync(cssOutPath, css);
+	})).then(() => {
+	console.log("Build complete");
+});
 
+// copy assets
 fs.cpSync(assets, assetsDir, { recursive: true });

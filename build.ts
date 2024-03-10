@@ -1,43 +1,37 @@
 import fs from "node:fs";
 import path from "node:path";
 import postcss from "postcss";
-import { renderToString } from "react-dom/server";
+import { renderToStaticMarkup } from "react-dom/server";
 import postcssConfig from "./postcss.config";
 import { app } from "./src/app";
 
-// input assets
-const inputAssets = path.join(process.cwd(), "assets");
-
-// Define the output directories
 const distDir = path.join(process.cwd(), "dist");
-const stylesDir = path.join(distDir, "styles");
-const assetsDir = path.join(distDir, "assets");
 
-// Ensure the output directories exist
-fs.mkdirSync(distDir, { recursive: true });
-fs.mkdirSync(stylesDir, { recursive: true });
-fs.mkdirSync(assetsDir, { recursive: true });
+const processHtml = async () => {
+	const html = renderToStaticMarkup(app());
+	return await fs.promises.writeFile("dist/index.html", html);
+};
 
-// Render the app to a string
-const html = renderToString(app());
+const processCss = async () => {
+	const cssSrcPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
+	const cssOutPath = path.join(distDir, "styles/main.css");
 
-// Write the rendered app to the output HTML file
-const htmlOutputPath = path.join(distDir, "index.html");
-fs.writeFileSync(htmlOutputPath, html);
+	const unprocessedCss = await fs.promises.readFile(cssSrcPath, "utf-8");
+	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss);
+	
+	await fs.promises.writeFile(cssOutPath, processedCss);
+};
 
-// Define the input CSS file path
-const cssInputPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
+const processAssets = async () => {
+	const assetsIn = path.join(process.cwd(), "src/assets");
+	const assetsOut = path.join(distDir, "assets");
 
-// Read the input CSS file
-const cssInput = fs.readFileSync(cssInputPath);
+	await fs.promises.cp(assetsIn, assetsOut, { recursive: true });
+};
 
-// Process the CSS with PostCSS
-postcss(postcssConfig.plugins)
-  .process(cssInput)
-  .then(({ css }) => {
-    // Write the processed CSS to the output CSS file
-    const cssOutputPath = path.join(stylesDir, "main.css");
-    fs.writeFileSync(cssOutputPath, css);
-  });
 
-fs.cpSync(inputAssets, assetsDir, { recursive: true });
+Promise.all([processHtml(), processCss(), processAssets()]).then(() => {
+	console.log("Build complete");
+}).catch((err) => {
+	console.error("Build failed", err);
+});

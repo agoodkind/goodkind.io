@@ -5,11 +5,11 @@ import tailwindcss from "tailwindcss";
 import { config as tailwindConfig } from "./tailwind.config";
 
 const postcssPlugins = [
-  autoprefixer(),
-  tailwindcss(tailwindConfig),
-  cssnanoPlugin()
+	autoprefixer(),
+	tailwindcss(tailwindConfig),
+	cssnanoPlugin()
 ];
 
 export default {
-  plugins: postcssPlugins
+	plugins: postcssPlugins
 } satisfies postcssConfig;

@@ -22,4 +22,4 @@ dist-ssr
 *.sln
 *.sw?
 
-goodkind-io-chrome-debug
+chrome-debug-profile

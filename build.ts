@@ -1,37 +1,59 @@
-import fs from "node:fs";
+
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { exit } from "node:process";
 import postcss from "postcss";
 import { renderToStaticMarkup } from "react-dom/server";
 import postcssConfig from "./postcss.config";
 import { app } from "./src/app";
 
-const distDir = path.join(process.cwd(), "dist");
+const outDir = path.join(process.cwd(), "dist");
+const stylesOutDir = path.join(outDir, "styles");
+const assetsOutDir = path.join(outDir, "assets");
 
 const processHtml = async () => {
 	const html = renderToStaticMarkup(app());
-	return await fs.promises.writeFile("dist/index.html", html);
+	const outHtmlPath = path.join(outDir, "index.html");
+
+	return await writeFile(outHtmlPath, html);
 };
 
 const processCss = async () => {
 	const cssSrcPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
-	const cssOutPath = path.join(distDir, "styles/main.css");
+	const cssOutPath = path.join(stylesOutDir, "main.css");
 
-	const unprocessedCss = await fs.promises.readFile(cssSrcPath, "utf-8");
-	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss);
+	const unprocessedCss = await readFile(cssSrcPath, "utf-8");
+	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss, {
+		from: cssSrcPath,
+		to: cssOutPath
+	});
 	
-	await fs.promises.writeFile(cssOutPath, processedCss);
+	await writeFile(cssOutPath, processedCss);
 };
 
 const processAssets = async () => {
 	const assetsIn = path.join(process.cwd(), "src/assets");
-	const assetsOut = path.join(distDir, "assets");
 
-	await fs.promises.cp(assetsIn, assetsOut, { recursive: true });
+	await cp(assetsIn, assetsOutDir, { recursive: true });
 };
 
 
-Promise.all([processHtml(), processCss(), processAssets()]).then(() => {
+const build = async () => {
+	console.log("Building...");
+	console.log("Cleaning dist directory...");
+	await rm(path.join(outDir), { recursive: true, force: true});
+
+	console.log("Creating directories...");
+	await Promise.all([outDir, stylesOutDir, assetsOutDir].map(async (dir) => await mkdir(dir, { recursive: true })));
+	
+	console.log("Processing files...");
+	await Promise.all([processHtml(), processCss(), processAssets()]);
+
 	console.log("Build complete");
-}).catch((err) => {
+};
+
+build().catch((err) => {
 	console.error("Build failed", err);
+
+	exit(1);
 });

@@ -15,8 +15,8 @@ const processHtml = async () => {
 };
 
 const processCss = async () => {
-	const cssSrcPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
-	const cssOutPath = path.join(distDir, "styles/main.css");
+	const cssSrcPath = path.join(process.cwd(), "src/styles", "main.tailwind.css");
+	const cssOutPath = path.join(distDir, "styles", "main.css");
 
 	const unprocessedCss = await fs.promises.readFile(cssSrcPath, "utf-8");
 	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss);
@@ -31,9 +31,12 @@ const processAssets = async () => {
 	await fs.promises.cp(assetsSrcPath, assetsOutPath, { recursive: true });
 };
 
-
-Promise.all([processHtml(), processCss(), processAssets()]).then(() => {
-	console.log("Build complete");
+fs.promises.mkdir(distDir, { recursive: true }).then(() => {
+	Promise.all([processHtml(), processCss(), processAssets()]).then(() => {
+		console.log("Build complete");
+	}).catch((err) => {
+		console.error("Build failed", err);
+	});
 }).catch((err) => {
 	console.error("Build failed", err);
 });

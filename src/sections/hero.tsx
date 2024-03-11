@@ -4,7 +4,8 @@ import { Section } from "../components/section";
 const hero = {
   name: "Alexander Goodkind",
   role: "Software Engineer",
-  avatar: "/assets/avi.webp"
+  avatar: "assets/avi.webp",
+  avatarFallback: "assets/avi.jpeg"
 };
 
 export function Hero() {
@@ -16,14 +17,17 @@ export function Hero() {
           Busy
         </span>
         <a className="#">
-          <img
-            // @ts-expect-error fetchPriority is not a valid attribute
-            // eslint-disable-next-line react/no-unknown-property
-            fetchpriority="high"
-            src={hero.avatar}
-            alt="Avatar"
-            className="absolute -top-10 h-20 rounded-lg border-2 border-solid border-white shadow-md"
-          />
+          <picture>
+            <source srcSet={hero.avatar} type="image/webp"></source>
+            <source srcSet={hero.avatarFallback} type="image/jpeg"></source>
+            <img
+              fetchPriority={"high"}
+              src={hero.avatarFallback}
+              alt="Avatar"
+              className="absolute -top-10 h-20 rounded-lg border-2 border-solid border-white shadow-md"
+            />
+          </picture>
+          
         </a>
         <div className="mb-1.5 text-lg font-semibold">{hero.name}</div>
         <div className="mb-7 text-sm text-gray-400">{hero.role}</div>

@@ -5,43 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Chrome",
-      "url": "http://0.0.0.0:3000",
-      "webRoot": "${workspaceFolder}",
-      "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${webRoot}/*"
-      },
-      "skipFiles": [
-        "<node_internals>/**",
-        "${workspaceFolder}/node_modules/**"
-      ],
-      "smartStep": true,
-      "sourceMaps": true,
-      "preLaunchTask": "sleep",
-      "userDataDir": "${workspaceFolder}/goodkind-io-chrome-debug",
-      "internalConsoleOptions": "openOnSessionStart"
-    },
-    {
-      "name": "Dev",
-      "cwd": "${workspaceFolder}",
-      "request": "launch",
-      "type": "node-terminal",
-      "command": "npm run dev",
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": [
-        "<node_internals>/**",
-        "${workspaceFolder}/node_modules/**"
-      ],
-      "serverReadyAction": {
-        "action": "startDebugging",
-        "name": "Chrome",
-        "killOnServerStop": true
-      }
-    },
-    {
       "name": "Static Build",
       "cwd": "${workspaceFolder}",
       "request": "launch",

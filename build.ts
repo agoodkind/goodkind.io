@@ -8,8 +8,10 @@ import { app } from "./src/app";
 const distDir = path.join(process.cwd(), "dist");
 
 const processHtml = async () => {
-	const html = renderToStaticMarkup(app());
-	return await fs.promises.writeFile("dist/index.html", html);
+	const htmlSrc = renderToStaticMarkup(app());
+	const htmlOutPath = path.join(distDir, "index.html");
+
+	return await fs.promises.writeFile(htmlOutPath, htmlSrc);
 };
 
 const processCss = async () => {
@@ -23,10 +25,10 @@ const processCss = async () => {
 };
 
 const processAssets = async () => {
-	const assetsIn = path.join(process.cwd(), "src/assets");
-	const assetsOut = path.join(distDir, "assets");
+	const assetsSrcPath = path.join(process.cwd(), "src/assets");
+	const assetsOutPath = path.join(distDir, "assets");
 
-	await fs.promises.cp(assetsIn, assetsOut, { recursive: true });
+	await fs.promises.cp(assetsSrcPath, assetsOutPath, { recursive: true });
 };
 
 

@@ -4,20 +4,20 @@ import { Title } from "../components/title";
 const information = [
   {
     title: "Location",
-    answer: "San Francisco",
+    answer: "San Francisco"
   },
   {
     title: "Remote",
-    answer: "Hybrid",
+    answer: "Hybrid"
   },
   {
     title: "Experience",
-    answer: "3+ years",
+    answer: "3+ years"
   },
   {
     title: "Relocation",
-    answer: "Let's Discuss",
-  },
+    answer: "Let's Discuss"
+  }
 ];
 
 function InformationItem({ title, answer }: { title: string; answer: string }) {

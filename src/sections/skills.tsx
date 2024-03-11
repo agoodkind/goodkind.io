@@ -9,7 +9,7 @@ const skills = [
   "HTML/CSS",
   "Java",
   "Python",
-  "C/C++",
+  "C/C++"
 ];
 
 export function Skills() {

@@ -1,5 +1,4 @@
 
-import { writeFileSync } from "node:fs";
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { exit } from "node:process";
@@ -29,8 +28,7 @@ const processCss = async () => {
 		to: cssOutPath
 	});
 	
-	writeFileSync(cssOutPath, processedCss);
-	// await writeFile(cssOutPath, processedCss);
+	await writeFile(cssOutPath, processedCss);
 };
 
 const processAssets = async () => {

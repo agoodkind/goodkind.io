@@ -9,7 +9,7 @@ const distDir = path.join(process.cwd(), "dist");
 
 const processHtml = async () => {
 	const htmlSrc = renderToStaticMarkup(app());
- const htmlOutPath = path.join(distDir, "index.html");
+	const htmlOutPath = path.join(distDir, "index.html");
 
 	return await fs.promises.writeFile(htmlOutPath, htmlSrc);
 };

@@ -14,13 +14,14 @@ const assetsOutDir = path.join(outDir, "assets");
 
 const processHtml = async () => {
 	const html = renderToStaticMarkup(app());
+	const outHtmlPath = path.join(outDir, "index.html");
 
-	return await writeFile("dist/index.html", html);
+	return await writeFile(outHtmlPath, html);
 };
 
 const processCss = async () => {
 	const cssSrcPath = path.join(process.cwd(), "src/styles/main.tailwind.css");
-	const cssOutPath = path.join(stylesOutDir,"main.css");
+	const cssOutPath = path.join(stylesOutDir, "main.css");
 
 	const unprocessedCss = await readFile(cssSrcPath, "utf-8");
 	const { css: processedCss } = await postcss(postcssConfig.plugins).process(unprocessedCss, {

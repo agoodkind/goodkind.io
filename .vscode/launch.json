@@ -24,17 +24,5 @@
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     }
-  ],
-  "compounds": [
-    {
-      "name": "Dev + Chrome",
-      "configurations": ["Dev", "Chrome"],
-      "stopAll": true,
-      "presentation": {
-        "hidden": false,
-        "group": "debug",
-        "order": 1
-      }
-    }
   ]
 }

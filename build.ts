@@ -1,7 +1,6 @@
 
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { exit } from "node:process";
 import postcss from "postcss";
 import { renderToStaticMarkup } from "react-dom/server";
 import postcssConfig from "./postcss.config";
@@ -55,5 +54,5 @@ const build = async () => {
 build().catch((err) => {
 	console.error("Build failed", err);
 
-	exit(1);
+	throw err;
 });

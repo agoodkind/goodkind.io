@@ -37,6 +37,7 @@ module.exports = {
     semi: ["error", "always"],
     "comma-dangle": "error",
     "prettier/prettier": "error",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-curly-brace-presence": [2, "always"]
   }
 };

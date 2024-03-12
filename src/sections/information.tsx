@@ -22,9 +22,9 @@ const information = [
 
 function InformationItem({ title, answer }: { title: string; answer: string }) {
   return (
-    <li key={title} className="flex justify-between">
-      <div className="text-gray-400">{title}</div>
-      <div className="text-right font-medium text-gray-600">{answer}</div>
+    <li key={title} className={"flex justify-between"}>
+      <div className={"text-gray-400"}>{title}</div>
+      <div className={"text-right font-medium text-gray-600"}>{answer}</div>
     </li>
   );
 }
@@ -32,8 +32,8 @@ function InformationItem({ title, answer }: { title: string; answer: string }) {
 export function Information() {
   return (
     <Section>
-      <Title>Information</Title>
-      <ul className="space-y-4">{information.map(InformationItem)}</ul>
+      <Title>{"Information"}</Title>
+      <ul className={"space-y-4"}>{information.map(InformationItem)}</ul>
     </Section>
   );
 }

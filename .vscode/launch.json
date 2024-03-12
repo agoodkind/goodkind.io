@@ -16,7 +16,6 @@
       ],
       "smartStep": true,
       "sourceMaps": true,
-      "preLaunchTask": "sleep",
       "userDataDir": "${workspaceFolder}/chrome-debug-profile",
       "internalConsoleOptions": "openOnSessionStart"
     },

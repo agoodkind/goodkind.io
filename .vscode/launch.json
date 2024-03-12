@@ -5,14 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Static Build",
-      "cwd": "${workspaceFolder}",
+      "type": "chrome",
       "request": "launch",
-      "type": "node-terminal",
-      "command": "npm run static:build",
+      "name": "Chrome",
+      "url": "http://0.0.0.0:3000",
+      "webRoot": "${workspaceFolder}/dist",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
       "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
+      "sourceMaps": true,
+      "preLaunchTask": "sleep",
+      "userDataDir": "${workspaceFolder}/chrome-debug-profile",
+      "internalConsoleOptions": "openOnSessionStart"
     },
     {
       "name": "Dev",
@@ -22,20 +28,18 @@
       "command": "npm run static:dev",
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
       "serverReadyAction": {
-        "action"
+        "action": "startDebugging",
+        "name": "Chrome",
+        "killOnServerStop": true,
+        "pattern": "Server running on port ([0-9]+)"
+        // "uriFormat": "http://0.0.0.0:%s"
+        // "action": "openExternally"
       }
-    },
-    {
-      "name": "Start Dev Server",
-      "cwd": "${workspaceFolder}",
-      "request": "launch",
-      "type": "node-terminal",
-      "command": "npm run static:serve",
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     }
   ]
 }

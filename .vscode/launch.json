@@ -15,11 +15,24 @@
       "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     },
     {
-      "name": "Watch Static Build",
+      "name": "Dev",
       "cwd": "${workspaceFolder}",
       "request": "launch",
       "type": "node-terminal",
       "command": "npm run static:dev",
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "serverReadyAction": {
+        "action"
+      }
+    },
+    {
+      "name": "Start Dev Server",
+      "cwd": "${workspaceFolder}",
+      "request": "launch",
+      "type": "node-terminal",
+      "command": "npm run static:serve",
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]

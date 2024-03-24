@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 export function Section({
   className,
   children,
-  variant = "with-padding"
+  variant
 }: {
   className?: string;
   children: ReactNode;

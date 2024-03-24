@@ -26,11 +26,12 @@
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.inlayHints.parameterTypes.enabled": true,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.enable": true,
+  "eslint.runtime": "node",
+  "eslint.run": "onSave",
+  "editor.renderFinalNewline": "on",
+  "prettier.endOfLine": "auto",
+  "prettier.arrowParens": "avoid",
+  "prettier.quoteProps": "consistent"
 }

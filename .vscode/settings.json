@@ -12,25 +12,8 @@
   "tailwindCSS.experimental.classRegex": [
     ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors": false,
-  "typescript.tsserver.log": "normal",
-  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
-  "typescript.tsserver.enableTracing": true,
-  "typescript.suggest.completeFunctionCalls": true,
-  "typescript.referencesCodeLens.showOnAllFunctions": true,
-  "typescript.referencesCodeLens.enabled": true,
-  "typescript.preferGoToSourceDefinition": true,
-  "typescript.preferences.preferTypeOnlyAutoImports": true,
-  "typescript.preferences.jsxAttributeCompletionStyle": "braces",
-  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "typescript.inlayHints.variableTypes.enabled": true,
-  "typescript.inlayHints.parameterTypes.enabled": true,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  "[typescriptreact][javascript][typescript][json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,5 +1,5 @@
-import { BlockTitle } from "../components/block-title";
-import { Section } from "../components/section";
+import { BlockTitle } from "@components/block-title";
+import { Section } from "@components/section";
 
 const skills = [
   "JavaScript",
@@ -18,10 +18,12 @@ export function Skills() {
       <BlockTitle>{"Skills"}</BlockTitle>
       <div className={"-m-2 flex flex-wrap"}>
         <ul>
-          {skills.map((skill) => (
+          {skills.map(skill => (
             <li
               key={skill}
-              className={"m-1 inline-flex rounded-lg bg-violet-100 px-4 py-1 text-sm font-medium text-violet-500"}
+              className={
+                "m-1 inline-flex rounded-lg bg-violet-100 px-4 py-1 text-sm font-medium text-violet-500"
+              }
             >
               {skill}
             </li>

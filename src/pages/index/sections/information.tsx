@@ -1,5 +1,5 @@
-import { Section } from "../components/section";
-import { Title } from "../components/title";
+import { Section } from "@components/section";
+import { Title } from "@components/title";
 
 const information = [
   {

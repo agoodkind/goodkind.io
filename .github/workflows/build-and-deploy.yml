@@ -10,19 +10,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 21
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: true
+
       - name: Build
         run: pnpm run build
-        
+
       - name: Publish Client HTML to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:

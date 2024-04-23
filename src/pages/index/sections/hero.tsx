@@ -27,7 +27,8 @@ export function Hero() {
             <source srcSet={hero.avatar} type={"image/webp"}></source>
             <source srcSet={hero.avatarFallback} type={"image/jpeg"}></source>
             <img
-              fetchPriority={"high"}
+              // @ts-expect-error this is stupid fix ur spec @react @mdn @js
+              fetchpriority={"high"}
               src={hero.avatarFallback}
               alt={"Avatar"}
               className={

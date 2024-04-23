@@ -24,20 +24,15 @@
       "cwd": "${workspaceFolder}",
       "request": "launch",
       "type": "node-terminal",
-      "command": "pnpm run dev",
+      "command": "NO_COLOR=true pnpm run dev",
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      "skipFiles": [
-        "<node_internals>/**",
-        "${workspaceFolder}/node_modules/**"
-      ],
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
       "serverReadyAction": {
         "action": "startDebugging",
         "name": "Chrome",
-        "killOnServerStop": true,
-        "pattern": "Server running on port ([0-9]+)"
-        // "uriFormat": "http://0.0.0.0:%s"
-        // "action": "openExternally"
+        "killOnServerStop": false,
+        "pattern": "http:\\/\\/localhost:([0-9]+)\\/"
       }
     }
   ]

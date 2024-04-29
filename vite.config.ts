@@ -2,6 +2,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import vike from "vike/plugin";
 import { defineConfig } from "vite";
+import { ViteFaviconsPlugin } from "vite-plugin-favicon2";
+import ogPlugin from "vite-plugin-open-graph";
 
 function resolve(dir: string) {
   return path.resolve(__dirname, dir);
@@ -17,7 +19,22 @@ export const paths = {
 };
 
 export default defineConfig({
-  plugins: [react(), vike({ prerender: true })],
+  plugins: [
+    react(),
+    vike({ prerender: true }),
+    ViteFaviconsPlugin({
+      logo: "./src/assets/logo.png",
+      favicons: {
+        appName: "goodkind-io",
+        appDescription: "Alex Goodkind"
+      }
+    }),
+    ogPlugin({
+      basic: {
+        image: "https://goodkind.io/assets/apple-icon.png"
+      }
+    })
+  ],
   resolve: {
     alias: paths
   },

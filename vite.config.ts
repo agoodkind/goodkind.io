@@ -10,9 +10,10 @@ function resolve(dir: string) {
 // define aliases here
 export const paths = {
   "@styles": resolve("./src/styles"),
-  "@components": resolve("./src/pages/index/components"),
-  "@sections": resolve("./src/pages/index/sections"),
-  "@assets": resolve("./src/assets")
+  "@components": resolve("./src/components"),
+  "@sections": resolve("./src/sections"),
+  "@assets": resolve("./src/assets"),
+  "@data": resolve("./src/data")
 };
 
 export default defineConfig({

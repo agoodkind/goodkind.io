@@ -112,10 +112,11 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
 
     "paths": {
-      "@components/*": ["./src/pages/index/components/*"],
-      "@sections/*": ["./src/pages/index/sections/*"],
+      "@components/*": ["./src/components/*"],
+      "@sections/*": ["./src/sections/*"],
       "@styles/*": ["./src/styles/*"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@data/*": ["./src/data/*"]
     }
   },
   "include": ["./src/**/*"]

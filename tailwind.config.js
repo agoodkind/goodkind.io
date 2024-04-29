@@ -1,8 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+
   theme: {
-    extend: {}
+    nightwind: {
+      colors: {
+        white: "gray.900",
+        black: "gray.50"
+      }
+    }
   },
-  plugins: []
+  darkMode: "class",
+  plugins: [require("nightwind")]
 };

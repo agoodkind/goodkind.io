@@ -50,7 +50,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vike": "0.4.171",
-    "vite": "5.2.10"
+    "vite": "5.2.10",
+    "vite-plugin-favicon2": "1.1.5",
+    "vite-plugin-open-graph": "2.0.4"
   },
   "prettier": {
     "printWidth": 90,

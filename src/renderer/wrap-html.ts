@@ -24,7 +24,7 @@ export function wrapHtml(pageContext: TPageContext, html: string = "") {
     <link rel="icon" type="image/png" href="/src/assets/src-favico.png" />
     <title>${getPageTitle(pageContext)}</title>
   </head>
-  <body class="bg-gray-100 antialiased">
+  <body>
     <div id="root">${dangerouslySkipEscape(html)}</div>
   </body>
 </html>`;

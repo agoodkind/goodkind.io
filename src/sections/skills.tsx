@@ -1,5 +1,5 @@
-import { BlockTitle } from "@components/block-title";
-import { Section } from "@components/section";
+import { BlockTitle } from "../components/block-title";
+import { Section } from "../components/section";
 
 const skills = [
   "JavaScript",
@@ -22,7 +22,7 @@ export function Skills() {
             <li
               key={skill}
               className={
-                "m-1 inline-flex rounded-lg bg-violet-100 px-4 py-1 text-sm font-medium text-violet-500"
+                "text-violet-500 bg-violet-100 m-1 inline-flex rounded-lg px-4 py-1 text-sm font-medium dark:text-violet-600"
               }
             >
               {skill}

@@ -1,5 +1,5 @@
-import { Section } from "@components/section";
-import { Title } from "@components/title";
+import { Section } from "../components/section";
+import { Title } from "../components/title";
 
 const information = [
   {
@@ -23,8 +23,8 @@ const information = [
 function InformationItem({ title, answer }: { title: string; answer: string }) {
   return (
     <li key={title} className={"flex justify-between"}>
-      <div className={"text-gray-400"}>{title}</div>
-      <div className={"text-right font-medium text-gray-600"}>{answer}</div>
+      <div className={"text-gray-400 dark:text-gray-500"}>{title}</div>
+      <div className={"text-gray-600 text-right font-medium"}>{answer}</div>
     </li>
   );
 }

@@ -6,6 +6,7 @@ export const heroData = {
   role: "Software Engineer",
   avatar,
   avatarFallback,
+  status: "busy",
   links: [
     {
       url: "https://go.goodkind.io/resume",

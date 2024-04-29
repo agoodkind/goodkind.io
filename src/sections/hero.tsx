@@ -6,6 +6,7 @@ export function Hero(hero: {
   role: string;
   avatar: string;
   avatarFallback: string;
+  status: string;
   links: { url: string; text: string }[];
 }) {
   return (
@@ -13,13 +14,13 @@ export function Hero(hero: {
       <a href={"/"}>
         <div className={"bg-violet-500 h-32 bg-cover dark:bg-violet-50"}></div>
       </a>
-      <div className={"bg-white relative p-7 pt-14 dark:bg-neutral-50"}>
+      <div className={"relative p-7 pt-14"}>
         <span
           className={
-            "text-white bg-gray-400 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase"
+            "text-white bg-gray-400 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-900"
           }
         >
-          {"Busy"}
+          {hero.status}
         </span>
         <a href={"/"}>
           <picture className="animate-surfaced">
@@ -39,7 +40,7 @@ export function Hero(hero: {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1">
             <div className={"text-lg font-semibold"}>{hero.name}</div>
-            <div className={"text-gray-400 text-sm"}>{hero.role}</div>
+            <div className={"text-gray-400 text-sm dark:text-gray-500"}>{hero.role}</div>
           </div>
           <div className={"flex w-full items-center justify-center gap-2"}>
             <div className="flex w-full flex-col gap-2">

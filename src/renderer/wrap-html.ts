@@ -15,17 +15,22 @@ function getPageTitle(pageContext: TPageContext, fallback = ""): string {
 }
 
 export function wrapHtml(pageContext: TPageContext, html: string = "") {
+
+  const rawHTML = dangerouslySkipEscape(html);
+  const pageTitle = dangerouslySkipEscape(getPageTitle(pageContext));
+  const darkModeInit = dangerouslySkipEscape(require("nightwind/helper").init());
+
   return escapeInject`
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script async>${darkModeInit}</script>
     <link rel="icon" type="image/png" href="/src/assets/src-favico.png" />
-    <title>${getPageTitle(pageContext)}</title>
-  </head>
+    <title>${pageTitle}</title>
   <body>
-    <div id="root">${dangerouslySkipEscape(html)}</div>
+    <div id="root">${rawHTML}</div>
   </body>
 </html>`;
 }

@@ -119,5 +119,5 @@
       "@data/*": ["./src/data/*"]
     }
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "eslint.config.ts"]
 }

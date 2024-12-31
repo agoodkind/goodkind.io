@@ -20,7 +20,7 @@ export async function onRenderHtml(
   );
 
   // in dev we can enable react client side hydration
-  const pageHtml = Boolean(process.env.DEV)
+  const pageHtml = process.env.DEV
     ? renderToString(toRender, {})
     : renderToStaticMarkup(toRender);
 

@@ -27,7 +27,7 @@ export function wrapHtml(pageContext: TPageContext, html: string = "") {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script async>${darkModeInit}</script>
-    <link rel="icon" type="image/png" href="/src/assets/src-favico.png" />
+    <link rel="icon" type="image/png" href="/assets/favicon.ico" />
     <title>${pageTitle}</title>
   <body>
     <div id="root">${rawHTML}</div>

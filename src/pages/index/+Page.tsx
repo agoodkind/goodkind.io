@@ -12,5 +12,3 @@ export default function App() {
     </>
   );
 }
-
-export const title = "Alex Goodkind";

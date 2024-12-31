@@ -23,12 +23,11 @@ export function Hero(hero: {
           {hero.status}
         </span>
         <a href={"/"}>
-          <picture className="animate-surfaced">
+          <picture className={"animate-surfaced"}>
             <source srcSet={hero.avatar} type={"image/webp"}></source>
             <source srcSet={hero.avatarFallback} type={"image/jpeg"}></source>
             <img
-              // @ts-expect-error this is stupid fix ur spec @react @mdn @js
-              fetchpriority={"high"}
+              fetchPriority={"high"}
               src={hero.avatarFallback}
               alt={"Avatar"}
               className={
@@ -37,13 +36,13 @@ export function Hero(hero: {
             />
           </picture>
         </a>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-1">
+        <div className={"flex flex-col gap-6"}>
+          <div className={"flex flex-col gap-1"}>
             <div className={"text-lg font-semibold"}>{hero.name}</div>
             <div className={"text-gray-400 text-sm dark:text-gray-500"}>{hero.role}</div>
           </div>
           <div className={"flex w-full items-center justify-center gap-2"}>
-            <div className="flex w-full flex-col gap-2">
+            <div className={"flex w-full flex-col gap-2"}>
               {hero.links.map(link => (
                 <LinkButton key={link.url} url={link.url} text={link.text} />
               ))}

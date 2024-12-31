@@ -15,7 +15,6 @@ function getPageTitle(pageContext: TPageContext, fallback = ""): string {
 }
 
 export function wrapHtml(pageContext: TPageContext, html: string = "") {
-
   const rawHTML = dangerouslySkipEscape(html);
   const pageTitle = dangerouslySkipEscape(getPageTitle(pageContext));
   const darkModeInit = dangerouslySkipEscape(require("nightwind/helper").init());

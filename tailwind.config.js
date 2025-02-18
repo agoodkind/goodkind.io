@@ -11,5 +11,6 @@ export default {
     }
   },
   darkMode: "class",
+  // eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef
   plugins: [require("nightwind")]
 };

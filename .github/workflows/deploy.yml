@@ -1,0 +1,47 @@
+name: Build & Deploy to Cloudflare Pages
+
+on: ["push"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: "install & build"
+        run: pnpm install && pnpm build
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist/client --project-name=goodkind-io
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  comment-preview-url:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    steps:
+      - name: Comment Preview URL on PR
+        uses: actions/checkout@v3
+        with:
+          repository: agoodkind/cf-preview-bot
+          ref: "fix/push-envet-errors"
+          path: cf-preview-bot
+      - uses: ./cf-preview-bot
+        with:
+          deployment_url: ${{ needs.build-and-deploy.outputs.deployment-url }}
+          branch_preview_url: ${{ needs.build-and-deploy.outputs.pages-deployment-alias-url }}

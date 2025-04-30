@@ -1,5 +1,0 @@
-{
-  "watch": ["src", "build.ts", "dev-serve.ts"],
-  "ext": "ts,tsx",
-  "exec": "ts-node build.ts && ts-node dev-serve.ts"
-}

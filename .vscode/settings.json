@@ -1,19 +1,14 @@
 {
-  "files.associations": {
-    "*.tailwind.css": "tailwindcss"
-  },
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
     "source.fixAll": "explicit",
     "source.sortImports": "explicit",
     "source.removeUnusedImports": "explicit"
   },
-  "eslint.workingDirectories": [{ "mode": "auto" }],
   "tailwindCSS.experimental.classRegex": [
     ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "[typescriptreact][javascript][typescript][json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,7 +1,7 @@
-import { LinkButton } from "@components/link-button";
-import { Section } from "../components/section";
+import LinkButton from "@components/LinkButton";
+import Section from "@components/Section";
 
-export function Hero(hero: {
+export default function Hero(hero: {
   name: string;
   role: string;
   avatar: string;
@@ -12,12 +12,12 @@ export function Hero(hero: {
   return (
     <Section variant={"without-padding"} className={"overflow-hidden"}>
       <a href={"/"}>
-        <div className={"bg-violet-500 h-32 bg-cover dark:bg-violet-50"}></div>
+        <div className={"bg-violet-500 h-32 bg-cover dark:bg-violet-800"}></div>
       </a>
       <div className={"relative p-7 pt-14"}>
         <span
           className={
-            "text-white bg-gray-400 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-900"
+            "text-white bg-gray-500 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50"
           }
         >
           {hero.status}
@@ -38,12 +38,16 @@ export function Hero(hero: {
         </a>
         <div className={"flex flex-col gap-6"}>
           <div className={"flex flex-col gap-1"}>
-            <div className={"text-lg font-semibold"}>{hero.name}</div>
-            <div className={"text-gray-400 text-sm dark:text-gray-500"}>{hero.role}</div>
+            <div className={"text-lg font-semibold dark:text-white"}>
+              {hero.name}
+            </div>
+            <div className={"text-gray-400 text-sm"}>
+              {hero.role}
+            </div>
           </div>
           <div className={"flex w-full items-center justify-center gap-2"}>
             <div className={"flex w-full flex-col gap-2"}>
-              {hero.links.map(link => (
+              {hero.links.map((link) => (
                 <LinkButton key={link.url} url={link.url} text={link.text} />
               ))}
             </div>

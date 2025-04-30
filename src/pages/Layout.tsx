@@ -8,7 +8,7 @@ export default function PageLayout({
   return (
     <div
       className={
-        " bg-gray-100 flex h-[100vh] w-full antialiased dark:bg-neutral-900"
+        "bg-gray-100 min-h-screen w-full antialiased dark:bg-neutral-900"
       }
     >
       <main

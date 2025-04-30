@@ -1,7 +1,7 @@
 import { heroData } from "@data/hero-data";
-import { Hero } from "@sections/hero";
-import { Information } from "@sections/information";
-import { Skills } from "@sections/skills";
+import Hero from "@sections/Hero";
+import Information from "@sections/Information";
+import Skills from "@sections/Skills";
 
 export default function App() {
   return (

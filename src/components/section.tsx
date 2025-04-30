@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { ReactNode } from "react";
 
-export function Section({
+export default function Section({
   className,
   children,
-  variant = "with-padding"
+  variant = "with-padding",
 }: {
   className?: string;
   children: ReactNode;
@@ -13,12 +13,12 @@ export function Section({
   return (
     <section
       className={clsx(
-        "section animate-surfaced text-black bg-white rounded-xl shadow dark:bg-neutral-100",
+        "section animate-surfaced text-black bg-white rounded-xl shadow dark:bg-neutral-800",
         {
           "p-0": variant === "without-padding",
-          "p-7": variant === "with-padding"
+          "p-7": variant === "with-padding",
         },
-        className
+        className,
       )}
     >
       {children}

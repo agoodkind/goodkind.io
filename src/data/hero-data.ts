@@ -11,10 +11,6 @@ export const heroData = {
     {
       url: "https://go.goodkind.io/resume",
       text: "LinkedIn"
-    },
-    {
-      url: "https://go.goodkind.io/endaids",
-      text: "AIDS/Lifecycle"
     }
   ]
 };

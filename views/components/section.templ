@@ -1,0 +1,22 @@
+package components
+
+type SectionVariant string
+
+const (
+	WithPadding    SectionVariant = "with-padding"
+	WithoutPadding SectionVariant = "without-padding"
+)
+
+templ Section(variant SectionVariant, className string) {
+	<section
+		class={
+			"section animate-surfaced text-black bg-white rounded-xl shadow dark:bg-neutral-800",
+			templ.KV("p-0", variant == WithoutPadding),
+			templ.KV("p-7", variant == WithPadding),
+			className,
+		}
+	>
+		{ children... }
+	</section>
+}
+

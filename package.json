@@ -1,7 +1,7 @@
 {
   "name": "goodkind.io",
   "private": true,
-  "version": "3.1.0",
+  "version": "4.0.0",
   "type": "module",
   "scripts": {
     "dev": "vike dev",
@@ -17,7 +17,6 @@
     "lodash": "^4.17.21",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
@@ -30,6 +29,7 @@
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "@tailwindcss/cli": "^4.1.18",
     "@types/gtag.js": "^0.0.20",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.15.3",
@@ -48,6 +48,7 @@
     "playwright": "^1.52.0",
     "prettier": "3.5.3",
     "storybook": "^8.6.12",
+    "tailwindcss": "^4.1.18",
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.31.1",
     "vike": "^0.4.229",

@@ -1,0 +1,29 @@
+package layouts
+
+templ Base(title string) {
+	<!DOCTYPE html>
+	<html lang="en" class="bg-gray-100 dark:bg-neutral-900">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<meta name="description" content="Alexander Goodkind - Software Engineer"/>
+			<title>{ title }</title>
+			<link rel="stylesheet" href="/styles.css"/>
+			<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+			<!-- Phase 2 Script Injection Slot -->
+			<!-- Future: Alpine.js and WASM bootstrap scripts will be added here -->
+			<!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
+			<!-- <script src="/wasm_exec.js"></script> -->
+		</head>
+		<body class="bg-gray-100 min-h-screen w-full antialiased dark:bg-neutral-900">
+			<main class="container mx-auto w-full max-w-xl p-4 sm:max-w-3xl sm:p-5">
+				<div class="grid gap-5">
+					<div class="space-y-5">
+						{ children... }
+					</div>
+				</div>
+			</main>
+		</body>
+	</html>
+}
+

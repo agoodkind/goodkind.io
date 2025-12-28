@@ -1,4 +1,4 @@
-.PHONY: all clean templ build generate css copy-assets dev
+.PHONY: all clean templ build generate css copy-assets serve dev
 
 TEMPL := $(shell which templ || echo ~/go/bin/templ)
 
@@ -22,8 +22,13 @@ css:
 copy-assets:
 	cp -r assets/images/* dist/
 
+serve:
+	@echo "Starting dev server..."
+	@go run cmd/serve/main.go
+
 dev:
 	@echo "Starting development mode..."
+	@echo "Run 'make serve' in another terminal to start the dev server"
 	@$(TEMPL) generate --watch &
 	@npx tailwindcss -i assets/css/input.css -o dist/styles.css --watch
 

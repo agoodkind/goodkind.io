@@ -72,11 +72,29 @@ make copy-assets    # Copy images to dist/
 
 ### Development Mode
 
+**Option 1: Two terminals (recommended)**
+
+Terminal 1 - Start the dev server:
 ```bash
-make dev
+make serve
+# Server runs at http://localhost:3000
 ```
 
-Watches for changes to `.templ` files and CSS.
+Terminal 2 - Watch for changes:
+```bash
+make dev
+# Rebuilds on .templ and CSS changes
+```
+
+**Option 2: Manual workflow**
+
+```bash
+# Make changes to .templ or CSS files
+make all          # Rebuild
+# Refresh browser
+```
+
+The dev server serves the `dist/` folder on port 3000 (configurable via `PORT` env var).
 
 ## Output
 

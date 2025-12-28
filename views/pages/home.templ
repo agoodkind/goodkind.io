@@ -1,0 +1,144 @@
+package pages
+
+import (
+	"goodkind.io/views/layouts"
+	"goodkind.io/views/components"
+)
+
+type Link struct {
+	URL  string
+	Text string
+}
+
+type HeroProps struct {
+	Name           string
+	Role           string
+	Avatar         string
+	AvatarFallback string
+	Status         string
+	Links          []Link
+}
+
+var heroData = HeroProps{
+	Name:           "Alexander Goodkind",
+	Role:           "Software Engineer",
+	Avatar:         "/avi.webp",
+	AvatarFallback: "/avi.jpeg",
+	Status:         "busy",
+	Links: []Link{
+		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn"},
+	},
+}
+
+templ Hero(hero HeroProps) {
+	@components.Section(components.WithoutPadding, "overflow-hidden") {
+		<a href="/">
+			<div class="bg-violet-500 h-32 bg-cover dark:bg-violet-800"></div>
+		</a>
+		<div class="relative p-7 pt-14">
+			<span class="text-white bg-gray-500 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50">
+				{ hero.Status }
+			</span>
+			<a href="/">
+				<picture class="animate-surfaced">
+					<source srcSet={ hero.Avatar } type="image/webp"/>
+					<source srcSet={ hero.AvatarFallback } type="image/jpeg"/>
+					<img
+						fetchpriority="high"
+						src={ hero.AvatarFallback }
+						alt="Avatar"
+						class="border-white absolute -top-10 h-20 rounded-lg border-2 border-solid shadow-md"
+					/>
+				</picture>
+			</a>
+			<div class="flex flex-col gap-6">
+				<div class="flex flex-col gap-1">
+					<div class="text-lg font-semibold dark:text-white">
+						{ hero.Name }
+					</div>
+					<div class="text-gray-400 text-sm">
+						{ hero.Role }
+					</div>
+				</div>
+				<div class="flex w-full items-center justify-center gap-2">
+					<div class="flex w-full flex-col gap-2">
+						for _, link := range hero.Links {
+							@components.LinkButton(link.URL, link.Text)
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+type InfoItem struct {
+	Title  string
+	Answer string
+}
+
+var informationData = []InfoItem{
+	{Title: "Location", Answer: "San Francisco"},
+	{Title: "Remote", Answer: "Hybrid"},
+	{Title: "Experience", Answer: "3+ years"},
+	{Title: "Relocation", Answer: "Let's Discuss"},
+}
+
+templ InformationItem(item InfoItem) {
+	<li class="flex justify-between">
+		<div class="text-gray-400 dark:text-gray-400">{ item.Title }</div>
+		<div class="text-gray-600 text-right font-medium dark:text-gray-300">
+			{ item.Answer }
+		</div>
+	</li>
+}
+
+templ Information() {
+	@components.Section(components.WithPadding, "") {
+		@components.Title(components.H1) {
+			Information
+		}
+		<ul class="space-y-4">
+			for _, item := range informationData {
+				@InformationItem(item)
+			}
+		</ul>
+	}
+}
+
+var skillsData = []string{
+	"JavaScript",
+	"React",
+	"SQL",
+	"PHP",
+	"HTML/CSS",
+	"Java",
+	"Python",
+	"C/C++",
+}
+
+templ Skills() {
+	@components.Section(components.WithPadding, "") {
+		@components.Title(components.H2) {
+			Skills
+		}
+		<div class="-m-2 flex flex-wrap">
+			<ul>
+				for _, skill := range skillsData {
+					<li class="text-violet-500 bg-violet-100 m-1 inline-flex rounded-lg px-4 py-1 text-sm font-medium dark:text-violet-300 dark:bg-violet-800">
+						{ skill }
+					</li>
+				}
+			</ul>
+		</div>
+	}
+}
+
+templ Home() {
+	@layouts.Base("Alexander Goodkind") {
+		@Hero(heroData)
+		@Information()
+		@Skills()
+	}
+}
+

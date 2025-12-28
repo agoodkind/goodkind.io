@@ -1,0 +1,21 @@
+package components
+
+type TitleLevel string
+
+const (
+	H1 TitleLevel = "h1"
+	H2 TitleLevel = "h2"
+)
+
+templ Title(level TitleLevel) {
+	if level == H1 {
+		<h1 class="mb-5 text-lg font-semibold dark:text-white">
+			{ children... }
+		</h1>
+	} else {
+		<h2 class="mb-5 text-lg font-semibold dark:text-white">
+			{ children... }
+		</h2>
+	}
+}
+

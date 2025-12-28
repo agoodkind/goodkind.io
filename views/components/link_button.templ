@@ -1,0 +1,12 @@
+package components
+
+templ LinkButton(url string, text string) {
+	<a href={ templ.URL(url) } class="group flex w-full">
+		<button
+			class="btn text-white bg-violet-500 w-full rounded-lg px-5 py-3 text-center font-semibold hover:bg-violet-100 dark:text-violet-200 dark:bg-violet-700 dark:hover:bg-violet-800 hover:cursor-pointer"
+		>
+			{ text }
+		</button>
+	</a>
+}
+

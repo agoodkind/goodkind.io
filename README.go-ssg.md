@@ -106,12 +106,24 @@ The `dist/` folder contains deployment-ready static files:
 
 ## Deployment
 
-### Cloudflare Pages
+### Cloudflare Pages (GitHub Actions)
 
-1. Build command: `make all`
-2. Output directory: `dist`
+The site auto-deploys on push via `.github/workflows/deploy.yml`:
 
-The site is configured for Cloudflare Pages deployment.
+1. **Setup**: Go 1.23 + Templ CLI + pnpm
+2. **Build**: `make all`
+3. **Deploy**: `dist/` → Cloudflare Pages
+
+Required secrets:
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+### Manual Deployment
+
+```bash
+make all
+wrangler pages deploy dist --project-name=goodkind-io
+```
 
 ## Component System
 

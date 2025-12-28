@@ -123,11 +123,8 @@ The architecture includes reserved slots for future interactivity:
 
 - **Go** - Build tool and templating logic
 - **Templ** (`a-h/templ`) - Type-safe HTML components
-- **Tailwind CSS v3** - Utility-first CSS framework
+- **Tailwind CSS v4.1** - Utility-first CSS framework
+  - Uses `@import "tailwindcss"` syntax (v4 native)
+  - Content sources defined via `@source` directive in CSS
+  - Config in `tailwind.config.ts` for additional settings
 - **Make** - Build automation
-
-## Notes
-
-- Line length target: <90 columns (workspace standard)
-- Dark mode: Media query based (`darkMode: "media"`)
-- Generated files (`*_templ.go`, `builder`) are git-ignored

@@ -137,9 +137,17 @@ templ Skills() {
 
 templ Home() {
 	@layouts.Base("Alexander Goodkind") {
-		@Hero(heroData)
-		@Information()
-		@Skills()
+		<div class="masonry-grid">
+			<div class="break-inside-avoid mb-5">
+				@Hero(heroData)
+			</div>
+			<div class="break-inside-avoid mb-5">
+				@Information()
+			</div>
+			<div class="break-inside-avoid mb-5">
+				@Skills()
+			</div>
+		</div>
 	}
 }
 

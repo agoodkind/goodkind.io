@@ -68,5 +68,30 @@
     -o-animation: grow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     animation: grow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
+
+  .masonry-grid {
+    columns: 1;
+    column-gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .masonry-grid {
+      columns: 2;
+    }
+  }
+
+  @supports (masonry-direction: column) {
+    .masonry-grid {
+      display: masonry;
+      masonry-direction: column;
+      grid-template-columns: repeat(1, 1fr);
+      columns: auto;
+    }
+    @media (min-width: 768px) {
+      .masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
 }
 

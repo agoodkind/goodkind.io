@@ -72,26 +72,39 @@ make copy-assets    # Copy images to dist/
 
 ### Development Mode
 
-**Option 1: Two terminals (recommended)**
+**🔥 Hot Reload (Recommended)**
+
+```bash
+make dev
+```
+
+This starts:
+
+1. Dev server with live reload on `http://localhost:3000`
+2. File watcher that auto-rebuilds and refreshes your browser
+
+Just make changes to `.templ`, `.css`, or `.go` files and watch them instantly appear in your browser!
+
+**Manual Mode**
 
 Terminal 1 - Start the dev server:
+
 ```bash
 make serve
 # Server runs at http://localhost:3000
 ```
 
 Terminal 2 - Watch for changes:
+
 ```bash
-make dev
-# Rebuilds on .templ and CSS changes
+make watch
+# Auto-rebuilds and triggers browser reload
 ```
 
-**Option 2: Manual workflow**
+**Legacy Mode (Manual Refresh)**
 
 ```bash
-# Make changes to .templ or CSS files
-make all          # Rebuild
-# Refresh browser
+make dev-old        # Watches files but requires manual browser refresh
 ```
 
 The dev server serves the `dist/` folder on port 3000 (configurable via `PORT` env var).
@@ -115,6 +128,7 @@ The site auto-deploys on push via `.github/workflows/deploy.yml`:
 3. **Deploy**: `dist/` → Cloudflare Pages
 
 Required secrets:
+
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 
@@ -129,17 +143,38 @@ wrangler pages deploy dist --project-name=goodkind-io
 
 ### Layouts
 
-- `layouts/base.templ` - HTML5 shell with dark mode support
+- `layouts/base.templ` - HTML5 shell with dark mode support and HTMX
 
 ### Components
 
 - `components/section.templ` - Card wrapper (supports `WithPadding`/`WithoutPadding`)
 - `components/title.templ` - Heading component (H1/H2)
 - `components/link_button.templ` - CTA button
+- `components/htmx_example.templ` - HTMX usage examples (optional)
 
 ### Pages
 
 - `pages/home.templ` - Main page composing Hero, Information, and Skills sections
+
+## HTMX Integration
+
+HTMX is included via CDN in `layouts/base.templ`. Use it in your components for dynamic interactions:
+
+```go
+templ MyButton() {
+    <button
+        hx-get="/api/data"
+        hx-target="#result"
+        hx-swap="innerHTML"
+        class="btn"
+    >
+        Load Data
+    </button>
+    <div id="result"></div>
+}
+```
+
+See `components/htmx_example.templ` for more patterns.
 
 ## Phase 2 Preparation
 
@@ -153,8 +188,10 @@ The architecture includes reserved slots for future interactivity:
 
 - **Go** - Build tool and templating logic
 - **Templ** (`a-h/templ`) - Type-safe HTML components
+- **HTMX** - High-power tools for HTML (included via CDN)
 - **Tailwind CSS v4.1** - Utility-first CSS framework
   - Uses `@import "tailwindcss"` syntax (v4 native)
   - Content sources defined via `@source` directive in CSS
   - Config in `tailwind.config.ts` for additional settings
 - **Make** - Build automation
+- **SSE Live Reload** - Hot reload development experience using Server-Sent Events

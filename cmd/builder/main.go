@@ -34,4 +34,3 @@ func main() {
 	fmt.Println("✓ Generated index.html")
 	fmt.Println("Build complete!")
 }
-

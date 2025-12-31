@@ -165,8 +165,8 @@ templ ThemeToggle() {
 	<div
 		x-cloak
 		x-data="themeToggle()"
-		@mouseenter="cancelClose(); open = true"
-		@mouseleave="scheduleClose()"
+		@mouseenter.debounce.50ms="cancelClose(); open = true"
+		@mouseleave.debounce.50ms="scheduleClose()"
 		@click.outside="open = false; cancelClose()"
 		@keydown.escape.window="open = false; cancelClose()"
 		class={ themeToggleRootClass }

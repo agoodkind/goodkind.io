@@ -60,15 +60,25 @@ function applyTheme(theme: Theme): void {
     effectiveTheme = theme;
   }
 
+  const autoIndicator = document.getElementById("theme-toggle-auto-indicator");
+
+  // Show auto indicator when in auto mode
+  if (theme === "auto") {
+    autoIndicator?.classList.remove("hidden");
+  } else {
+    autoIndicator?.classList.add("hidden");
+  }
+
+  // Show icon for CURRENT state (not next state)
   if (effectiveTheme === "dark") {
     html.classList.add("dark");
-    darkIcon?.classList.add("hidden");
-    lightIcon?.classList.remove("hidden");
+    darkIcon?.classList.remove("hidden");
+    lightIcon?.classList.add("hidden");
     updateThemeColor(true);
   } else {
     html.classList.remove("dark");
-    darkIcon?.classList.remove("hidden");
-    lightIcon?.classList.add("hidden");
+    darkIcon?.classList.add("hidden");
+    lightIcon?.classList.remove("hidden");
     updateThemeColor(false);
   }
 }
@@ -82,15 +92,24 @@ function initializeThemeIcons(): void {
 }
 
 /**
- * Get next theme in cycle: light → dark → auto → light
+ * Get next theme in cycle
+ * - auto (showing light) → dark
+ * - auto (showing dark) → light
+ * - light → dark
+ * - dark → auto
  */
 function getNextTheme(current: Theme): Theme {
+  if (current === "auto") {
+    // When in auto, switch to opposite of what's currently showing
+    const systemPreference = getSystemPreference();
+    return systemPreference === "dark" ? "light" : "dark";
+  }
+
   switch (current) {
     case "light":
       return "dark";
     case "dark":
       return "auto";
-    case "auto":
     default:
       return "light";
   }

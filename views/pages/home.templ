@@ -1,8 +1,8 @@
 package pages
 
 import (
-	"goodkind.io/views/layouts"
 	"goodkind.io/views/components"
+	"goodkind.io/views/layouts"
 )
 
 type Link struct {
@@ -41,7 +41,9 @@ templ Hero(hero HeroProps) {
 				<span class="text-white bg-gray-500 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50">
 					{ hero.Status }
 				</span>
-				@components.ThemeToggle()
+				<div class="sm:hidden">
+					@components.ThemeToggle()
+				</div>
 			</div>
 			<a href="/">
 				<picture class="animate-surfaced">
@@ -116,7 +118,7 @@ var skillsData = []string{
 	"SQL",
 	"PHP/Hacklang",
 	"HTML/CSS",
-    "Ruby",
+	"Ruby",
 	"Python",
 	"C/C++",
 }
@@ -153,4 +155,3 @@ templ Home() {
 		</div>
 	}
 }
-

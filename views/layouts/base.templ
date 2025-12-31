@@ -1,5 +1,7 @@
 package layouts
 
+import "goodkind.io/views/components"
+
 templ Base(title string) {
 	<!DOCTYPE html>
 	<html lang="en" class="bg-slate-50 dark:bg-slate-950">
@@ -50,6 +52,9 @@ templ Base(title string) {
 					</div>
 				</div>
 			</main>
+			<div class="hidden sm:block">
+				@components.ThemeToggle()
+			</div>
 		</body>
 	</html>
 }

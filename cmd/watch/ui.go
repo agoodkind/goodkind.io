@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 	"strings"
+	"syscall"
 	"time"
 
 	bspinner "github.com/charmbracelet/bubbles/spinner"
@@ -68,7 +70,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch v := msg.(type) {
 	case tea.KeyMsg:
 		switch v.Type {
-		case tea.KeyCtrlC, tea.KeyEsc:
+		case tea.KeyCtrlC:
+			sendInterruptToProcessGroup()
+			return m, tea.Quit
+		case tea.KeyEsc:
 			return m, tea.Quit
 		}
 	case buildStartMsg:
@@ -157,6 +162,16 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	return m, nil
+}
+
+func sendInterruptToProcessGroup() {
+	pgrp := syscall.Getpgrp()
+	if pgrp > 0 {
+		_ = syscall.Kill(-pgrp, syscall.SIGINT)
+		return
+	}
+
+	_ = syscall.Kill(os.Getpid(), syscall.SIGINT)
 }
 
 func (m model) View() string {

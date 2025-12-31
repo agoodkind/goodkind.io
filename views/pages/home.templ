@@ -15,7 +15,6 @@ type HeroProps struct {
 	Role           string
 	Avatar         string
 	AvatarFallback string
-	Status         string
 	Links          []Link
 }
 
@@ -24,7 +23,6 @@ var heroData = HeroProps{
 	Role:           "Software Engineer",
 	Avatar:         "/avi.webp",
 	AvatarFallback: "/avi.jpeg",
-	Status:         "busy",
 	Links: []Link{
 		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn"},
 		{URL: "https://github.com/agoodkind", Text: "GitHub"},
@@ -32,31 +30,22 @@ var heroData = HeroProps{
 }
 
 templ Hero(hero HeroProps) {
-	@components.Section(components.WithoutPadding, "overflow-hidden") {
-		<a href="/">
-			<div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-32 bg-cover dark:from-indigo-600 dark:to-purple-600"></div>
-		</a>
+	@components.Section(components.WithoutPadding, "overflow-hidden relative") {
+		<div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-32 bg-cover dark:from-indigo-600 dark:to-purple-600"></div>
+		<div class="sm:hidden absolute top-2 right-2 z-10">
+			@components.ThemeToggle()
+		</div>
 		<div class="relative p-7 pt-14">
-			<div class="absolute right-7 top-4 flex items-center gap-2">
-				<span class="text-white bg-gray-500 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50">
-					{ hero.Status }
-				</span>
-				<div class="sm:hidden">
-					@components.ThemeToggle()
-				</div>
-			</div>
-			<a href="/">
-				<picture class="animate-surfaced">
-					<source srcSet={ hero.Avatar } type="image/webp"/>
-					<source srcSet={ hero.AvatarFallback } type="image/jpeg"/>
-					<img
-						fetchpriority="high"
-						src={ hero.AvatarFallback }
-						alt="Avatar"
-						class="border-white absolute -top-10 h-20 rounded-lg border-2 border-solid shadow-md"
-					/>
-				</picture>
-			</a>
+			<picture class="animate-surfaced">
+				<source srcSet={ hero.Avatar } type="image/webp"/>
+				<source srcSet={ hero.AvatarFallback } type="image/jpeg"/>
+				<img
+					fetchpriority="high"
+					src={ hero.AvatarFallback }
+					alt="Avatar"
+					class="border-white absolute -top-10 h-20 rounded-lg border-2 border-solid shadow-md"
+				/>
+			</picture>
 			<div class="flex flex-col gap-6">
 				<div class="flex flex-col gap-1">
 					<div class="text-lg font-semibold dark:text-white">

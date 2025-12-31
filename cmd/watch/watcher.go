@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -90,6 +91,8 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 				continue
 			}
 
+			log.Printf("[WATCHER] File changed: %s (op: %s)\n", event.Name, event.Op)
+
 			debounceMu.Lock()
 			if debounceTimer != nil {
 				debounceTimer.Stop()
@@ -101,8 +104,10 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 			}
 
 			changedFile := event.Name
+			log.Printf("[WATCHER] Queuing rebuild: kind=%v file=%s\n", kind, changedFile)
 
 			debounceTimer = time.AfterFunc(200*time.Millisecond, func() {
+				log.Printf("[WATCHER] Sending rebuild request for: %s\n", changedFile)
 				select {
 				case out <- rebuildRequest{kind: kind, changedFile: changedFile}:
 				case <-ctx.Done():

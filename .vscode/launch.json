@@ -11,20 +11,6 @@
       "env": {
         "PORT": "3000"
       },
-      "preLaunchTask": "build-assets",
-      "showLog": true,
-      "trace": "verbose"
-    },
-    {
-      "name": "Launch Server (no build)",
-      "type": "go",
-      "request": "launch",
-      "mode": "debug",
-      "program": "${workspaceFolder}/cmd/serve",
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "PORT": "3000"
-      },
       "showLog": false
     },
     {
@@ -45,7 +31,7 @@
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/dist",
-      "userDataDir": "${workspaceFolder}/.vscode/chrome-debug-profile",
+      "userDataDir": "${workspaceFolder}/.build/chrome-debug-profile",
       "runtimeArgs": ["--auto-open-devtools-for-tabs"],
       "sourceMaps": true,
       "sourceMapPathOverrides": {
@@ -66,7 +52,7 @@
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/dist",
-      "userDataDir": "${workspaceFolder}/.vscode/edge-debug-profile",
+      "userDataDir": "${workspaceFolder}/.build/edge-debug-profile",
       "runtimeArgs": ["--auto-open-devtools-for-tabs"],
       "sourceMaps": true
     }
@@ -80,13 +66,13 @@
     },
     {
       "name": "Full Stack (Server + Watcher + Chrome)",
-      "configurations": ["Launch Server (no build)", "Launch Watcher", "Launch Chrome"],
+      "configurations": ["Launch Server", "Launch Watcher", "Launch Chrome"],
       "stopAll": true,
       "preLaunchTask": "build-assets"
     },
     {
       "name": "Dev Mode (Server + Watcher)",
-      "configurations": ["Launch Server (no build)", "Launch Watcher"],
+      "configurations": ["Launch Server", "Launch Watcher"],
       "stopAll": true,
       "preLaunchTask": "build-assets"
     }

@@ -166,7 +166,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func stopDevServer() {
-	data, err := os.ReadFile(".dev-server-pid")
+	data, err := os.ReadFile(".build/.dev-server-pid")
 	if err != nil {
 		return
 	}

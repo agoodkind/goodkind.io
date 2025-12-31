@@ -13,7 +13,12 @@
         "PORT": "3000",
         "DEV_SSR": "true"
       },
-      "showLog": false
+      "showLog": false,
+      "serverReadyAction": {
+        "pattern": "Server: (https?://[^\\s]+)",
+        "action": "startDebugging",
+        "name": "Chrome"
+      }
     },
     {
       "name": "Watcher",
@@ -36,14 +41,17 @@
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/dist",
       "userDataDir": "${workspaceFolder}/.build/chrome-debug-profile",
-      "runtimeArgs": ["--auto-open-devtools-for-tabs"],
+      "runtimeArgs": [
+        "--auto-open-devtools-for-tabs",
+        "--disable-features=QuitConfirmation"
+      ],
       "sourceMaps": true
     }
   ],
   "compounds": [
     {
       "name": "Dev Mode",
-      "configurations": ["Server", "Watcher", "Chrome"],
+      "configurations": ["Server", "Watcher"],
       "stopAll": true,
       "preLaunchTask": "build-assets"
     }

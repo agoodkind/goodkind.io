@@ -78,6 +78,39 @@ eventSource.addEventListener("open", function () {
   console.log("🔌 Live reload connected (HMR enabled)");
 });
 
+// HTMX event listeners for detailed logging
+document.body.addEventListener("htmx:beforeSwap", function (e: Event) {
+  const event = e as CustomEvent;
+  console.log("🔄 HTMX beforeSwap:", {
+    target: event.detail.target,
+    swapStyle: event.detail.swapStyle,
+  });
+});
+
+document.body.addEventListener("htmx:afterSwap", function (e: Event) {
+  const event = e as CustomEvent;
+  console.log("✅ HTMX afterSwap:", {
+    target: event.detail.target,
+    elapsed: event.detail.requestConfig?.timeout || "N/A",
+  });
+});
+
+document.body.addEventListener("htmx:beforeOnLoad", function (e: Event) {
+  const event = e as CustomEvent;
+  const start = performance.now();
+  event.detail.swapStartTime = start;
+  console.log("⏱️  Swap started");
+});
+
+document.body.addEventListener("htmx:afterOnLoad", function (e: Event) {
+  const event = e as CustomEvent;
+  const start = event.detail.swapStartTime;
+  if (start) {
+    const elapsed = Math.round(performance.now() - start);
+    console.log(`⚡ Swap completed in ${elapsed}ms`);
+  }
+});
+
 eventSource.addEventListener("error", function (event) {
   const target = event.target as EventSource | null;
   if (target?.readyState === EventSource.CLOSED) {

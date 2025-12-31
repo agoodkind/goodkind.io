@@ -12,12 +12,12 @@ templ Base(title string) {
 			<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)"/>
 			<meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)"/>
 			<title>{ title }</title>
-		<link rel="stylesheet" href="/styles.css"/>
-		<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
-		<!-- HTMX -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.7/htmx.min.js" integrity="sha512-IisGoumHahmfNIhP4wUV3OhgQZaaDBuD6IG4XlyjT77IUkwreZL3T3afO4xXuDanSalZ57Un+UlAbarQjNZCTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<!-- Critical: Prevent flash of wrong theme -->
-		<script>
+			<link rel="stylesheet" href="/styles.css"/>
+			<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+			<!-- HTMX -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.7/htmx.min.js" integrity="sha512-IisGoumHahmfNIhP4wUV3OhgQZaaDBuD6IG4XlyjT77IUkwreZL3T3afO4xXuDanSalZ57Un+UlAbarQjNZCTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<!-- Critical: Prevent flash of wrong theme -->
+			<script>
 			(function() {
 				const theme = localStorage.getItem('theme') || 'auto';
 				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -38,11 +38,11 @@ templ Base(title string) {
 				document.head.appendChild(metaThemeColor);
 			})();
 		</script>
-		<!-- Bundled: Alpine.js + App logic -->
-		<script defer src="/main.js"></script>
-		<!-- Phase 2 Script Injection Slot -->
-		<!-- Future: WASM bootstrap scripts will be added here -->
-		<!-- <script src="/wasm_exec.js"></script> -->
+			<!-- Bundled: Alpine.js + App logic -->
+			<script defer src="/main.js"></script>
+			<!-- Phase 2 Script Injection Slot -->
+			<!-- Future: WASM bootstrap scripts will be added here -->
+			<!-- <script src="/wasm_exec.js"></script> -->
 		</head>
 		<body class="bg-slate-50 min-h-screen w-full antialiased dark:bg-slate-950">
 			<main class="container mx-auto w-full max-w-xl p-4 sm:max-w-3xl sm:p-5">
@@ -52,9 +52,9 @@ templ Base(title string) {
 					</div>
 				</div>
 			</main>
-			@components.ThemeToggle()
+			<div class="hidden sm:block">
+				@components.ThemeToggle()
+			</div>
 		</body>
 	</html>
 }
-
-

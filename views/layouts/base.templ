@@ -27,10 +27,15 @@ templ Base(title string) {
 					document.documentElement.classList.add('dark');
 				}
 				
-				const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-				if (metaThemeColor) {
-					metaThemeColor.setAttribute('content', shouldBeDark ? '#0f172a' : '#f8fafc');
-				}
+				const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+				metaTags.forEach(function(tag) {
+					tag.remove();
+				});
+				
+				const metaThemeColor = document.createElement('meta');
+				metaThemeColor.setAttribute('name', 'theme-color');
+				metaThemeColor.setAttribute('content', shouldBeDark ? '#0f172a' : '#f8fafc');
+				document.head.appendChild(metaThemeColor);
 			})();
 		</script>
 		<!-- Bundled: Alpine.js + App logic -->

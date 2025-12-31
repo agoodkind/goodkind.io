@@ -9,6 +9,9 @@ type Theme = "light" | "dark" | "auto";
 interface ThemeStore {
   current: Theme;
   toggle(): void;
+  set(theme: Theme): void;
+  sliderStyle(): string;
+  currentLabel(): string;
   init(): void;
 }
 
@@ -38,19 +41,20 @@ function getCurrentTheme(): Theme {
  * Update Safari theme-color meta tag
  */
 function updateThemeColor(isDark: boolean): void {
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-  if (metaThemeColor) {
-    metaThemeColor.setAttribute("content", isDark ? "#0f172a" : "#f8fafc");
-  }
+  const existingTags = document.querySelectorAll('meta[name="theme-color"]');
+  existingTags.forEach((tag) => tag.remove());
+
+  const metaThemeColor = document.createElement("meta");
+  metaThemeColor.setAttribute("name", "theme-color");
+  metaThemeColor.setAttribute("content", isDark ? "#0f172a" : "#f8fafc");
+  document.head.appendChild(metaThemeColor);
 }
 
 /**
- * Apply theme to document and update icons
+ * Apply theme to document
  */
 function applyTheme(theme: Theme): void {
   const html = document.documentElement;
-  const darkIcon = document.getElementById("theme-toggle-dark-icon");
-  const lightIcon = document.getElementById("theme-toggle-light-icon");
 
   let effectiveTheme: "light" | "dark";
 
@@ -60,25 +64,11 @@ function applyTheme(theme: Theme): void {
     effectiveTheme = theme;
   }
 
-  const autoIndicator = document.getElementById("theme-toggle-auto-indicator");
-
-  // Show auto indicator when in auto mode
-  if (theme === "auto") {
-    autoIndicator?.classList.remove("hidden");
-  } else {
-    autoIndicator?.classList.add("hidden");
-  }
-
-  // Show icon for CURRENT state (not next state)
   if (effectiveTheme === "dark") {
     html.classList.add("dark");
-    darkIcon?.classList.remove("hidden");
-    lightIcon?.classList.add("hidden");
     updateThemeColor(true);
   } else {
     html.classList.remove("dark");
-    darkIcon?.classList.add("hidden");
-    lightIcon?.classList.remove("hidden");
     updateThemeColor(false);
   }
 }
@@ -115,6 +105,38 @@ function getNextTheme(current: Theme): Theme {
   }
 }
 
+function getThemeLabel(theme: Theme): string {
+  switch (theme) {
+    case "light":
+      return "Light";
+    case "dark":
+      return "Dark";
+    case "auto":
+      return "Auto";
+    default:
+      return "Auto";
+  }
+}
+
+function getThemeSliderX(theme: Theme): string {
+  switch (theme) {
+    case "light":
+      return "0%";
+    case "auto":
+      return "100%";
+    case "dark":
+      return "200%";
+    default:
+      return "100%";
+  }
+}
+
+function handleSystemPreferenceChange(): void {
+  if (getCurrentTheme() === "auto") {
+    applyTheme("auto");
+  }
+}
+
 /**
  * Initialize theme store with Alpine instance
  * @param {AlpineType} Alpine - Alpine.js instance
@@ -130,6 +152,20 @@ export function initializeThemeStore(Alpine: AlpineType): void {
       applyTheme(this.current);
     },
 
+    set(this: ThemeStore, theme: Theme) {
+      this.current = theme;
+      localStorage.setItem(THEME_KEY, this.current);
+      applyTheme(this.current);
+    },
+
+    sliderStyle(this: ThemeStore) {
+      return `transform: translateX(${getThemeSliderX(this.current)});`;
+    },
+
+    currentLabel(this: ThemeStore) {
+      return getThemeLabel(this.current);
+    },
+
     init(this: ThemeStore) {
       applyTheme(this.current);
     },
@@ -139,9 +175,7 @@ export function initializeThemeStore(Alpine: AlpineType): void {
   document.addEventListener("DOMContentLoaded", initializeThemeIcons);
 
   // Listen for system preference changes when in auto mode
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-    if (getCurrentTheme() === "auto") {
-      applyTheme("auto");
-    }
-  });
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", handleSystemPreferenceChange);
 }

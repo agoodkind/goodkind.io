@@ -71,6 +71,12 @@
     animation: grow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
+  .transition-grid-template {
+    transition-property: grid-template-columns, grid-template-rows;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
   .masonry-grid {
     columns: 1;
     column-gap: 1.25rem;
@@ -87,11 +93,28 @@
       display: masonry;
       masonry-direction: column;
       grid-template-columns: repeat(1, 1fr);
+      transition-property: grid-template-columns;
+      transition-duration: 200ms;
+      transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
       columns: auto;
     }
     @media (min-width: 768px) {
       .masonry-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .transition-grid-template {
+      transition-duration: 0ms;
+      transition-property: none;
+    }
+
+    @supports (masonry-direction: column) {
+      .masonry-grid {
+        transition-duration: 0ms;
+        transition-property: none;
       }
     }
   }

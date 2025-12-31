@@ -132,7 +132,16 @@ func triggerReloadWithFile(changedFile string) {
 
 	url := fmt.Sprintf("http://localhost:%s/__reload", port)
 	if changedFile != "" {
-		url = fmt.Sprintf("%s?file=%s", url, changedFile)
+		// Normalize file path to relative path
+		relPath := changedFile
+		if strings.Contains(changedFile, "/goodkind.io/") {
+			parts := strings.Split(changedFile, "/goodkind.io/")
+			if len(parts) > 1 {
+				relPath = parts[1]
+			}
+		}
+		url = fmt.Sprintf("%s?file=%s", url, relPath)
+		fmt.Printf("[DEBUG] Triggering HMR for: %s\n", relPath)
 	}
 
 	resp, err := http.Post(url, "text/plain", nil)

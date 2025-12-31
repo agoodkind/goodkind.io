@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -141,7 +142,9 @@ func triggerReloadWithFile(changedFile string) {
 			}
 		}
 		url = fmt.Sprintf("%s?file=%s", url, relPath)
-		fmt.Printf("[DEBUG] Triggering HMR for: %s\n", relPath)
+		log.Printf("[DEBUG] Triggering HMR for: %s\n", relPath)
+	} else {
+		log.Printf("[DEBUG] Triggering full reload (no file)\n")
 	}
 
 	resp, err := http.Post(url, "text/plain", nil)

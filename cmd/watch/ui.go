@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -147,7 +148,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			time.Since(m.start).Milliseconds())
 		m.lastError = nil
 
-		fmt.Printf("[UI] Triggering reload with file: %q\n", m.changedFile)
+		log.Printf("[UI] Triggering reload with file: %q\n", m.changedFile)
 		triggerReloadWithFile(m.changedFile)
 
 		if m.pending != nil {

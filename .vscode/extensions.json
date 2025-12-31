@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "a-h.templ",
+        "bradlc.vscode-tailwindcss",
+        "golang.go",
+        "christian-kohler.npm-intellisense"
+    ]
+}

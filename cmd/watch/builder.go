@@ -174,6 +174,6 @@ func runPipelineWithFile(ctx context.Context, kind buildKind, changedFile string
 		}
 	}
 
-	triggerReloadWithFile(changedFile)
+	// Don't trigger reload here - UI handles it after showing completion
 	return nil
 }

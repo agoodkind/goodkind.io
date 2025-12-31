@@ -29,11 +29,11 @@ func HandleReloadTrigger(broker *SSEBroker) http.HandlerFunc {
 		// Check if file info was sent
 		changedFile := r.URL.Query().Get("file")
 		if changedFile != "" {
-		broker.SendUpdate(changedFile)
+			broker.SendUpdate(changedFile)
 		} else {
 			broker.SendReload()
 		}
-		
+
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte("OK"))
 	}

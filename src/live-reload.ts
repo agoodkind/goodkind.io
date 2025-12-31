@@ -4,17 +4,13 @@
  * Uses HTMX for partial page updates
  */
 
+import type htmx from "htmx.org";
+
 export {};
 
 declare global {
   interface Window {
-    htmx?: {
-      ajax: (
-        method: string,
-        url: string,
-        options: { target: string; swap: string }
-      ) => void;
-    };
+    htmx?: typeof htmx;
   }
 }
 
@@ -58,7 +54,7 @@ function performHMRUpdate(changedFile: string) {
 
   // Use HTMX to fetch and swap the target
   // Morph swap intelligently diffs and updates only what changed
-  window.htmx.ajax("GET", "/", {
+  window.htmx.ajax("get", "/", {
     target: target,
     swap: "morph:outerHTML",
   });

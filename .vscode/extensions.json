@@ -1,0 +1,28 @@
+{
+  "recommendations": [
+    // Go development
+    "golang.go",
+
+    // JavaScript/TypeScript
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // Template language support
+    "a-h.templ",
+
+    // Browser debugging
+    "msjsdiag.debugger-for-chrome",
+    "ms-edgedevtools.vscode-edge-devtools",
+
+    // Git
+    "eamodio.gitlens",
+
+    // Utilities
+    "christian-kohler.path-intellisense",
+    "editorconfig.editorconfig"
+  ],
+  "unwantedRecommendations": []
+}

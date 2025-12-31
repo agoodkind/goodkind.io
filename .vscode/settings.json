@@ -1,14 +1,102 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.fixAll": "explicit",
-    "source.sortImports": "explicit",
-    "source.removeUnusedImports": "explicit"
+  // Go settings
+  "go.toolsManagement.autoUpdate": true,
+  "go.useLanguageServer": true,
+  "go.lintTool": "golangci-lint",
+  "go.lintOnSave": "workspace",
+  "go.formatTool": "goimports",
+  "go.buildOnSave": "off",
+  "go.vetOnSave": "workspace",
+  "go.coverOnSave": false,
+  "go.testOnSave": false,
+  "go.delveConfig": {
+    "dlvLoadConfig": {
+      "followPointers": true,
+      "maxVariableRecurse": 1,
+      "maxStringLen": 120,
+      "maxArrayValues": 64,
+      "maxStructFields": -1
+    },
+    "apiVersion": 2,
+    "showGlobalVariables": false
   },
-  "tailwindCSS.experimental.classRegex": [
-    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
-  ],
-  "[typescriptreact][javascript][typescript][json]": {
+
+  // TypeScript/JavaScript settings
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
+  // Editor settings
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.rulers": [80, 90],
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // Files to exclude from explorer
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/*_templ.go": true,
+    "**/node_modules": true,
+    "dist": false
+  },
+
+  // Search exclusions
+  "search.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/*_templ.go": true,
+    "**/.vscode/chrome-debug-profile": true,
+    "**/.vscode/edge-debug-profile": true
+  },
+
+  // File associations
+  "files.associations": {
+    "*.templ": "html"
+  },
+
+  // Prettier
+  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Go formatting
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": true
+  },
+
+  // Terminal
+  "terminal.integrated.scrollback": 10000,
+
+  // Debug console
+  "debug.console.fontSize": 13,
+  "debug.console.lineHeight": 18,
+  "debug.console.wordWrap": true,
+
+  // Tailwind CSS IntelliSense
+  "tailwindCSS.experimental.classRegex": [
+    ["class:\\s*?[\"'`]([^\"'`]*).*?[\"'`]", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
 }

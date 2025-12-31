@@ -14,67 +14,67 @@ import (
 func main() {
 	time.Sleep(100 * time.Millisecond)
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	appCtx, cancelApp := context.WithCancel(context.Background())
+	defer cancelApp()
 
-	reqCh := make(chan rebuildRequest, 1)
+	rebuildRequests := make(chan rebuildRequest, 1)
 
 	// Bubble Tea requires a TTY. Fallback for CI/piping/timeout.
 	if !term.IsTerminal(int(os.Stdout.Fd())) {
 		// Handle Ctrl+C gracefully in non-TTY mode
-		sigCh := make(chan os.Signal, 1)
-		signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+		signalCh := make(chan os.Signal, 1)
+		signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
 		go func() {
-			<-sigCh
-			cancel()
+			<-signalCh
+			cancelApp()
 		}()
 
-		_ = runPipeline(ctx, buildKindFull)
+		_ = runPipeline(appCtx, buildKindFull)
 
 		go func() {
-			_ = watchFiles(ctx, reqCh)
+			_ = watchFiles(appCtx, rebuildRequests)
 		}()
 
 		for {
 			select {
-			case <-ctx.Done():
+			case <-appCtx.Done():
 				return
-			case req := <-reqCh:
-				_ = runPipeline(ctx, req.kind)
+			case req := <-rebuildRequests:
+				_ = runPipeline(appCtx, req.kind)
 			}
 		}
 	}
 
-	m := newModel()
-	p := tea.NewProgram(m)
+	uiModel := newModel()
+	program := tea.NewProgram(uiModel)
 
 	// Handle Ctrl+C gracefully - let Bubble Tea handle it
 	go func() {
-		sigCh := make(chan os.Signal, 1)
-		signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
-		<-sigCh
-		p.Send(tea.KeyMsg{Type: tea.KeyCtrlC})
+		signalCh := make(chan os.Signal, 1)
+		signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
+		<-signalCh
+		program.Send(tea.KeyMsg{Type: tea.KeyCtrlC})
 	}()
 
 	go func() {
-		if err := watchFiles(ctx, reqCh); err != nil {
-			cancel()
+		if err := watchFiles(appCtx, rebuildRequests); err != nil {
+			cancelApp()
 		}
 	}()
 
 	go func() {
-		p.Send(buildStartMsg{kind: buildKindFull})
+		program.Send(buildStartMsg{kind: buildKindFull})
 		for {
 			select {
-			case <-ctx.Done():
+			case <-appCtx.Done():
 				return
-			case req := <-reqCh:
-				p.Send(buildStartMsg{kind: req.kind})
+			case req := <-rebuildRequests:
+				program.Send(buildStartMsg{kind: req.kind})
 			}
 		}
 	}()
 
-	if _, err := p.Run(); err != nil {
+	if _, err := program.Run(); err != nil {
 		os.Exit(1)
 	}
 }

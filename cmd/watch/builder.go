@@ -125,12 +125,20 @@ func buildSteps(kind buildKind) []buildStep {
 }
 
 func triggerReload() {
+	triggerReloadWithFile("")
+}
+
+func triggerReloadWithFile(changedFile string) {
 	port := "3000"
 	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {
 		port = strings.TrimSpace(string(data))
 	}
 
 	url := fmt.Sprintf("http://localhost:%s/__reload", port)
+	if changedFile != "" {
+		url = fmt.Sprintf("%s?file=%s", url, changedFile)
+	}
+	
 	resp, err := http.Post(url, "text/plain", nil)
 	if err != nil {
 		return
@@ -139,6 +147,10 @@ func triggerReload() {
 }
 
 func runPipeline(ctx context.Context, kind buildKind) error {
+	return runPipelineWithFile(ctx, kind, "")
+}
+
+func runPipelineWithFile(ctx context.Context, kind buildKind, changedFile string) error {
 	phases := buildPhases(kind)
 
 	for _, phase := range phases {
@@ -157,6 +169,6 @@ func runPipeline(ctx context.Context, kind buildKind) error {
 		}
 	}
 
-	triggerReload()
+	triggerReloadWithFile(changedFile)
 	return nil
 }

@@ -12,7 +12,8 @@ import (
 )
 
 type rebuildRequest struct {
-	kind buildKind
+	kind        buildKind
+	changedFile string
 }
 
 func shouldWatch(path string) bool {
@@ -99,9 +100,11 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 				kind = buildKindTypeScriptOnly
 			}
 
+			changedFile := event.Name
+
 			debounceTimer = time.AfterFunc(200*time.Millisecond, func() {
 				select {
-				case out <- rebuildRequest{kind: kind}:
+				case out <- rebuildRequest{kind: kind, changedFile: changedFile}:
 				case <-ctx.Done():
 				default:
 				}

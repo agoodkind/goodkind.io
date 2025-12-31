@@ -46,7 +46,7 @@ func main() {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				_ = runPipeline(appCtx, req.kind)
+				_ = runPipelineWithFile(appCtx, req.kind, req.changedFile)
 			}
 		}
 	}
@@ -69,13 +69,13 @@ func main() {
 	}()
 
 	go func() {
-		program.Send(buildStartMsg{kind: initialBuildKind})
+		program.Send(buildStartMsg{kind: initialBuildKind, changedFile: ""})
 		for {
 			select {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				program.Send(buildStartMsg{kind: req.kind})
+				program.Send(buildStartMsg{kind: req.kind, changedFile: req.changedFile})
 			}
 		}
 	}()

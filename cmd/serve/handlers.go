@@ -25,9 +25,16 @@ func HandleReloadTrigger(broker *SSEBroker) http.HandlerFunc {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
-		broker.SendReload()
+
+		// Check if file info was sent
+		changedFile := r.URL.Query().Get("file")
+		if changedFile != "" {
+			broker.SendUpdate(changedFile)
+		} else {
+			broker.SendReload()
+		}
+
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))
 	}
 }
-

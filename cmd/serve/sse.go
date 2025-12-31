@@ -71,6 +71,14 @@ func (b *SSEBroker) SendReload() {
 	}
 }
 
+// SendUpdate broadcasts a partial update event with file info
+func (b *SSEBroker) SendUpdate(changedFile string) {
+	select {
+	case b.broadcast <- "update:" + changedFile:
+	default:
+	}
+}
+
 // ServeHTTP handles SSE connections
 func (b *SSEBroker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer func() {

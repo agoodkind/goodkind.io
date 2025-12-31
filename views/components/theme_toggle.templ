@@ -163,7 +163,6 @@ templ ThemeToggleOption(option ThemeOption) {
 
 templ ThemeToggle() {
 	<div
-		id="theme-toggle"
 		x-cloak
 		x-data="themeToggle()"
 		@mouseenter.debounce.50ms="cancelClose(); open = true"

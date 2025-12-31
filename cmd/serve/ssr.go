@@ -25,15 +25,9 @@ func (h *SSRHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Render pages dynamically
+	// Render pages dynamically - always render full page
+	// HTMX morph swap handles granular updates client-side
 	ctx := context.Background()
-
-	// Check if this is a fragment request
-	fragment := r.URL.Query().Get("fragment")
-	if fragment != "" {
-		h.renderFragment(w, r, ctx, fragment)
-		return
-	}
 
 	switch r.URL.Path {
 	case "/", "/index.html":
@@ -46,19 +40,6 @@ func (h *SSRHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	default:
 		http.NotFound(w, r)
-	}
-}
-
-func (h *SSRHandler) renderFragment(w http.ResponseWriter, r *http.Request, ctx context.Context, fragment string) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-
-	// For all fragments (including component-specific ones), render the whole page
-	// HTMX will swap only the targeted element on the client side
-	// This works because components have IDs matching their names (e.g. id="theme-toggle")
-	if err := pages.Home().Render(ctx, w); err != nil {
-		fmt.Fprintf(os.Stderr, "Error rendering fragment %s: %v\n", fragment, err)
-		http.Error(w, "Error rendering page", http.StatusInternalServerError)
 	}
 }
 

@@ -105,7 +105,7 @@ func buildSteps(kind buildKind) []buildStep {
 
 func triggerReload() {
 	port := "3000"
-	if data, err := os.ReadFile(".dev-server-port"); err == nil {
+	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {
 		port = strings.TrimSpace(string(data))
 	}
 

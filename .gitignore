@@ -15,8 +15,17 @@ dist-ssr
 
 # Go SSG build artifacts
 *_templ.go
-/builder
+.build/
 .dev-server-port
+.dev-server-pid
+
+# Go binaries (root level)
+/builder
+/serve
+/watch
+
+# Go debug binaries
+__debug_bin*
 
 # Editor directories and files
 .idea
@@ -26,7 +35,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-chrome-debug-profile
-.vscode/chrome-debug-profile
-.vscode/edge-debug-profile

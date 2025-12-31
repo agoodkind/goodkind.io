@@ -61,13 +61,14 @@ func main() {
 	}
 
 	// Write port to file for watcher
-	portFile := ".dev-server-port"
+	os.MkdirAll(".build", 0755)
+	portFile := ".build/.dev-server-port"
 	if err := os.WriteFile(portFile, []byte(fmt.Sprintf("%d", port)), 0644); err != nil {
 		log.Printf("Warning: could not write port file: %v", err)
 	}
 	defer os.Remove(portFile)
 
-	pidFile := ".dev-server-pid"
+	pidFile := ".build/.dev-server-pid"
 	if err := os.WriteFile(
 		pidFile,
 		[]byte(fmt.Sprintf("%d", os.Getpid())),

@@ -2,6 +2,8 @@
 
 @source "../../views/**/*.templ";
 
+@variant dark (&:is(.dark *));
+
 @layer utilities {
   @-webkit-keyframes grow {
     0% {

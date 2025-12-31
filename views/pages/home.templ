@@ -34,7 +34,7 @@ var heroData = HeroProps{
 templ Hero(hero HeroProps) {
 	@components.Section(components.WithoutPadding, "overflow-hidden") {
 		<a href="/">
-			<div class="bg-violet-500 h-32 bg-cover dark:bg-violet-800"></div>
+			<div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-32 bg-cover dark:from-indigo-600 dark:to-purple-600"></div>
 		</a>
 		<div class="relative p-7 pt-14">
 			<span class="text-white bg-gray-500 absolute right-7 top-4 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50">
@@ -126,7 +126,7 @@ templ Skills() {
 		<div class="-m-2 flex flex-wrap">
 			<ul>
 				for _, skill := range skillsData {
-					<li class="text-violet-500 bg-violet-100 m-1 inline-flex rounded-lg px-4 py-1 text-sm font-medium dark:text-violet-300 dark:bg-violet-800">
+					<li class="text-indigo-700 bg-indigo-100 m-1 inline-flex rounded-lg px-4 py-1 text-sm font-medium border border-indigo-200 dark:text-indigo-300 dark:bg-indigo-900 dark:border-indigo-700">
 						{ skill }
 					</li>
 				}

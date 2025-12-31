@@ -40,7 +40,7 @@ function getCurrentTheme(): Theme {
 function updateThemeColor(isDark: boolean): void {
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   if (metaThemeColor) {
-    metaThemeColor.setAttribute("content", isDark ? "#2e1065" : "#f5f3ff");
+    metaThemeColor.setAttribute("content", isDark ? "#0f172a" : "#f8fafc");
   }
 }
 
@@ -92,11 +92,11 @@ function initializeThemeIcons(): void {
 }
 
 /**
- * Get next theme in cycle
- * - auto (showing light) → dark
- * - auto (showing dark) → light
- * - light → dark
- * - dark → auto
+ * Get next theme in 3-state cycle
+ * - auto (showing light) → dark → light → auto → ...
+ * - auto (showing dark) → light → dark → auto → ...
+ * - light → auto → dark → light → ...
+ * - dark → light → auto → dark → ...
  */
 function getNextTheme(current: Theme): Theme {
   if (current === "auto") {
@@ -107,9 +107,9 @@ function getNextTheme(current: Theme): Theme {
 
   switch (current) {
     case "light":
-      return "dark";
-    case "dark":
       return "auto";
+    case "dark":
+      return "light";
     default:
       return "light";
   }

@@ -7,7 +7,7 @@ import (
 
 // ServeJavaScript serves the live reload JavaScript file
 func ServeJavaScript(w http.ResponseWriter, r *http.Request) {
-	script, err := os.ReadFile("cmd/serve/livereload.js")
+	script, err := os.ReadFile("dist/livereload.js")
 	if err != nil {
 		http.Error(w, "Script not found", http.StatusNotFound)
 		return

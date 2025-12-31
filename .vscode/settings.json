@@ -10,5 +10,5 @@
   ],
   "[typescriptreact][javascript][typescript][json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  }
 }

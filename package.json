@@ -3,7 +3,24 @@
   "private": true,
   "version": "4.0.0",
   "type": "module",
+  "scripts": {
+    "build:js": "NODE_ENV=production node build.mjs",
+    "build:js:dev": "NODE_ENV=development node build.mjs",
+    "watch:js": "NODE_ENV=development node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "alpinejs": "^3.15.3"
+  },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.18"
+    "@tailwindcss/cli": "^4.1.18",
+    "@types/alpinejs": "^3.13.11",
+    "@types/node": "^25.0.3",
+    "esbuild": "^0.27.2",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
   }
 }

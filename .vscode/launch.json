@@ -10,10 +10,7 @@
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/dist",
-      "skipFiles": [
-        "<node_internals>/**",
-        "${workspaceFolder}/node_modules/**"
-      ],
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
       "smartStep": true,
       "sourceMaps": true,
       "userDataDir": "${workspaceFolder}/chrome-debug-profile",

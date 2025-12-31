@@ -1,50 +1,42 @@
-.PHONY: all clean install templ build generate css copy-assets serve serve-only watch watch-only dev
+.PHONY: all clean install templ build generate css ts copy-assets serve serve-only watch watch-only dev
 
 TEMPL := $(shell which templ || echo ~/go/bin/templ)
 
-all: clean install templ build generate css copy-assets
+all: clean install templ build generate css ts copy-assets
 
 clean:
-	rm -rf dist && mkdir -p dist
+	@rm -rf dist && mkdir -p dist
 
 install:
-	pnpm install
+	@pnpm install > /dev/null 2>&1 || true
 
 templ:
-	$(TEMPL) generate
+	@$(TEMPL) generate > /dev/null 2>&1
 
 build:
-	go build -o builder ./cmd/builder
+	@go build -o builder ./cmd/builder
 
 generate: build
-	./builder
+	@./builder > /dev/null 2>&1
 
 css: install
-	pnpm exec tailwindcss -i assets/css/input.css -o dist/styles.css --minify
+	@pnpm exec tailwindcss -i assets/css/input.css -o dist/styles.css --minify > /dev/null 2>&1
+
+ts: install
+	@pnpm run build:js > /dev/null 2>&1
 
 copy-assets:
-	cp -r assets/images/* dist/
+	@cp -r assets/images/* dist/
 
 serve: all serve-only
 
 serve-only:
-	@echo "🚀 Starting dev server with live reload..."
 	@go run ./cmd/serve
 
 watch: watch-only
 
 watch-only:
-	@echo "👀 Starting file watcher..."
 	@TEMPL_CMD=$(TEMPL) go run ./cmd/watch
 
 dev: all
-	@echo "🔥 Hot Reload Development Mode"
-	@echo ""
-	@echo "This will start TWO processes:"
-	@echo "  1. Dev server with live reload (port 3000)"
-	@echo "  2. File watcher that auto-rebuilds on changes"
-	@echo ""
-	@echo "Open http://localhost:3000 in your browser"
-	@echo "Press Ctrl+C to stop both processes"
-	@echo ""
 	@make -j2 serve-only watch-only

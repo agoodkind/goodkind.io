@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"sync"
 )
@@ -45,7 +44,6 @@ func (b *SSEBroker) run() {
 func (b *SSEBroker) SendReload() {
 	select {
 	case b.broadcast <- "reload":
-		log.Println("📡 Broadcasting reload to", len(b.clients), "client(s)")
 	default:
 	}
 }
@@ -64,19 +62,14 @@ func (b *SSEBroker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Register the client
 	b.clientsMu.Lock()
 	b.clients[clientChan] = true
-	clientCount := len(b.clients)
 	b.clientsMu.Unlock()
-
-	log.Printf("🔌 New live reload client connected (total: %d)\n", clientCount)
 
 	// Remove client when done
 	defer func() {
 		b.clientsMu.Lock()
 		delete(b.clients, clientChan)
-		clientCount := len(b.clients)
 		b.clientsMu.Unlock()
 		close(clientChan)
-		log.Printf("❌ Live reload client disconnected (remaining: %d)\n", clientCount)
 	}()
 
 	// Send initial connection message

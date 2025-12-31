@@ -1,0 +1,18 @@
+# Build outputs
+dist/
+node_modules/
+
+# Generated files
+*_templ.go
+builder
+
+# Git
+.git/
+
+# Logs
+*.log
+pnpm-lock.yaml
+
+# OS
+.DS_Store
+

@@ -1,23 +1,45 @@
 package layouts
 
+import "goodkind.io/views/components"
+
 templ Base(title string) {
 	<!DOCTYPE html>
-	<html lang="en" class="bg-gray-100 dark:bg-neutral-900">
+	<html lang="en" class="bg-violet-50 dark:bg-violet-950">
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<meta name="description" content="Alexander Goodkind - Software Engineer"/>
+			<meta name="theme-color" content="#f5f3ff" media="(prefers-color-scheme: light)"/>
+			<meta name="theme-color" content="#2e1065" media="(prefers-color-scheme: dark)"/>
 			<title>{ title }</title>
 		<link rel="stylesheet" href="/styles.css"/>
 		<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
 		<!-- HTMX -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/htmx/2.0.7/htmx.min.js" integrity="sha512-IisGoumHahmfNIhP4wUV3OhgQZaaDBuD6IG4XlyjT77IUkwreZL3T3afO4xXuDanSalZ57Un+UlAbarQjNZCTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- Critical: Prevent flash of wrong theme -->
+		<script>
+			(function() {
+				const theme = localStorage.getItem('theme') || 'auto';
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				const shouldBeDark = theme === 'dark' || (theme === 'auto' && prefersDark);
+				
+				if (shouldBeDark) {
+					document.documentElement.classList.add('dark');
+				}
+				
+				const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+				if (metaThemeColor) {
+					metaThemeColor.setAttribute('content', shouldBeDark ? '#2e1065' : '#f5f3ff');
+				}
+			})();
+		</script>
+		<!-- Bundled: Alpine.js + App logic -->
+		<script defer src="/main.js"></script>
 		<!-- Phase 2 Script Injection Slot -->
-		<!-- Future: Alpine.js and WASM bootstrap scripts will be added here -->
-		<!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
+		<!-- Future: WASM bootstrap scripts will be added here -->
 		<!-- <script src="/wasm_exec.js"></script> -->
 		</head>
-		<body class="bg-gray-100 min-h-screen w-full antialiased dark:bg-neutral-900">
+		<body class="bg-violet-50 min-h-screen w-full antialiased dark:bg-violet-950">
 			<main class="container mx-auto w-full max-w-xl p-4 sm:max-w-3xl sm:p-5">
 				<div class="grid gap-5">
 					<div class="space-y-5">
@@ -25,6 +47,7 @@ templ Base(title string) {
 					</div>
 				</div>
 			</main>
+			@components.ThemeToggle()
 		</body>
 	</html>
 }

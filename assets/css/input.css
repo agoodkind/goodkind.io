@@ -96,8 +96,8 @@
     @media (min-width: 768px) {
       .masonry-grid {
         grid-template-areas:
-          "hero info"
-          ". skills";
+          "hero skills"
+          "info skills";
       }
     }
 

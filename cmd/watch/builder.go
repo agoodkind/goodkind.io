@@ -64,7 +64,7 @@ func buildPhases(kind buildKind) []buildPhase {
 					return runCmd(ctx, getTemplCmd(), "generate")
 				}},
 				{label: "css", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "npx", "@tailwindcss/cli",
+					return runCmd(ctx, "pnpm", "exec", "tailwindcss",
 						"-i", "assets/css/input.css",
 						"-o", "dist/styles.css",
 						"--minify")

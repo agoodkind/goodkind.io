@@ -13,10 +13,6 @@
     // Template language support
     "a-h.templ",
 
-    // Browser debugging
-    "msjsdiag.debugger-for-chrome",
-    "ms-edgedevtools.vscode-edge-devtools",
-
     // Git
     "eamodio.gitlens",
 

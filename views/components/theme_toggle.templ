@@ -1,106 +1,204 @@
 package components
 
+import "fmt"
+
+type ThemeOption struct {
+	Key      string
+	Label    string
+	ColStart string
+}
+
+var themeOptions = []ThemeOption{
+	{Key: "light", Label: "Light", ColStart: "col-start-1"},
+	{Key: "auto", Label: "Auto", ColStart: "col-start-2"},
+	{Key: "dark", Label: "Dark", ColStart: "col-start-3"},
+}
+
+const themeToggleData = `{
+  open: false,
+  closeTimer: null,
+  cancelClose() {
+    if (this.closeTimer) {
+      clearTimeout(this.closeTimer);
+      this.closeTimer = null;
+    }
+  },
+  scheduleClose() {
+    this.cancelClose();
+    this.closeTimer = setTimeout(() => {
+      this.open = false;
+      this.closeTimer = null;
+    }, 150);
+  },
+}`
+
+const (
+	themeToggleRootClass = "fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5"
+
+	themeTogglePillClass = `relative h-10 w-10 overflow-hidden rounded-full
+bg-white/25 shadow-md border border-slate-200/60 backdrop-blur-xl
+transition-[width,transform] duration-200 ease-out
+hover:scale-[1.03] hover:cursor-pointer
+dark:bg-violet-950/25 dark:border-slate-700/60`
+
+	themeToggleCollapsedButtonClass =
+		"absolute inset-0 flex cursor-pointer items-center justify-center"
+
+	themeToggleCollapsedIconClass = "h-5 w-5 text-slate-800 dark:text-violet-100"
+
+	themeToggleAutoIndicatorClass = `absolute -right-1 -top-1 flex h-3 w-3 items-center
+justify-center rounded-full bg-violet-500 text-[7px] font-semibold leading-none
+text-white ring-1 ring-white dark:bg-violet-400 dark:text-violet-950
+dark:ring-violet-950`
+
+	themeToggleExpandedWrapClass =
+		"absolute inset-0 flex items-center px-1.5"
+
+	themeToggleExpandedGridClass =
+		"relative isolate grid h-8 w-full grid-cols-3 gap-1 p-0.5"
+
+	themeToggleThumbClass = `pointer-events-none relative z-0 col-span-1 row-start-1
+h-full w-full rounded-full bg-white/95 ring-1 ring-slate-900/10 backdrop-blur
+transition-all duration-200 ease-out dark:bg-white/10 dark:ring-white/15`
+
+	themeToggleOptionBaseClass = `relative z-10 row-start-1 flex h-full items-center
+justify-center gap-1 rounded-full px-2 text-xs font-medium cursor-pointer
+transition-colors text-slate-800 dark:text-white/80 hover:bg-slate-900/10
+hover:ring-1 hover:ring-slate-900/10 focus-visible:outline-none
+active:bg-slate-900/14 focus-visible:ring-2 focus-visible:ring-violet-500/70
+dark:hover:bg-white/14 dark:hover:ring-white/12 dark:active:bg-white/18`
+
+	themeToggleOptionSelectedClass = "text-slate-950 font-semibold dark:text-white"
+)
+
+const themeToggleThumbColStartExpr = "$store.theme.current === 'light'\n" +
+	"? 'col-start-1'\n" +
+	": $store.theme.current === 'auto'\n" +
+	"  ? 'col-start-2'\n" +
+	"  : 'col-start-3'"
+
+func themeIsSelectedExpr(theme string) string {
+	return fmt.Sprintf("$store.theme.current === '%s'", theme)
+}
+
+func themeSetExpr(theme string) string {
+	return fmt.Sprintf("$store.theme.set('%s')", theme)
+}
+
+func themeCheckedExpr(theme string) string {
+	return fmt.Sprintf("%s ? 'true' : 'false'", themeIsSelectedExpr(theme))
+}
+
+func themeSelectedClassExpr(theme string) string {
+	return fmt.Sprintf("%s ? '%s' : ''", themeIsSelectedExpr(theme), themeToggleOptionSelectedClass)
+}
+
+templ IconSun(className string) {
+	<svg class={ className } fill="currentColor" viewBox="0 0 20 20">
+		<path
+			d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8
+			0 4 4 0 018 0zm7 1a1 1 0 100-2h-1a1 1 0 100 2h1zM5.05
+			6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707
+			.707zM4 11a1 1 0 100-2H3a1 1 0 000 2h1zm6 4a1 1 0 011 1v1a1 1
+			0 11-2 0v-1a1 1 0 011-1z"
+		></path>
+	</svg>
+}
+
+templ IconMoon(className string) {
+	<svg class={ className } fill="currentColor" viewBox="0 0 20 20">
+		<path
+			d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0
+			1010.586 10.586z"
+		></path>
+	</svg>
+}
+
+templ IconAuto(className string, strokeWidth string) {
+	<svg class={ className } fill="none" viewBox="0 0 24 24">
+		<path
+			d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414
+			1.414M7.05 16.95l-1.414 1.414m0-11.314 1.414 1.414M16.95
+			16.95l1.414 1.414"
+			stroke="currentColor"
+			stroke-width={ strokeWidth }
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		/>
+		<path
+			d="M14.5 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+			stroke="currentColor"
+			stroke-width={ strokeWidth }
+		/>
+	</svg>
+}
+
+templ ThemeOptionIcon(option ThemeOption, className string) {
+	if option.Key == "light" {
+		@IconSun(className)
+	}
+	if option.Key == "auto" {
+		@IconAuto(className, "2")
+	}
+	if option.Key == "dark" {
+		@IconMoon(className)
+	}
+}
+
+templ ThemeToggleCollapsedIcon(theme string) {
+	<span x-show={ themeIsSelectedExpr(theme) }>
+		if theme == "light" {
+			@IconSun(themeToggleCollapsedIconClass)
+		}
+		if theme == "auto" {
+			@IconAuto(themeToggleCollapsedIconClass, "1.6")
+		}
+		if theme == "dark" {
+			@IconMoon(themeToggleCollapsedIconClass)
+		}
+	</span>
+}
+
+templ ThemeToggleOption(option ThemeOption) {
+	<button
+		type="button"
+		role="radio"
+		:aria-checked={ themeCheckedExpr(option.Key) }
+		class={ themeToggleOptionBaseClass, option.ColStart }
+		:class={ themeSelectedClassExpr(option.Key) }
+		@click.stop={ themeSetExpr(option.Key) }
+		aria-label={ option.Label + " theme" }
+	>
+		@ThemeOptionIcon(option, "h-4 w-4")
+		<span class="hidden sm:inline">{ option.Label }</span>
+	</button>
+}
+
 templ ThemeToggle() {
 	<div
-		x-data="{
-			open: false,
-			closeTimer: null,
-			cancelClose() {
-				if (this.closeTimer) {
-					clearTimeout(this.closeTimer);
-					this.closeTimer = null;
-				}
-			},
-			scheduleClose() {
-				this.cancelClose();
-				this.closeTimer = setTimeout(() => {
-					this.open = false;
-					this.closeTimer = null;
-				}, 150);
-			},
-		}"
+		x-data={ themeToggleData }
 		@mouseenter="cancelClose(); open = true"
 		@mouseleave="scheduleClose()"
 		@click.outside="open = false; cancelClose()"
 		@keydown.escape.window="open = false; cancelClose()"
-		class="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5"
+		class={ themeToggleRootClass }
 	>
-		<div
-			class="relative h-10 w-10 overflow-hidden rounded-full
-			bg-white/25 shadow-md border border-slate-200/60 backdrop-blur-xl
-			transition-[width,transform] duration-200 ease-out
-			hover:scale-[1.03] hover:cursor-pointer
-			dark:bg-violet-950/25 dark:border-slate-700/60"
-			:class="open ? 'w-52' : 'w-10'"
-		>
+		<div class={ themeTogglePillClass } :class="open ? 'w-52' : 'w-10'">
 			<button
 				type="button"
-				class="absolute inset-0 flex cursor-pointer items-center justify-center"
+				class={ themeToggleCollapsedButtonClass }
 				:class="open ? 'pointer-events-none opacity-0' : 'opacity-100'"
 				aria-label="Theme"
 				@click="open = true"
 			>
 				<div class="relative">
-					<svg
-						x-show="$store.theme.current === 'light'"
-						class="h-5 w-5 text-slate-800 dark:text-violet-100"
-						fill="currentColor"
-						viewBox="0 0 20 20"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8
-							0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1
-							1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0
-							11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1
-							0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05
-							6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414
-							8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414
-							1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-							fill-rule="evenodd"
-							clip-rule="evenodd"
-						></path>
-					</svg>
-					<svg
-						x-show="$store.theme.current === 'auto'"
-						class="h-5 w-5 text-slate-800 dark:text-violet-100"
-						fill="none"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414
-							1.414M7.05 16.95l-1.414 1.414m0-11.314 1.414 1.414M16.95
-							16.95l1.414 1.414"
-							stroke="currentColor"
-							stroke-width="1.6"
-							stroke-linecap="round"
-						/>
-						<path
-							d="M14.5 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-							stroke="currentColor"
-							stroke-width="1.6"
-						/>
-					</svg>
-					<svg
-						x-show="$store.theme.current === 'dark'"
-						class="h-5 w-5 text-slate-800 dark:text-violet-100"
-						fill="currentColor"
-						viewBox="0 0 20 20"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0
-							1010.586 10.586z"
-						></path>
-					</svg>
+					@ThemeToggleCollapsedIcon("light")
+					@ThemeToggleCollapsedIcon("auto")
+					@ThemeToggleCollapsedIcon("dark")
 
 					<span
-						x-show="$store.theme.current === 'auto'"
-						class="absolute -right-1 -top-1 flex h-3 w-3 items-center
-						justify-center rounded-full bg-violet-500 text-[7px]
-						font-semibold leading-none text-white ring-1 ring-white
-						dark:bg-violet-400 dark:text-violet-950 dark:ring-violet-950"
+						x-show={ themeIsSelectedExpr("auto") }
+						class={ themeToggleAutoIndicatorClass }
 					>
 						A
 					</span>
@@ -110,140 +208,17 @@ templ ThemeToggle() {
 			<div
 				x-show="open"
 				x-transition.opacity.duration.150ms
-				class="absolute inset-0 flex items-center px-1.5"
+				class={ themeToggleExpandedWrapClass }
 				role="radiogroup"
 				aria-label="Theme"
 			>
-				<div class="relative isolate grid h-8 w-full grid-cols-3 gap-1 p-0.5">
-					<div
-						class="pointer-events-none relative z-0 col-span-1 row-start-1 h-full w-full
-						rounded-full bg-white/95 ring-1 ring-slate-900/10
-						backdrop-blur transition-all duration-200 ease-out
-						dark:bg-white/10 dark:ring-white/15"
-						:class="$store.theme.current === 'light'
-							? 'col-start-1'
-							: $store.theme.current === 'auto'
-								? 'col-start-2'
-								: 'col-start-3'"
-					></div>
+				<div class={ themeToggleExpandedGridClass }>
+					<div class={ themeToggleThumbClass } :class={ themeToggleThumbColStartExpr }>
+					</div>
 
-					<button
-						type="button"
-						role="radio"
-						:aria-checked="$store.theme.current === 'light' ? 'true' : 'false'"
-						class="relative z-10 col-start-1 row-start-1 flex h-full items-center
-						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						cursor-pointer
-						transition-colors
-						text-slate-800 dark:text-white/80
-						hover:bg-slate-900/10 hover:ring-1
-						hover:ring-slate-900/10 focus-visible:outline-none
-						active:bg-slate-900/14
-						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:hover:bg-white/14 dark:hover:ring-white/12
-						dark:active:bg-white/18"
-						:class="$store.theme.current === 'light'
-							? 'text-slate-950 font-semibold dark:text-white'
-							: ''"
-						@click.stop="$store.theme.set('light')"
-						aria-label="Light theme"
-					>
-						<svg
-							class="h-4 w-4"
-							fill="currentColor"
-							viewBox="0 0 20 20"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0
-								11-8 0 4 4 0 018 0zm7 1a1 1 0 100-2h-1a1 1 0 100 2h1zM5.05
-								6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707
-								.707zM4 11a1 1 0 100-2H3a1 1 0 000 2h1zm6 4a1 1 0 011 1v1a1 1
-								0 11-2 0v-1a1 1 0 011-1z"
-							></path>
-						</svg>
-						<span class="hidden sm:inline">Light</span>
-					</button>
-
-					<button
-						type="button"
-						role="radio"
-						:aria-checked="$store.theme.current === 'auto' ? 'true' : 'false'"
-						class="relative z-10 col-start-2 row-start-1 flex h-full items-center
-						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						cursor-pointer
-						transition-colors
-						text-slate-800 dark:text-white/80
-						hover:bg-slate-900/10 hover:ring-1
-						hover:ring-slate-900/10 focus-visible:outline-none
-						active:bg-slate-900/14
-						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:hover:bg-white/14 dark:hover:ring-white/12
-						dark:active:bg-white/18"
-						:class="$store.theme.current === 'auto'
-							? 'text-slate-950 font-semibold dark:text-white'
-							: ''"
-						@click.stop="$store.theme.set('auto')"
-						aria-label="Auto theme"
-					>
-						<svg
-							class="h-4 w-4"
-							fill="none"
-							viewBox="0 0 24 24"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364-1.414
-								1.414M7.05 16.95l-1.414 1.414m0-11.314 1.414 1.414M16.95
-								16.95l1.414 1.414"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-							/>
-							<path
-								d="M14.5 12a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-								stroke="currentColor"
-								stroke-width="2"
-							/>
-						</svg>
-						<span class="hidden sm:inline">Auto</span>
-					</button>
-
-					<button
-						type="button"
-						role="radio"
-						:aria-checked="$store.theme.current === 'dark' ? 'true' : 'false'"
-						class="relative z-10 col-start-3 row-start-1 flex h-full items-center
-						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						cursor-pointer
-						transition-colors
-						text-slate-800 dark:text-white/80
-						hover:bg-slate-900/10 hover:ring-1
-						hover:ring-slate-900/10 focus-visible:outline-none
-						active:bg-slate-900/14
-						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:hover:bg-white/14 dark:hover:ring-white/12
-						dark:active:bg-white/18"
-						:class="$store.theme.current === 'dark'
-							? 'text-slate-950 font-semibold dark:text-white'
-							: ''"
-						@click.stop="$store.theme.set('dark')"
-						aria-label="Dark theme"
-					>
-						<svg
-							class="h-4 w-4"
-							fill="currentColor"
-							viewBox="0 0 20 20"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0
-								1010.586 10.586z"
-							></path>
-						</svg>
-						<span class="hidden sm:inline">Dark</span>
-					</button>
+					for _, option := range themeOptions {
+						@ThemeToggleOption(option)
+					}
 				</div>
 			</div>
 		</div>

@@ -7,6 +7,7 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}/cmd/serve",
+      "output": "${workspaceFolder}/.build/serve",
       "cwd": "${workspaceFolder}",
       "env": {
         "PORT": "3000"
@@ -19,6 +20,7 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}/cmd/watch",
+      "output": "${workspaceFolder}/.build/watch",
       "cwd": "${workspaceFolder}",
       "env": {
         "TEMPL_CMD": "${env:HOME}/go/bin/templ"

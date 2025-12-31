@@ -4,7 +4,7 @@ on: ["push"]
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       deployment-url: ${{ steps.deploy.outputs.deployment-url }}
       pages-deployment-alias-url: ${{ steps.deploy.outputs.alias }}

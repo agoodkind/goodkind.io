@@ -46,7 +46,7 @@ func main() {
 	}
 
 	m := newModel()
-	p := tea.NewProgram(m, tea.WithAltScreen())
+	p := tea.NewProgram(m)
 
 	// Handle Ctrl+C gracefully - let Bubble Tea handle it
 	go func() {

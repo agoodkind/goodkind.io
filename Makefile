@@ -20,7 +20,7 @@ generate: build
 	@./builder > /dev/null 2>&1
 
 css: install
-	@pnpm exec tailwindcss -i assets/css/input.css -o dist/styles.css --minify
+	@pnpm dlx @tailwindcss/cli -i assets/css/input.css -o dist/styles.css --minify
 
 ts: install
 	@pnpm run build:js > /dev/null 2>&1

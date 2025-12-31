@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -125,6 +124,14 @@ func buildSteps(kind buildKind) []buildStep {
 	return steps
 }
 
+func debugLog(msg string) {
+	f, _ := os.OpenFile(".build/watcher-debug.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if f != nil {
+		defer f.Close()
+		fmt.Fprintf(f, "%s %s\n", time.Now().Format("2006/01/02 15:04:05.000000"), msg)
+	}
+}
+
 func triggerReloadWithFile(changedFile string) {
 	port := "3000"
 	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {
@@ -142,16 +149,18 @@ func triggerReloadWithFile(changedFile string) {
 			}
 		}
 		url = fmt.Sprintf("%s?file=%s", url, relPath)
-		log.Printf("[DEBUG] Triggering HMR for: %s\n", relPath)
+		debugLog(fmt.Sprintf("[TRIGGER] HMR for: %s (URL: %s)", relPath, url))
 	} else {
-		log.Printf("[DEBUG] Triggering full reload (no file)\n")
+		debugLog("[TRIGGER] Full reload (no file)")
 	}
 
 	resp, err := http.Post(url, "text/plain", nil)
 	if err != nil {
+		debugLog(fmt.Sprintf("[TRIGGER] Error: %v", err))
 		return
 	}
 	defer resp.Body.Close()
+	debugLog(fmt.Sprintf("[TRIGGER] Response: %d", resp.StatusCode))
 }
 
 func runPipeline(ctx context.Context, kind buildKind) error {

@@ -15,7 +15,6 @@ type HeroProps struct {
 	Role           string
 	Avatar         string
 	AvatarFallback string
-	Status         string
 	Links          []Link
 }
 
@@ -24,7 +23,6 @@ var heroData = HeroProps{
 	Role:           "Software Engineer",
 	Avatar:         "/avi.webp",
 	AvatarFallback: "/avi.jpeg",
-	Status:         "busy",
 	Links: []Link{
 		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn"},
 		{URL: "https://github.com/agoodkind", Text: "GitHub"},
@@ -38,9 +36,6 @@ templ Hero(hero HeroProps) {
 		</a>
 		<div class="relative p-7 pt-14">
 			<div class="absolute right-7 top-4 flex items-center gap-2">
-				<span class="text-white bg-gray-500 rounded-3xl px-2 py-[0.125rem] text-xs font-semibold uppercase dark:text-gray-50">
-					{ hero.Status }
-				</span>
 				<div class="sm:hidden">
 					@components.ThemeToggle()
 				</div>

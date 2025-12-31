@@ -26,7 +26,7 @@ func InjectLiveReload(next http.Handler) http.Handler {
 
 				w.Header().Set("Content-Type", "text/html; charset=utf-8")
 				w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-				w.Write([]byte(injected))
+				_, _ = w.Write([]byte(injected))
 				return
 			}
 		}

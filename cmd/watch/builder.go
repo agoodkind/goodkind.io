@@ -124,10 +124,6 @@ func buildSteps(kind buildKind) []buildStep {
 	return steps
 }
 
-func triggerReload() {
-	triggerReloadWithFile("")
-}
-
 func triggerReloadWithFile(changedFile string) {
 	port := "3000"
 	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {

@@ -75,7 +75,7 @@ func main() {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				program.Send(buildStartMsg{kind: req.kind, changedFile: req.changedFile})
+				program.Send(buildStartMsg(req))
 			}
 		}
 	}()

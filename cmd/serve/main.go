@@ -67,6 +67,16 @@ func main() {
 	}
 	defer os.Remove(portFile)
 
+	pidFile := ".dev-server-pid"
+	if err := os.WriteFile(
+		pidFile,
+		[]byte(fmt.Sprintf("%d", os.Getpid())),
+		0644,
+	); err != nil {
+		log.Printf("Warning: could not write pid file: %v", err)
+	}
+	defer os.Remove(pidFile)
+
 	// Create server with graceful shutdown
 	srv := &http.Server{Addr: addr}
 

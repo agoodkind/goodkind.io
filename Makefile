@@ -26,7 +26,8 @@ ts: install
 	@pnpm run build:js > /dev/null 2>&1
 
 copy-assets:
-	@cp -r assets/images/* dist/
+	@mkdir -p dist/images
+	@cp -r assets/images/* dist/images/
 
 serve: all serve-only
 

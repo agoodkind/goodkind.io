@@ -18,7 +18,7 @@ async function main() {
       const ctx = await context(quietConfig);
 
       await ctx.watch();
-      
+
       // Small delay to let other processes start
       await new Promise((resolve) => setTimeout(resolve, 100));
       console.log("👀 Ready (typescript)");

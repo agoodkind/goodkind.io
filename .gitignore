@@ -19,6 +19,11 @@ dist-ssr
 .dev-server-port
 .dev-server-pid
 
+# Go binaries (root level)
+/builder
+/serve
+/watch
+
 # Go debug binaries
 __debug_bin*
 

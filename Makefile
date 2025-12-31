@@ -8,7 +8,7 @@ clean:
 	@rm -rf dist && mkdir -p dist
 
 install:
-	@pnpm install > /dev/null 2>&1 || true
+	@pnpm install
 
 templ:
 	@$(TEMPL) generate > /dev/null 2>&1

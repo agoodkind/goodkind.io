@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	bspinner "github.com/charmbracelet/bubbles/spinner"
@@ -68,7 +71,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch v := msg.(type) {
 	case tea.KeyMsg:
 		switch v.Type {
-		case tea.KeyCtrlC, tea.KeyEsc:
+		case tea.KeyCtrlC:
+			stopDevServer()
+			return m, tea.Quit
+		case tea.KeyEsc:
 			return m, tea.Quit
 		}
 	case buildStartMsg:
@@ -157,6 +163,21 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	return m, nil
+}
+
+func stopDevServer() {
+	data, err := os.ReadFile(".dev-server-pid")
+	if err != nil {
+		return
+	}
+
+	pidStr := strings.TrimSpace(string(data))
+	pid, err := strconv.Atoi(pidStr)
+	if err != nil || pid <= 0 {
+		return
+	}
+
+	_ = syscall.Kill(pid, syscall.SIGTERM)
 }
 
 func (m model) View() string {

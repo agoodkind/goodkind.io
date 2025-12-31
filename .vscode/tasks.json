@@ -2,13 +2,135 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "sleep",
+      "label": "build-assets",
       "type": "shell",
-      "command": "sleep 2",
-      "presentation": {
-        "reveal": "silent"
+      "command": "make",
+      "args": ["all"],
+      "options": {
+        "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "build-js",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "build:js"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "build-css",
+      "type": "shell",
+      "command": "make",
+      "args": ["css"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "build-templ",
+      "type": "shell",
+      "command": "make",
+      "args": ["templ"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "make",
+      "args": ["clean"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "watch-js",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "watch:js"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "typecheck",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "typecheck"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "format",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["run", "format"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared"
+      }
     }
   ]
 }

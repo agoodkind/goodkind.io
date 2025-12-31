@@ -20,20 +20,38 @@ declare global {
 
 const eventSource = new EventSource("/__livereload");
 
+// Extract component name from file path
+// e.g. "views/components/theme_toggle.templ" -> "theme-toggle"
+function getComponentName(filePath: string): string | null {
+  const match = filePath.match(/views\/components\/(.+)\.templ$/);
+  if (!match) return null;
+  return match[1].replace(/_/g, "-");
+}
+
 // Map file patterns to target elements for HMR
 function getUpdateTarget(changedFile: string): string | null {
   switch (true) {
     case changedFile.includes("views/pages/"):
       return "body";
-    case changedFile.includes("views/components/"):
-      return "main";
+    case changedFile.includes("views/components/"): {
+      const componentName = getComponentName(changedFile);
+      return componentName ?? "main";
+    }
     case changedFile.includes(".css"):
       return null; // CSS reloads automatically
     case changedFile.includes(".js"):
       return null; // JS requires full reload
     default:
-      return "main"; // Default: update main content
+      return "main";
   }
+}
+
+// Get fragment parameter for server request
+function getFragmentParam(target: string): string {
+  if (target.startsWith("#")) {
+    return target.substring(1); // Remove # for component name
+  }
+  return target; // body or main
 }
 
 // Perform HMR update using HTMX
@@ -57,7 +75,8 @@ function performHMRUpdate(changedFile: string) {
 
   // Use HTMX to fetch and swap the fragment
   // Use morph swap to preserve Alpine.js state
-  window.htmx.ajax("GET", "/?fragment=main", {
+  const fragment = getFragmentParam(target);
+  window.htmx.ajax("GET", `/?fragment=${fragment}`, {
     target: target,
     swap: "morph:outerHTML",
   });

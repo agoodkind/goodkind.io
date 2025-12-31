@@ -53,10 +53,19 @@ func (h *SSRHandler) renderFragment(w http.ResponseWriter, r *http.Request, ctx 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 
-	// Map fragments to their renderers
+	// Check if this is a component fragment
+	if renderer, ok := componentRegistry[fragment]; ok {
+		if err := renderer(ctx, w); err != nil {
+			fmt.Fprintf(os.Stderr, "Error rendering component %s: %v\n", fragment, err)
+			http.Error(w, "Error rendering component", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	// Map page-level fragments to their renderers
 	switch fragment {
-	case "main":
-		// Re-render the main content section
+	case "main", "body":
+		// Re-render the whole page for page-level changes
 		if err := pages.Home().Render(ctx, w); err != nil {
 			fmt.Fprintf(os.Stderr, "Error rendering fragment: %v\n", err)
 			http.Error(w, "Error rendering fragment", http.StatusInternalServerError)

@@ -138,7 +138,7 @@ func triggerReloadWithFile(changedFile string) {
 	if changedFile != "" {
 		url = fmt.Sprintf("%s?file=%s", url, changedFile)
 	}
-	
+
 	resp, err := http.Post(url, "text/plain", nil)
 	if err != nil {
 		return

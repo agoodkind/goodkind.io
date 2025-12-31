@@ -99,18 +99,17 @@
           "hero skills"
           "info skills";
       }
-    }
+      .masonry-item--hero {
+        grid-area: hero;
+      }
 
-    .masonry-item--hero {
-      grid-area: hero;
-    }
+      .masonry-item--info {
+        grid-area: info;
+      }
 
-    .masonry-item--info {
-      grid-area: info;
-    }
-
-    .masonry-item--skills {
-      grid-area: skills;
+      .masonry-item--skills {
+        grid-area: skills;
+      }
     }
   }
 

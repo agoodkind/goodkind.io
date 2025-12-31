@@ -4,38 +4,17 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
-	"strconv"
 	"syscall"
 	"time"
 )
 
-func findAvailablePort(start int) (int, error) {
-	for port := start; port < start+100; port++ {
-		addr := fmt.Sprintf(":%d", port)
-		ln, err := net.Listen("tcp", addr)
-		if err == nil {
-			ln.Close()
-			return port, nil
-		}
-	}
-	return 0, fmt.Errorf("no available ports found")
-}
-
 func main() {
-	preferredPort := 3000
+	port := "3000"
 	if p := os.Getenv("PORT"); p != "" {
-		if parsed, err := strconv.Atoi(p); err == nil {
-			preferredPort = parsed
-		}
-	}
-
-	port, err := findAvailablePort(preferredPort)
-	if err != nil {
-		log.Fatal(err)
+		port = p
 	}
 
 	dir := "dist"
@@ -44,30 +23,25 @@ func main() {
 	broker := NewSSEBroker()
 
 	// Register routes
-	http.HandleFunc("/__livereload", broker.ServeHTTP)
-	http.HandleFunc("/__livereload.js", ServeJavaScript)
-	http.HandleFunc("/__reload", HandleReloadTrigger(broker))
+	http.HandleFunc("/__livereload", broker.ServeHTTP)        // SSE endpoint
+	http.HandleFunc("/__livereload.js", ServeJavaScript)      // JavaScript client
+	http.HandleFunc("/__reload", HandleReloadTrigger(broker)) // Manual trigger endpoint
 
 	// Static file server with live reload injection
 	fs := http.FileServer(http.Dir(dir))
 	http.Handle("/", InjectLiveReload(fs))
 
 	// Server info
-	addr := fmt.Sprintf(":%d", port)
-	if port != preferredPort {
-		fmt.Printf("🚀 Server: http://localhost:%d (port %d was busy)\n", port, preferredPort)
-	} else {
-		fmt.Printf("🚀 Server: http://localhost:%d\n", port)
-	}
+	addr := fmt.Sprintf(":%s", port)
 
 	// Write port to file for watcher
-	portFile := ".dev-server-port"
-	if err := os.WriteFile(portFile, []byte(fmt.Sprintf("%d", port)), 0644); err != nil {
+	portFile := "dist/.dev-server-port"
+	if err := os.WriteFile(portFile, []byte(port), 0644); err != nil {
 		log.Printf("Warning: could not write port file: %v", err)
 	}
 	defer os.Remove(portFile)
 
-	pidFile := ".dev-server-pid"
+	pidFile := "dist/.dev-server-pid"
 	if err := os.WriteFile(
 		pidFile,
 		[]byte(fmt.Sprintf("%d", os.Getpid())),
@@ -79,6 +53,8 @@ func main() {
 
 	// Create server with graceful shutdown
 	srv := &http.Server{Addr: addr}
+
+	fmt.Printf("🚀 Server: http://localhost:%s\n", port)
 
 	// Handle Ctrl+C gracefully
 	sigCh := make(chan os.Signal, 1)

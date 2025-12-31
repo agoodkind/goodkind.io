@@ -14,10 +14,10 @@ templ:
 	@$(TEMPL) generate > /dev/null 2>&1
 
 build:
-	@go build -o builder ./cmd/builder
+	@go build -o dist/builder ./cmd/builder
 
 generate: build
-	@./builder > /dev/null 2>&1
+	@./dist/builder > /dev/null 2>&1
 
 css: install
 	@pnpm exec tailwindcss -i assets/css/input.css -o dist/styles.css --minify

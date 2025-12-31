@@ -77,18 +77,18 @@ func buildPhases(kind buildKind) []buildPhase {
 					return nil, nil
 				}},
 			}},
-			// Phase 2: Depends on templ
-			{steps: []buildStep{
-				{label: "go", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "go", "build", "-o", "builder", "./cmd/builder")
-				}},
+		// Phase 2: Depends on templ
+		{steps: []buildStep{
+			{label: "go", run: func(ctx context.Context) ([]byte, error) {
+				return runCmd(ctx, "go", "build", "-o", "dist/builder", "./cmd/builder")
 			}},
-			// Phase 3: Depends on go
-			{steps: []buildStep{
-				{label: "html", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "./builder")
-				}},
+		}},
+		// Phase 3: Depends on go
+		{steps: []buildStep{
+			{label: "html", run: func(ctx context.Context) ([]byte, error) {
+				return runCmd(ctx, "./dist/builder")
 			}},
+		}},
 		}
 	}
 }
@@ -105,7 +105,7 @@ func buildSteps(kind buildKind) []buildStep {
 
 func triggerReload() {
 	port := "3000"
-	if data, err := os.ReadFile(".dev-server-port"); err == nil {
+	if data, err := os.ReadFile("dist/.dev-server-port"); err == nil {
 		port = strings.TrimSpace(string(data))
 	}
 

@@ -78,23 +78,39 @@
   }
 
   .masonry-grid {
-    columns: 1;
-    column-gap: 1.25rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    transition-property: grid-template-columns, grid-template-rows;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   @media (min-width: 768px) {
     .masonry-grid {
-      columns: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @supports not (display: masonry) {
-    .masonry-grid > * {
-      -webkit-column-break-inside: avoid;
-      break-inside: avoid;
-      page-break-inside: avoid;
-      display: inline-block;
-      width: 100%;
+    @media (min-width: 768px) {
+      .masonry-grid {
+        grid-template-areas:
+          "hero info"
+          ". skills";
+      }
+    }
+
+    .masonry-item--hero {
+      grid-area: hero;
+    }
+
+    .masonry-item--info {
+      grid-area: info;
+    }
+
+    .masonry-item--skills {
+      grid-area: skills;
     }
   }
 
@@ -102,25 +118,19 @@
     .masonry-grid {
       display: masonry;
       masonry-direction: column;
-      grid-template-columns: repeat(1, 1fr);
-      transition-property: grid-template-columns;
-      transition-duration: 200ms;
-      transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-      columns: unset;
     }
+
     @media (min-width: 768px) {
-      .masonry-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .masonry-grid .masonry-item--hero {
+        grid-column: 1;
       }
 
-      .masonry-grid .masonry-item--hero,
       .masonry-grid .masonry-item--info {
-        grid-column: 1;
+        grid-column: 2;
       }
 
       .masonry-grid .masonry-item--skills {
         grid-column: 2;
-        grid-row: 1;
       }
     }
   }
@@ -131,11 +141,9 @@
       transition-property: none;
     }
 
-    @supports (display: masonry) {
-      .masonry-grid {
-        transition-duration: 0ms;
-        transition-property: none;
-      }
+    .masonry-grid {
+      transition-duration: 0ms;
+      transition-property: none;
     }
   }
 }

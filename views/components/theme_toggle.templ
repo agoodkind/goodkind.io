@@ -129,14 +129,19 @@ templ ThemeToggle() {
 
 					<button
 						type="button"
+						role="radio"
+						:aria-checked="$store.theme.current === 'light'"
 						class="col-start-1 row-start-1 flex h-full items-center
 						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						text-slate-700 transition-colors hover:bg-white/35
-						hover:text-slate-900 focus-visible:outline-none active:bg-white/50
+						cursor-pointer
+						text-slate-900/75 transition-colors aria-checked:text-slate-900
+						aria-checked:dark:text-white
+						hover:bg-slate-900/8 hover:text-slate-900 hover:ring-1
+						hover:ring-slate-900/10 focus-visible:outline-none
+						active:bg-slate-900/12
 						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:text-violet-100 dark:hover:bg-white/10 dark:hover:text-white
-						dark:active:bg-white/15"
-						:class="$store.theme.current === 'light' ? 'text-slate-900' : ''"
+						dark:text-white/80 dark:hover:bg-white/12 dark:hover:text-white
+						dark:hover:ring-white/10 dark:active:bg-white/18"
 						@click.stop="$store.theme.set('light')"
 						aria-label="Light theme"
 					>
@@ -159,14 +164,19 @@ templ ThemeToggle() {
 
 					<button
 						type="button"
+						role="radio"
+						:aria-checked="$store.theme.current === 'auto'"
 						class="col-start-2 row-start-1 flex h-full items-center
 						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						text-slate-700 transition-colors hover:bg-white/35
-						hover:text-slate-900 focus-visible:outline-none active:bg-white/50
+						cursor-pointer
+						text-slate-900/75 transition-colors aria-checked:text-slate-900
+						aria-checked:dark:text-white
+						hover:bg-slate-900/8 hover:text-slate-900 hover:ring-1
+						hover:ring-slate-900/10 focus-visible:outline-none
+						active:bg-slate-900/12
 						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:text-violet-100 dark:hover:bg-white/10 dark:hover:text-white
-						dark:active:bg-white/15"
-						:class="$store.theme.current === 'auto' ? 'text-slate-900' : ''"
+						dark:text-white/80 dark:hover:bg-white/12 dark:hover:text-white
+						dark:hover:ring-white/10 dark:active:bg-white/18"
 						@click.stop="$store.theme.set('auto')"
 						aria-label="Auto theme"
 					>
@@ -195,14 +205,19 @@ templ ThemeToggle() {
 
 					<button
 						type="button"
+						role="radio"
+						:aria-checked="$store.theme.current === 'dark'"
 						class="col-start-3 row-start-1 flex h-full items-center
 						justify-center gap-1 rounded-full px-2 text-xs font-medium
-						text-slate-700 transition-colors hover:bg-white/35
-						hover:text-slate-900 focus-visible:outline-none active:bg-white/50
+						cursor-pointer
+						text-slate-900/75 transition-colors aria-checked:text-slate-900
+						aria-checked:dark:text-white
+						hover:bg-slate-900/8 hover:text-slate-900 hover:ring-1
+						hover:ring-slate-900/10 focus-visible:outline-none
+						active:bg-slate-900/12
 						focus-visible:ring-2 focus-visible:ring-violet-500/70
-						dark:text-violet-100 dark:hover:bg-white/10 dark:hover:text-white
-						dark:active:bg-white/15"
-						:class="$store.theme.current === 'dark' ? 'text-slate-900' : ''"
+						dark:text-white/80 dark:hover:bg-white/12 dark:hover:text-white
+						dark:hover:ring-white/10 dark:active:bg-white/18"
 						@click.stop="$store.theme.set('dark')"
 						aria-label="Dark theme"
 					>

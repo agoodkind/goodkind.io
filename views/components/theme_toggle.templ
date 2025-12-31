@@ -17,26 +17,8 @@ var themeOptions = []ThemeOption{
 	{Key: "dark", Label: "Dark", ColStart: "col-start-3"},
 }
 
-const themeToggleData = `{
-  open: false,
-  closeTimer: null,
-  cancelClose() {
-    if (this.closeTimer) {
-      clearTimeout(this.closeTimer);
-      this.closeTimer = null;
-    }
-  },
-  scheduleClose() {
-    this.cancelClose();
-    this.closeTimer = setTimeout(() => {
-      this.open = false;
-      this.closeTimer = null;
-    }, 150);
-  },
-}`
-
 const (
-	themeToggleRootClass = "fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5"
+	themeToggleRootClass = "relative z-50 inline-flex"
 
 	themeTogglePillClass = `relative h-10 w-10 overflow-hidden rounded-full
 bg-white/25 shadow-md border border-slate-200/60 backdrop-blur-xl
@@ -44,16 +26,13 @@ transition-[width,transform] duration-200 ease-out
 hover:scale-[1.03] hover:cursor-pointer
 dark:bg-violet-950/25 dark:border-slate-700/60`
 
-	themeToggleCollapsedButtonClass =
-		"absolute inset-0 flex cursor-pointer items-center justify-center"
+	themeToggleCollapsedButtonClass = "absolute inset-0 flex cursor-pointer items-center justify-center"
 
 	themeToggleCollapsedIconClass = "h-5 w-5 text-slate-800 dark:text-violet-100"
 
-	themeToggleExpandedWrapClass =
-		"absolute inset-0 flex items-center px-1.5"
+	themeToggleExpandedWrapClass = "absolute inset-0 flex items-center px-1.5"
 
-	themeToggleExpandedGridClass =
-		"relative isolate grid h-8 w-full grid-cols-3 gap-1 p-0.5"
+	themeToggleExpandedGridClass = "relative isolate grid h-8 w-full grid-cols-3 gap-1 p-0.5"
 
 	themeToggleThumbClass = `pointer-events-none relative z-0 col-span-1 row-start-1
 h-full w-full rounded-full bg-white/95 ring-1 ring-slate-900/10 backdrop-blur
@@ -108,7 +87,7 @@ templ IconSun(className string) {
 		aria-hidden="true"
 		data-slot="icon"
 	>
-		<path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z"></path>
+		<use href="/images/icons/theme-sun.svg#icon"></use>
 	</svg>
 }
 
@@ -121,11 +100,7 @@ templ IconMoon(className string) {
 		aria-hidden="true"
 		data-slot="icon"
 	>
-		<path
-			fill-rule="evenodd"
-			d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z"
-			clip-rule="evenodd"
-		></path>
+		<use href="/images/icons/theme-moon.svg#icon"></use>
 	</svg>
 }
 
@@ -141,11 +116,7 @@ templ IconAuto(className string) {
 		stroke-linejoin="round"
 		aria-hidden="true"
 	>
-		<path d="M12 2v2"></path>
-		<path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
-		<path d="M16 12a4 4 0 0 0-4-4"></path>
-		<path d="m19 5-1.256 1.256"></path>
-		<path d="M20 12h2"></path>
+		<use href="/images/icons/theme-auto.svg#icon"></use>
 	</svg>
 }
 
@@ -192,7 +163,7 @@ templ ThemeToggleOption(option ThemeOption) {
 
 templ ThemeToggle() {
 	<div
-		x-data={ themeToggleData }
+		x-data="themeToggle"
 		@mouseenter="cancelClose(); open = true"
 		@mouseleave="scheduleClose()"
 		@click.outside="open = false; cancelClose()"
@@ -213,7 +184,6 @@ templ ThemeToggle() {
 					@ThemeToggleCollapsedIcon("dark")
 				</div>
 			</button>
-
 			<div
 				x-show="open"
 				x-transition.opacity.duration.150ms
@@ -222,9 +192,7 @@ templ ThemeToggle() {
 				aria-label="Theme"
 			>
 				<div class={ themeToggleExpandedGridClass }>
-					<div class={ themeToggleThumbClass } :class={ themeToggleThumbColStartExpr }>
-					</div>
-
+					<div class={ themeToggleThumbClass } :class={ themeToggleThumbColStartExpr }></div>
 					for _, option := range themeOptions {
 						@ThemeToggleOption(option)
 					}
@@ -233,4 +201,3 @@ templ ThemeToggle() {
 		</div>
 	</div>
 }
-

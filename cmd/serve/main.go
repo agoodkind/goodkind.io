@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
+	"time"
 )
 
 func findAvailablePort(start int) (int, error) {
@@ -56,7 +60,29 @@ func main() {
 		fmt.Printf("🚀 Server: http://localhost:%d\n", port)
 	}
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	// Write port to file for watcher
+	portFile := ".dev-server-port"
+	if err := os.WriteFile(portFile, []byte(fmt.Sprintf("%d", port)), 0644); err != nil {
+		log.Printf("Warning: could not write port file: %v", err)
+	}
+	defer os.Remove(portFile)
+
+	// Create server with graceful shutdown
+	srv := &http.Server{Addr: addr}
+
+	// Handle Ctrl+C gracefully
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		if err := srv.Shutdown(ctx); err != nil {
+			log.Printf("Server shutdown error: %v", err)
+		}
+	}()
+
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }

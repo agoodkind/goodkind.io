@@ -22,8 +22,8 @@ type HeroProps struct {
 var heroData = HeroProps{
 	Name:           "Alexander Goodkind",
 	Role:           "Software Engineer",
-	Avatar:         "/avi.webp",
-	AvatarFallback: "/avi.jpeg",
+	Avatar:         "/images/avi.webp",
+	AvatarFallback: "/images/avi.jpeg",
 	Status:         "busy",
 	Links: []Link{
 		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn"},
@@ -138,13 +138,13 @@ templ Skills() {
 templ Home() {
 	@layouts.Base("Alexander Goodkind") {
 		<div class="masonry-grid">
-			<div class="break-inside-avoid mb-5">
+			<div class="masonry-item masonry-item--hero break-inside-avoid mb-5">
 				@Hero(heroData)
 			</div>
-			<div class="break-inside-avoid mb-5">
+			<div class="masonry-item masonry-item--info break-inside-avoid mb-5">
 				@Information()
 			</div>
-			<div class="break-inside-avoid mb-5">
+			<div class="masonry-item masonry-item--skills break-inside-avoid mb-5">
 				@Skills()
 			</div>
 		</div>

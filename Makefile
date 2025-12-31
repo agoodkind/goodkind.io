@@ -38,5 +38,6 @@ watch: watch-only
 watch-only:
 	@TEMPL_CMD=$(TEMPL) go run ./cmd/watch
 
-dev: all
+dev: clean install
+	@echo "Starting development server..."
 	@make -j2 serve-only watch-only

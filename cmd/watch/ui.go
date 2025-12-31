@@ -66,6 +66,11 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch v := msg.(type) {
+	case tea.KeyMsg:
+		switch v.Type {
+		case tea.KeyCtrlC, tea.KeyEsc:
+			return m, tea.Quit
+		}
 	case buildStartMsg:
 		if time.Since(lastRebuild) < 500*time.Millisecond {
 			return m, nil
@@ -163,6 +168,30 @@ func (m model) View() string {
 
 	lines := make([]string, 0, len(m.steps)+1)
 
+	// Find the current phase by checking which phase has incomplete steps
+	currentPhaseStart := 0
+	currentPhaseEnd := 0
+	if m.active {
+		phases := buildPhases(m.kind)
+		offset := 0
+		for _, phase := range phases {
+			phaseEnd := offset + len(phase.steps)
+			hasIncomplete := false
+			for i := offset; i < phaseEnd; i++ {
+				if !m.stepStates[m.steps[i]].done {
+					hasIncomplete = true
+					break
+				}
+			}
+			if hasIncomplete {
+				currentPhaseStart = offset
+				currentPhaseEnd = phaseEnd
+				break
+			}
+			offset = phaseEnd
+		}
+	}
+
 	for i, step := range m.steps {
 		state := m.stepStates[step]
 		var icon, line string
@@ -172,21 +201,8 @@ func (m model) View() string {
 			timing := dimStyle.Render(fmt.Sprintf("(%dms)", state.duration.Milliseconds()))
 			line = fmt.Sprintf("%s %s %s", icon, step, timing)
 		} else {
-			// Check if this is the currently running step
-			isRunning := false
-			if m.active {
-				// Count completed steps
-				completedCount := 0
-				for _, s := range m.steps {
-					if m.stepStates[s].done {
-						completedCount++
-					}
-				}
-				// This step is running if its index matches completed count
-				if i == completedCount {
-					isRunning = true
-				}
-			}
+			// Check if this step is in the current running phase
+			isRunning := m.active && i >= currentPhaseStart && i < currentPhaseEnd
 
 			if isRunning {
 				icon = m.spin.View()

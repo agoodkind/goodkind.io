@@ -16,6 +16,7 @@ dist-ssr
 # Go SSG build artifacts
 *_templ.go
 /builder
+.dev-server-port
 
 # Editor directories and files
 .idea

@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"golang.org/x/sync/errgroup"
@@ -67,6 +69,9 @@ func buildPhases(kind buildKind) []buildPhase {
 						"-o", "dist/styles.css",
 						"--minify")
 				}},
+				{label: "ts", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "pnpm", "run", "build:js:dev")
+				}},
 				{label: "assets", run: func(ctx context.Context) ([]byte, error) {
 					runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
 					return nil, nil
@@ -99,7 +104,13 @@ func buildSteps(kind buildKind) []buildStep {
 }
 
 func triggerReload() {
-	resp, err := http.Post("http://localhost:3000/__reload", "text/plain", nil)
+	port := "3000"
+	if data, err := os.ReadFile(".dev-server-port"); err == nil {
+		port = strings.TrimSpace(string(data))
+	}
+
+	url := fmt.Sprintf("http://localhost:%s/__reload", port)
+	resp, err := http.Post(url, "text/plain", nil)
 	if err != nil {
 		return
 	}

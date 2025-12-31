@@ -29,6 +29,9 @@ ts: install
 copy-assets:
 	@mkdir -p dist/images
 	@cp -r assets/images/* dist/images/
+	@cp -f assets/images/avi.webp dist/avi.webp
+	@cp -f assets/images/avi.jpeg dist/avi.jpeg
+	@cp -f assets/images/favicon.ico dist/favicon.ico
 
 serve: all serve-only
 

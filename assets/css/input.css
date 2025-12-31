@@ -4,6 +4,12 @@
 
 @variant dark (&:is(.dark *));
 
+@layer base {
+  [x-cloak] {
+    display: none !important;
+  }
+}
+
 @layer utilities {
   @-webkit-keyframes grow {
     0% {

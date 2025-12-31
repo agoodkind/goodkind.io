@@ -20,6 +20,7 @@ type buildKind int
 const (
 	buildKindFull buildKind = iota
 	buildKindTypeScriptOnly
+	buildKindSSR
 )
 
 type buildStep struct {
@@ -56,6 +57,27 @@ func buildPhases(kind buildKind) []buildPhase {
 				}},
 			}},
 		}
+	case buildKindSSR:
+		// SSR mode: skip builder, templates render dynamically
+		return []buildPhase{
+			{steps: []buildStep{
+				{label: "templ", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, getTemplCmd(), "generate")
+				}},
+				{label: "css", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "pnpm", "exec", "tailwindcss",
+						"-i", "assets/css/input.css",
+						"-o", "dist/styles.css",
+						"--minify")
+				}},
+				{label: "ts", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "pnpm", "run", "build:js:dev")
+				}},
+				{label: "assets", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
+				}},
+			}},
+		}
 	default:
 		return []buildPhase{
 			// Phase 1: Independent tasks (parallel)
@@ -73,20 +95,19 @@ func buildPhases(kind buildKind) []buildPhase {
 					return runCmd(ctx, "pnpm", "run", "build:js:dev")
 				}},
 				{label: "assets", run: func(ctx context.Context) ([]byte, error) {
-					runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
-					return nil, nil
+					return runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
 				}},
 			}},
 			// Phase 2: Depends on templ
 			{steps: []buildStep{
 				{label: "go", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "go", "build", "-o", "builder", "./cmd/builder")
+					return runCmd(ctx, "go", "build", "-o", ".build/builder", "./cmd/builder")
 				}},
 			}},
 			// Phase 3: Depends on go
 			{steps: []buildStep{
 				{label: "html", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "./builder")
+					return runCmd(ctx, "./.build/builder")
 				}},
 			}},
 		}

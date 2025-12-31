@@ -1,4 +1,4 @@
-.PHONY: all clean install templ build generate css ts copy-assets serve serve-only watch watch-only dev
+.PHONY: all clean install templ build generate css ts copy-assets serve serve-only watch watch-only dev fmt
 
 TEMPL := $(shell which templ || echo ~/go/bin/templ)
 
@@ -29,8 +29,6 @@ ts: install
 copy-assets:
 	@mkdir -p dist/images
 	@cp -r assets/images/* dist/images/
-	@cp -f assets/images/avi.webp dist/avi.webp
-	@cp -f assets/images/avi.jpeg dist/avi.jpeg
 	@cp -f assets/images/favicon.ico dist/favicon.ico
 
 serve: all serve-only
@@ -38,11 +36,19 @@ serve: all serve-only
 serve-only:
 	@go run ./cmd/serve
 
+serve-ssr:
+	@DEV_SSR=true go run ./cmd/serve
+
 watch: watch-only
 
 watch-only:
 	@TEMPL_CMD=$(TEMPL) go run ./cmd/watch
 
 dev: clean install
-	@echo "Starting development server..."
-	@make -j2 serve-only watch-only
+	@echo "Starting development server with SSR..."
+	@make -j2 serve-ssr watch-only
+
+fmt:
+	@echo "Formatting files..."
+	@$(TEMPL) fmt .
+	@pnpm run format

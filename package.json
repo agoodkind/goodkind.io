@@ -13,7 +13,8 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "alpinejs": "^3.15.3"
+    "alpinejs": "^3.15.3",
+    "htmx.org": "^2.0.8"
   },
   "devDependencies": {
     "@heroicons/react": "^2.2.0",

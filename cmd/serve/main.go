@@ -39,6 +39,7 @@ func main() {
 	}
 
 	dir := "dist"
+	devSSR := os.Getenv("DEV_SSR") == "true"
 
 	// Create SSE broker for live reload
 	broker := NewSSEBroker()
@@ -48,9 +49,16 @@ func main() {
 	http.HandleFunc("/__livereload.js", ServeJavaScript)
 	http.HandleFunc("/__reload", HandleReloadTrigger(broker))
 
-	// Static file server with live reload injection
+	// Choose handler based on mode
 	fs := http.FileServer(http.Dir(dir))
-	http.Handle("/", InjectLiveReload(fs))
+	var handler http.Handler
+	if devSSR {
+		fmt.Println("🔥 SSR mode enabled (dynamic template rendering)")
+		handler = InjectLiveReload(NewSSRHandler(fs))
+	} else {
+		handler = InjectLiveReload(fs)
+	}
+	http.Handle("/", handler)
 
 	// Server info
 	addr := fmt.Sprintf(":%d", port)

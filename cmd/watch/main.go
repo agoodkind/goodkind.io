@@ -17,6 +17,12 @@ func main() {
 	appCtx, cancelApp := context.WithCancel(context.Background())
 	defer cancelApp()
 
+	// Determine build mode
+	initialBuildKind := buildKindFull
+	if os.Getenv("DEV_SSR") == "true" {
+		initialBuildKind = buildKindSSR
+	}
+
 	rebuildRequests := make(chan rebuildRequest, 1)
 
 	// Bubble Tea requires a TTY. Fallback for CI/piping/timeout.
@@ -29,7 +35,7 @@ func main() {
 			cancelApp()
 		}()
 
-		_ = runPipeline(appCtx, buildKindFull)
+		_ = runPipeline(appCtx, initialBuildKind)
 
 		go func() {
 			_ = watchFiles(appCtx, rebuildRequests)
@@ -63,7 +69,7 @@ func main() {
 	}()
 
 	go func() {
-		program.Send(buildStartMsg{kind: buildKindFull})
+		program.Send(buildStartMsg{kind: initialBuildKind})
 		for {
 			select {
 			case <-appCtx.Done():

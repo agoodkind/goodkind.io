@@ -53,29 +53,12 @@ func (h *SSRHandler) renderFragment(w http.ResponseWriter, r *http.Request, ctx 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 
-	// Check if this is a component fragment
-	if renderer, ok := componentRegistry[fragment]; ok {
-		if err := renderer(ctx, w); err != nil {
-			fmt.Fprintf(os.Stderr, "Error rendering component %s: %v\n", fragment, err)
-			http.Error(w, "Error rendering component", http.StatusInternalServerError)
-		}
-		return
-	}
-
-	// Map page-level fragments to their renderers
-	switch fragment {
-	case "main", "body":
-		// Re-render the whole page for page-level changes
-		if err := pages.Home().Render(ctx, w); err != nil {
-			fmt.Fprintf(os.Stderr, "Error rendering fragment: %v\n", err)
-			http.Error(w, "Error rendering fragment", http.StatusInternalServerError)
-		}
-	default:
-		// For unknown fragments, return the whole page
-		if err := pages.Home().Render(ctx, w); err != nil {
-			fmt.Fprintf(os.Stderr, "Error rendering page: %v\n", err)
-			http.Error(w, "Error rendering page", http.StatusInternalServerError)
-		}
+	// For all fragments (including component-specific ones), render the whole page
+	// HTMX will swap only the targeted element on the client side
+	// This works because components have IDs matching their names (e.g. id="theme-toggle")
+	if err := pages.Home().Render(ctx, w); err != nil {
+		fmt.Fprintf(os.Stderr, "Error rendering fragment %s: %v\n", fragment, err)
+		http.Error(w, "Error rendering page", http.StatusInternalServerError)
 	}
 }
 

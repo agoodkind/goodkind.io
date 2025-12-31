@@ -49,11 +49,6 @@ dark:bg-violet-950/25 dark:border-slate-700/60`
 
 	themeToggleCollapsedIconClass = "h-5 w-5 text-slate-800 dark:text-violet-100"
 
-	themeToggleAutoIndicatorClass = `absolute -right-1 -top-1 flex h-3 w-3 items-center
-justify-center rounded-full bg-violet-500 text-[7px] font-semibold leading-none
-text-white ring-1 ring-white dark:bg-violet-400 dark:text-violet-950
-dark:ring-violet-950`
-
 	themeToggleExpandedWrapClass =
 		"absolute inset-0 flex items-center px-1.5"
 
@@ -216,13 +211,6 @@ templ ThemeToggle() {
 					@ThemeToggleCollapsedIcon("light")
 					@ThemeToggleCollapsedIcon("auto")
 					@ThemeToggleCollapsedIcon("dark")
-
-					<span
-						x-show={ themeIsSelectedExpr("auto") }
-						class={ themeToggleAutoIndicatorClass }
-					>
-						A
-					</span>
 				</div>
 			</button>
 

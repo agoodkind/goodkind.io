@@ -102,13 +102,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		lastRebuild = time.Now()
 
 		if m.active {
-			next := v.kind
-			if m.pending != nil {
-				if *m.pending == buildKindFull || next == buildKindTypeScriptOnly {
-					return m, nil
-				}
-			}
-			m.pending = &next
+			m.pending = &v.kind
 			return m, nil
 		}
 
@@ -119,12 +113,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.pending = nil
 		m.lastError = nil
 
-		steps := buildSteps(v.kind)
-		m.steps = m.steps[:0]
-		m.stepStates = make(map[string]buildStepMsg)
-		for _, s := range steps {
-			m.steps = append(m.steps, s.label)
-			m.stepStates[s.label] = buildStepMsg{label: s.label, done: false}
+		// Initialize step list only if empty
+		if len(m.steps) == 0 {
+			steps := buildSteps(v.kind)
+			for _, s := range steps {
+				m.steps = append(m.steps, s.label)
+				m.stepStates[s.label] = buildStepMsg{label: s.label, done: false}
+			}
 		}
 
 		m.lastStatus = "building"

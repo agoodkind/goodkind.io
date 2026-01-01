@@ -152,3 +152,98 @@
     }
   }
 }
+
+/* Runtime-only class (added by JS), keep outside Tailwind layers. */
+.ios26-glass .btn {
+  background-color: #ffffff40;
+  background-image: none;
+  border: 1px solid #e2e8f099;
+  color: var(--color-slate-800);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 10%),
+    0 2px 4px -2px rgb(0 0 0 / 10%);
+}
+
+.ios26-glass .btn:hover {
+  background-color: #ffffff4d;
+  background-image: none;
+}
+
+.ios26-glass.dark .btn {
+  background-color: rgb(255 255 255 / 8%);
+  background-image: none;
+  border-color: rgb(255 255 255 / 12%);
+  color: rgb(255 255 255 / 92%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    0 10px 22px rgb(0 0 0 / 42%),
+    inset 0 1px 0 rgb(255 255 255 / 12%);
+}
+
+.ios26-glass.dark .btn:hover {
+  background-color: rgb(255 255 255 / 10%);
+  background-image: none;
+}
+
+html:not(.ios26-glass) .theme-toggle-pill {
+  background-color: var(--color-indigo-500);
+  border: 1px solid transparent;
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 10%),
+    0 2px 4px -2px rgb(0 0 0 / 10%);
+  color: var(--color-white);
+}
+
+html.dark:not(.ios26-glass) .theme-toggle-pill {
+  background-color: rgb(15 23 42);
+  border-color: rgb(30 41 59 / 75%);
+  color: rgb(255 255 255 / 92%);
+}
+
+@media (hover: hover) {
+  html:not(.ios26-glass) .theme-toggle-pill:hover {
+    background-color: var(--color-indigo-600);
+  }
+
+  html.dark:not(.ios26-glass) .theme-toggle-pill:hover {
+    background-color: rgb(30 41 59);
+  }
+}
+
+html:not(.ios26-glass) .theme-toggle-thumb {
+  background-color: rgb(255 255 255 / 18%);
+  border: 1px solid rgb(255 255 255 / 18%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+html.dark:not(.ios26-glass) .theme-toggle-thumb {
+  background-color: rgb(255 255 255 / 14%);
+  border-color: rgb(255 255 255 / 12%);
+}
+
+html:not(.ios26-glass) .theme-toggle-option {
+  color: rgb(255 255 255 / 80%);
+}
+
+@media (hover: hover) {
+  html:not(.ios26-glass) .theme-toggle-option:hover {
+    background-color: rgb(255 255 255 / 14%);
+  }
+}
+
+html:not(.ios26-glass) .theme-toggle-option[aria-checked="true"] {
+  color: var(--color-white);
+}
+
+.ios26-glass .theme-toggle-option[aria-checked="true"] {
+  color: var(--color-slate-950);
+}
+
+.ios26-glass.dark .theme-toggle-option[aria-checked="true"] {
+  color: var(--color-white);
+}

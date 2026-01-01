@@ -6,8 +6,8 @@
       "type": "go",
       "request": "launch",
       "mode": "debug",
-      "program": "${workspaceFolder}/cmd/serve-supervisor",
-      "output": "${workspaceFolder}/.build/serve-supervisor",
+      "program": "${workspaceFolder}/cmd/serve",
+      "output": "${workspaceFolder}/.build/serve",
       "cwd": "${workspaceFolder}",
       "env": {
         "PORT": "3000",

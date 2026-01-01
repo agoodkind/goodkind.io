@@ -7,6 +7,10 @@ import { esbuildConfig } from "./build.config.mjs";
 const args = process.argv.slice(2);
 const isWatch = args.includes("--watch") || args.includes("-w");
 
+/**
+ * @param {number} ms
+ * @returns {Promise<void>}
+ */
 function sleep(ms) {
   return new Promise(function (resolve) {
     setTimeout(resolve, ms);
@@ -30,6 +34,10 @@ async function main() {
       await sleep(100);
       console.log("👀 Ready (typescript)");
 
+      /**
+       * @param {string} signal
+       * @returns {Promise<void>}
+       */
       async function shutdown(signal) {
         if (signal === "SIGINT") {
           console.log("\n🛑 Stopping TypeScript watcher...");

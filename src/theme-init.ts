@@ -5,6 +5,8 @@
 
 import { UAParser } from "ua-parser-js";
 
+const DEV_GLASS_KEY = "dev:liquid-glass";
+
 function parseMajorVersion(version: string | undefined): number | null {
   if (!version) {
     return null;
@@ -16,6 +18,23 @@ function parseMajorVersion(version: string | undefined): number | null {
   }
 
   return Number.parseInt(match[1], 10);
+}
+
+function parseDevLiquidGlassOverride(): boolean | null {
+  if (!__DEV__) {
+    return null;
+  }
+
+  const stored = localStorage.getItem(DEV_GLASS_KEY);
+  if (stored === "1") {
+    return true;
+  }
+
+  if (stored === "0") {
+    return false;
+  }
+
+  return null;
 }
 
 function getIOSMajorVersion(): number | null {
@@ -54,7 +73,12 @@ function supportsBackdropFilter(): boolean {
 }
 
 const iosMajorVersion = getIOSMajorVersion();
-if (iosMajorVersion !== null && iosMajorVersion >= 26 && supportsBackdropFilter()) {
+const devLiquidGlass = parseDevLiquidGlassOverride();
+if (
+  supportsBackdropFilter() &&
+  (devLiquidGlass === true ||
+    (devLiquidGlass === null && iosMajorVersion !== null && iosMajorVersion >= 26))
+) {
   document.documentElement.classList.add("ios26-glass");
 }
 

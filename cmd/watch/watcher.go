@@ -37,10 +37,6 @@ func shouldWatch(path string) bool {
 	}
 }
 
-func isTypeScriptFile(path string) bool {
-	return filepath.Ext(path) == ".ts"
-}
-
 func addRecursive(watcher *fsnotify.Watcher, path string) error {
 	return filepath.Walk(path, func(walkPath string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -91,29 +87,24 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 				continue
 			}
 
-			log.Printf("[WATCHER] File changed: %s (op: %s)\n", event.Name, event.Op)
+		log.Printf("[WATCHER] File changed: %s (op: %s)\n", event.Name, event.Op)
 
-			debounceMu.Lock()
-			if debounceTimer != nil {
-				debounceTimer.Stop()
+		debounceMu.Lock()
+		if debounceTimer != nil {
+			debounceTimer.Stop()
+		}
+
+		changedFile := event.Name
+		log.Printf("[WATCHER] Queuing rebuild: file=%s\n", changedFile)
+
+		debounceTimer = time.AfterFunc(200*time.Millisecond, func() {
+			log.Printf("[WATCHER] Sending rebuild request for: %s\n", changedFile)
+			select {
+			case out <- rebuildRequest{kind: buildKindFull, changedFile: changedFile}:
+			case <-ctx.Done():
+			default:
 			}
-
-			kind := buildKindFull
-			if isTypeScriptFile(event.Name) {
-				kind = buildKindTypeScriptOnly
-			}
-
-			changedFile := event.Name
-			log.Printf("[WATCHER] Queuing rebuild: kind=%v file=%s\n", kind, changedFile)
-
-			debounceTimer = time.AfterFunc(200*time.Millisecond, func() {
-				log.Printf("[WATCHER] Sending rebuild request for: %s\n", changedFile)
-				select {
-				case out <- rebuildRequest{kind: kind, changedFile: changedFile}:
-				case <-ctx.Done():
-				default:
-				}
-			})
+		})
 			debounceMu.Unlock()
 
 		case err, ok := <-watcher.Errors:

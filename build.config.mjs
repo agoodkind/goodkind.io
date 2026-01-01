@@ -33,6 +33,10 @@ export const esbuildConfig = {
   entryPoints,
   bundle: true,
 
+  define: {
+    __DEV__: JSON.stringify(isDev),
+  },
+
   // Development vs Production settings
   minify: isProduction,
   minifyWhitespace: isProduction,

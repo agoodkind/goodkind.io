@@ -1,11 +1,26 @@
 package components
 
-templ LinkButton(url string, text string) {
-	<a href={ templ.URL(url) } class="group flex w-full">
-		<button
-			class="btn text-white bg-indigo-500 w-full rounded-lg px-5 py-2.5 text-center font-medium transition-all hover:bg-indigo-600 hover:shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-800 hover:cursor-pointer"
+templ LinkButtonIcon(iconName string) {
+	if iconName != "" {
+		<svg
+			class="h-4 w-4"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			aria-hidden="true"
 		>
-			{ text }
+			<use href={ templ.URL("/images/icons/" + iconName + ".svg#icon") }></use>
+		</svg>
+	}
+}
+
+templ LinkButton(url string, text string, iconName string) {
+	<a href={ templ.URL(url) } class="group flex flex-1">
+		<button
+			class="btn text-white bg-indigo-500 w-full rounded-lg px-4 py-2 text-center text-sm font-medium transition-all hover:bg-indigo-600 hover:shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-800 hover:cursor-pointer inline-flex items-center justify-center gap-2"
+		>
+			@LinkButtonIcon(iconName)
+			<span>{ text }</span>
 		</button>
 	</a>
 }

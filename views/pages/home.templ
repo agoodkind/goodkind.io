@@ -8,6 +8,7 @@ import (
 type Link struct {
 	URL  string
 	Text string
+	Icon string
 }
 
 type HeroProps struct {
@@ -24,8 +25,8 @@ var heroData = HeroProps{
 	Avatar:         "/images/avi.webp",
 	AvatarFallback: "/images/avi.jpeg",
 	Links: []Link{
-		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn"},
-		{URL: "https://github.com/agoodkind", Text: "GitHub"},
+		{URL: "https://go.goodkind.io/resume", Text: "LinkedIn", Icon: "linkedin"},
+		{URL: "https://github.com/agoodkind", Text: "GitHub", Icon: "github"},
 	},
 }
 
@@ -46,7 +47,7 @@ templ Hero(hero HeroProps) {
 					class="border-white absolute -top-10 h-20 rounded-lg border-2 border-solid shadow-md"
 				/>
 			</picture>
-			<div class="flex flex-col gap-6">
+			<div class="flex flex-col gap-4">
 				<div class="flex flex-col gap-1">
 					<div class="text-lg font-semibold dark:text-white">
 						{ hero.Name }
@@ -55,12 +56,10 @@ templ Hero(hero HeroProps) {
 						{ hero.Role }
 					</div>
 				</div>
-				<div class="flex w-full items-center justify-center gap-2">
-					<div class="flex w-full flex-col gap-2">
-						for _, link := range hero.Links {
-							@components.LinkButton(link.URL, link.Text)
-						}
-					</div>
+				<div class="flex w-full items-center gap-2">
+					for _, link := range hero.Links {
+						@components.LinkButton(link.URL, link.Text, link.Icon)
+					}
 				</div>
 			</div>
 		</div>

@@ -172,14 +172,19 @@
 }
 
 .ios26-glass.dark .btn {
-  background-color: #2f0d6840;
+  background-color: rgb(255 255 255 / 8%);
   background-image: none;
-  border-color: #31415899;
-  color: var(--color-violet-100);
+  border-color: rgb(255 255 255 / 12%);
+  color: rgb(255 255 255 / 92%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    0 10px 22px rgb(0 0 0 / 42%),
+    inset 0 1px 0 rgb(255 255 255 / 12%);
 }
 
 .ios26-glass.dark .btn:hover {
-  background-color: #2f0d684d;
+  background-color: rgb(255 255 255 / 10%);
   background-image: none;
 }
 
@@ -192,9 +197,19 @@ html:not(.ios26-glass) .theme-toggle-pill {
   color: var(--color-white);
 }
 
+html.dark:not(.ios26-glass) .theme-toggle-pill {
+  background-color: rgb(15 23 42);
+  border-color: rgb(30 41 59 / 75%);
+  color: rgb(255 255 255 / 92%);
+}
+
 @media (hover: hover) {
   html:not(.ios26-glass) .theme-toggle-pill:hover {
     background-color: var(--color-indigo-600);
+  }
+
+  html.dark:not(.ios26-glass) .theme-toggle-pill:hover {
+    background-color: rgb(30 41 59);
   }
 }
 
@@ -204,6 +219,11 @@ html:not(.ios26-glass) .theme-toggle-thumb {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow: none;
+}
+
+html.dark:not(.ios26-glass) .theme-toggle-thumb {
+  background-color: rgb(255 255 255 / 14%);
+  border-color: rgb(255 255 255 / 12%);
 }
 
 html:not(.ios26-glass) .theme-toggle-option {

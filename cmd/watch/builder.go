@@ -58,7 +58,7 @@ func buildPhases(kind buildKind) []buildPhase {
 			}},
 		}
 	case buildKindSSR:
-		// SSR mode: skip builder, templates render dynamically
+		// Generate static HTML for HMR (templ compiles to Go, can't do runtime SSR)
 		return []buildPhase{
 			{steps: []buildStep{
 				{label: "templ", run: func(ctx context.Context) ([]byte, error) {
@@ -75,6 +75,18 @@ func buildPhases(kind buildKind) []buildPhase {
 				}},
 				{label: "assets", run: func(ctx context.Context) ([]byte, error) {
 					return runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
+				}},
+			}},
+			// Phase 2: Rebuild builder
+			{steps: []buildStep{
+				{label: "go", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "go", "build", "-o", ".build/builder", "./cmd/builder")
+				}},
+			}},
+			// Phase 3: Generate HTML
+			{steps: []buildStep{
+				{label: "html", run: func(ctx context.Context) ([]byte, error) {
+					return runCmd(ctx, "./.build/builder")
 				}},
 			}},
 		}
@@ -154,13 +166,22 @@ func triggerReloadWithFile(changedFile string) {
 		debugLog("[TRIGGER] Full reload (no file)")
 	}
 
-	resp, err := http.Post(url, "text/plain", nil)
-	if err != nil {
-		debugLog(fmt.Sprintf("[TRIGGER] Error: %v", err))
-		return
+	// Retry logic for when server is restarting
+	for i := 0; i < 10; i++ {
+		resp, err := http.Post(url, "text/plain", nil)
+		if err == nil {
+			defer resp.Body.Close()
+			debugLog(fmt.Sprintf("[TRIGGER] Response: %d (attempt %d)", resp.StatusCode, i+1))
+			return
+		}
+
+		if i < 9 {
+			time.Sleep(200 * time.Millisecond)
+			debugLog(fmt.Sprintf("[TRIGGER] Retry %d after error: %v", i+1, err))
+		} else {
+			debugLog(fmt.Sprintf("[TRIGGER] Final error after %d attempts: %v", i+1, err))
+		}
 	}
-	defer resp.Body.Close()
-	debugLog(fmt.Sprintf("[TRIGGER] Response: %d", resp.StatusCode))
 }
 
 func runPipeline(ctx context.Context, kind buildKind) error {
@@ -198,6 +219,10 @@ func runPipelineWithFile(ctx context.Context, kind buildKind, changedFile string
 	}
 
 	debugLog(fmt.Sprintf("[PIPELINE] All phases complete for file: %s", changedFile))
+
+	// Wait for dist/index.html to be written (give file system time to flush)
+	time.Sleep(100 * time.Millisecond)
+
 	// Don't trigger reload here - caller handles it
 	return nil
 }

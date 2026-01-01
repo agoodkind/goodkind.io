@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"goodkind.io/views/pages"
 )
@@ -33,6 +34,9 @@ func (h *SSRHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	case "/", "/index.html":
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		w.Header().Set("Pragma", "no-cache")
+		w.Header().Set("Expires", "0")
+		w.Header().Set("ETag", fmt.Sprintf("%d", time.Now().UnixNano()))
 		if err := pages.Home().Render(ctx, w); err != nil {
 			fmt.Fprintf(os.Stderr, "Error rendering page: %v\n", err)
 			http.Error(w, "Error rendering page", http.StatusInternalServerError)

@@ -75,16 +75,14 @@ type InfoItem struct {
 var informationData = []InfoItem{
 	{Title: "Location", Answer: "San Francisco"},
 	{Title: "Remote", Answer: "Hybrid"},
-	{Title: "Experience", Answer: "3+ years"},
-	{Title: "Relocation", Answer: "Let's Discuss"},
+	{Title: "Experience", Answer: "5+ years"},
+	{Title: "Relocation", Answer: "Let's discuss"},
 }
 
 templ InformationItem(item InfoItem) {
 	<li class="flex justify-between">
 		<div class="text-gray-400 dark:text-gray-400">{ item.Title }</div>
-		<div class="text-gray-600 text-right font-medium dark:text-gray-300">
-			{ item.Answer } TESTING HMR
-		</div>
+		<div class="text-gray-600 text-right font-medium dark:text-gray-300">{ item.Answer }</div>
 	</li>
 }
 
@@ -144,4 +142,3 @@ templ Home() {
 		</div>
 	}
 }
-test

@@ -152,3 +152,69 @@
     }
   }
 }
+
+/* Runtime-only class (added by JS), keep outside Tailwind layers. */
+.ios26-glass .btn {
+  background: linear-gradient(
+    135deg,
+    rgb(99 102 241 / 35%),
+    rgb(14 165 233 / 18%)
+  );
+  border: 1px solid rgb(255 255 255 / 22%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    0 10px 30px rgb(15 23 42 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 28%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ios26-glass .btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      120% 90% at 20% 10%,
+      rgb(255 255 255 / 42%),
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 70% at 80% 0%,
+      rgb(255 255 255 / 22%),
+      transparent 60%
+    );
+  pointer-events: none;
+}
+
+.ios26-glass .btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgb(99 102 241 / 45%),
+    rgb(14 165 233 / 22%)
+  );
+  box-shadow:
+    0 14px 36px rgb(15 23 42 / 26%),
+    inset 0 1px 0 rgb(255 255 255 / 32%);
+}
+
+.ios26-glass.dark .btn {
+  background: linear-gradient(
+    135deg,
+    rgb(99 102 241 / 30%),
+    rgb(14 165 233 / 12%)
+  );
+  border-color: rgb(255 255 255 / 18%);
+  box-shadow:
+    0 12px 34px rgb(0 0 0 / 38%),
+    inset 0 1px 0 rgb(255 255 255 / 14%);
+}
+
+.ios26-glass.dark .btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgb(99 102 241 / 38%),
+    rgb(14 165 233 / 16%)
+  );
+}

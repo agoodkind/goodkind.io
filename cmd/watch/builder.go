@@ -1,3 +1,4 @@
+// Command watch runs the dev file watcher and rebuild pipeline.
 package main
 
 import (
@@ -20,7 +21,6 @@ type buildKind int
 const (
 	buildKindFull buildKind = iota
 	buildKindTypeScriptOnly
-	buildKindSSR
 )
 
 type buildStep struct {
@@ -54,39 +54,6 @@ func buildPhases(kind buildKind) []buildPhase {
 			{steps: []buildStep{
 				{label: "ts", run: func(ctx context.Context) ([]byte, error) {
 					return runCmd(ctx, "pnpm", "run", "build:js:dev")
-				}},
-			}},
-		}
-	case buildKindSSR:
-		// Generate static HTML for HMR (templ compiles to Go, can't do runtime SSR)
-		return []buildPhase{
-			{steps: []buildStep{
-				{label: "templ", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, getTemplCmd(), "generate")
-				}},
-				{label: "css", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "pnpm", "exec", "tailwindcss",
-						"-i", "assets/css/input.css",
-						"-o", "dist/styles.css",
-						"--minify")
-				}},
-				{label: "ts", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "pnpm", "run", "build:js:dev")
-				}},
-				{label: "assets", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "cp", "-r", "assets/images/", "dist/")
-				}},
-			}},
-			// Phase 2: Rebuild builder
-			{steps: []buildStep{
-				{label: "go", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "go", "build", "-o", ".build/builder", "./cmd/builder")
-				}},
-			}},
-			// Phase 3: Generate HTML
-			{steps: []buildStep{
-				{label: "html", run: func(ctx context.Context) ([]byte, error) {
-					return runCmd(ctx, "./.build/builder")
 				}},
 			}},
 		}
@@ -144,6 +111,21 @@ func debugLog(msg string) {
 	}
 }
 
+func normalizeChangedFilePath(changedFile string) string {
+	if changedFile == "" {
+		return ""
+	}
+
+	if strings.Contains(changedFile, "/goodkind.io/") {
+		parts := strings.Split(changedFile, "/goodkind.io/")
+		if len(parts) > 1 {
+			return parts[1]
+		}
+	}
+
+	return changedFile
+}
+
 func triggerReloadWithFile(changedFile string) {
 	port := "3000"
 	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {
@@ -152,14 +134,7 @@ func triggerReloadWithFile(changedFile string) {
 
 	url := fmt.Sprintf("http://localhost:%s/__reload", port)
 	if changedFile != "" {
-		// Normalize file path to relative path
-		relPath := changedFile
-		if strings.Contains(changedFile, "/goodkind.io/") {
-			parts := strings.Split(changedFile, "/goodkind.io/")
-			if len(parts) > 1 {
-				relPath = parts[1]
-			}
-		}
+		relPath := normalizeChangedFilePath(changedFile)
 		url = fmt.Sprintf("%s?file=%s", url, relPath)
 		debugLog(fmt.Sprintf("[TRIGGER] HMR for: %s (URL: %s)", relPath, url))
 	} else {

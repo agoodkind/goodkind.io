@@ -72,49 +72,16 @@ make copy-assets    # Copy images to dist/
 
 ### Development Mode
 
-**🔥 SSR Dev Mode (Recommended)**
-
 ```bash
 make dev
 ```
 
-This starts the dev server in **SSR mode** with:
-
-1. **Dynamic template rendering** - Templates render on each request (no static HTML build step)
-2. **Live reload** - File watcher auto-rebuilds and refreshes your browser
-3. **Faster iteration** - Skip the static HTML generation, see changes instantly
-
-The server runs at `http://localhost:3000`
-
-**How it works:**
-
-- **SSG mode (production)**: `.templ` → Go code → Builder → Static HTML files
-- **SSR mode (dev)**: `.templ` → Go code → Server renders HTML on each request
-
-This gives you a much faster dev experience while keeping the same production output.
+This starts the dev server and watcher with live reload at `http://localhost:3000`.
 
 **Static Mode (SSG)**
 
-If you want to test the production static build in dev:
-
 ```bash
 make serve    # Serves pre-built static files
-```
-
-**Manual SSR Mode**
-
-Terminal 1 - Start SSR dev server:
-
-```bash
-make serve-ssr
-# Server runs at http://localhost:3000
-```
-
-Terminal 2 - Watch for changes:
-
-```bash
-DEV_SSR=true make watch
-# Auto-rebuilds (skips static HTML generation)
 ```
 
 **Legacy Mode (Manual Refresh)**

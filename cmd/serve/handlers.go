@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -30,10 +30,10 @@ func HandleReloadTrigger(broker *SSEBroker) http.HandlerFunc {
 		// Check if file info was sent
 		changedFile := r.URL.Query().Get("file")
 		if changedFile != "" {
-			fmt.Printf("[SERVER] HMR update for: %s\n", changedFile)
+			log.Printf("[SERVER] HMR update for: %s", changedFile)
 			broker.SendUpdate(changedFile)
 		} else {
-			fmt.Printf("[SERVER] Full reload (no file info)\n")
+			log.Printf("[SERVER] Full reload (no file info)")
 			broker.SendReload()
 		}
 

@@ -4,7 +4,14 @@ import { build, context } from "esbuild";
 import process from "node:process";
 import { esbuildConfig } from "./build.config.mjs";
 
-const isWatch = process.argv.includes("--watch") || process.argv.includes("-w");
+const args = process.argv.slice(2);
+const isWatch = args.includes("--watch") || args.includes("-w");
+
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, ms);
+  });
+}
 
 /**
  * Main build function
@@ -20,13 +27,23 @@ async function main() {
       await ctx.watch();
 
       // Small delay to let other processes start
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await sleep(100);
       console.log("👀 Ready (typescript)");
 
-      process.on("SIGINT", async () => {
-        console.log("\n🛑 Stopping TypeScript watcher...");
+      async function shutdown(signal) {
+        if (signal === "SIGINT") {
+          console.log("\n🛑 Stopping TypeScript watcher...");
+        }
         await ctx.dispose();
         process.exit(0);
+      }
+
+      process.on("SIGINT", async function () {
+        await shutdown("SIGINT");
+      });
+
+      process.on("SIGTERM", async function () {
+        await shutdown("SIGTERM");
       });
     } else {
       await build(esbuildConfig);

@@ -36,17 +36,13 @@ serve: all serve-only
 serve-only:
 	@go run ./cmd/serve
 
-serve-ssr:
-	@DEV_SSR=true go run ./cmd/serve
-
 watch: watch-only
 
 watch-only:
 	@TEMPL_CMD=$(TEMPL) go run ./cmd/watch
 
 dev: clean install
-	@echo "Starting development server with SSR..."
-	@make -j2 serve-ssr watch-only
+	@make -j2 serve-only watch-only
 
 fmt:
 	@echo "Formatting files..."

@@ -96,7 +96,14 @@
   "debug.console.wordWrap": true,
 
   // Tailwind CSS IntelliSense
+  "tailwindCSS.includeLanguages": {
+    "templ": "html",
+    "go-templ": "html"
+  },
   "tailwindCSS.experimental.classRegex": [
+    ["\\bclass\\s*=\\s*\\{([\\s\\S]*?)\\}", "['\"`]([^'\"`]*)['\"`]"],
+    [":class\\s*=\\s*\\{([\\s\\S]*?)\\}", "['\"`]([^'\"`]*)['\"`]"],
+    [":class\\s*=\\s*\"([^\"]*)\"", "'([^']*)'"],
     ["class:\\s*?[\"'`]([^\"'`]*).*?[\"'`]", "[\"'`]([^\"'`]*).*?[\"'`]"]
   ]
 }

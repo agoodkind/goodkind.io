@@ -3,7 +3,6 @@
  * Must run synchronously before body renders
  */
 
-document.documentElement.classList.remove("ios26-glass");
 try {
   localStorage.removeItem("dev:liquid-glass");
 } catch {

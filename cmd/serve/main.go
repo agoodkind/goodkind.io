@@ -48,7 +48,7 @@ func main() {
 	http.HandleFunc("/__livereload.js", ServeJavaScript)
 	http.HandleFunc("/__reload", HandleReloadTrigger(broker))
 
-	// Static file server with live reload injection
+	// Static file server with HMR injection
 	fs := http.FileServer(http.Dir(dir))
 	http.Handle("/", InjectLiveReload(fs))
 
@@ -61,7 +61,9 @@ func main() {
 	}
 
 	// Write port to file for watcher
-	os.MkdirAll(".build", 0755)
+	if err := os.MkdirAll(".build", 0755); err != nil {
+		log.Printf("Warning: could not create .build directory: %v", err)
+	}
 	portFile := ".build/.dev-server-port"
 	if err := os.WriteFile(portFile, []byte(fmt.Sprintf("%d", port)), 0644); err != nil {
 		log.Printf("Warning: could not write port file: %v", err)

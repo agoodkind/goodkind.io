@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"runtime/debug"
+	"strings"
 	"sync"
 )
 
@@ -65,8 +66,17 @@ func (b *SSEBroker) run() {
 
 // SendReload broadcasts a reload event to all connected clients
 func (b *SSEBroker) SendReload() {
+	b.sendMessage("reload", "reload")
+}
+
+// SendUpdate broadcasts a partial update event with file info
+func (b *SSEBroker) SendUpdate(changedFile string) {
+	b.sendMessage("update", changedFile)
+}
+
+func (b *SSEBroker) sendMessage(event, data string) {
 	select {
-	case b.broadcast <- "reload":
+	case b.broadcast <- event + "|" + data:
 	default:
 	}
 }
@@ -115,11 +125,19 @@ func (b *SSEBroker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			// Parse message format: "event|data"
+			parts := strings.SplitN(message, "|", 2)
+			event := parts[0]
+			data := message
+			if len(parts) == 2 {
+				data = parts[1]
+			}
+
 			if _, err := fmt.Fprintf(
 				w,
 				"event: %s\ndata: %s\n\n",
-				message,
-				message,
+				event,
+				data,
 			); err != nil {
 				return
 			}

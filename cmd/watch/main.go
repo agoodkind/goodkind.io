@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,8 +15,22 @@ import (
 func main() {
 	time.Sleep(100 * time.Millisecond)
 
+	// Setup debug logging to file
+	logFile, _ := os.OpenFile(".build/watcher-debug.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if logFile != nil {
+		defer logFile.Close()
+		log.SetOutput(logFile)
+		log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
+	}
+
 	appCtx, cancelApp := context.WithCancel(context.Background())
 	defer cancelApp()
+
+	// Determine build mode
+	initialBuildKind := buildKindFull
+	if os.Getenv("DEV_SSR") == "true" {
+		initialBuildKind = buildKindSSR
+	}
 
 	rebuildRequests := make(chan rebuildRequest, 1)
 
@@ -29,7 +44,7 @@ func main() {
 			cancelApp()
 		}()
 
-		_ = runPipeline(appCtx, buildKindFull)
+		_ = runPipeline(appCtx, initialBuildKind)
 
 		go func() {
 			_ = watchFiles(appCtx, rebuildRequests)
@@ -40,7 +55,9 @@ func main() {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				_ = runPipeline(appCtx, req.kind)
+				if err := runPipelineWithFile(appCtx, req.kind, req.changedFile); err == nil {
+					triggerReloadWithFile(req.changedFile)
+				}
 			}
 		}
 	}
@@ -63,13 +80,13 @@ func main() {
 	}()
 
 	go func() {
-		program.Send(buildStartMsg{kind: buildKindFull})
+		program.Send(buildStartMsg{kind: initialBuildKind, changedFile: ""})
 		for {
 			select {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				program.Send(buildStartMsg{kind: req.kind})
+				program.Send(buildStartMsg(req))
 			}
 		}
 	}()

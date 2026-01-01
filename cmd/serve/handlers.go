@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -15,7 +16,7 @@ func ServeJavaScript(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/javascript")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Write(script)
+	_, _ = w.Write(script)
 }
 
 // HandleReloadTrigger handles manual reload triggers (POST /__reload)
@@ -25,9 +26,18 @@ func HandleReloadTrigger(broker *SSEBroker) http.HandlerFunc {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
-		broker.SendReload()
+
+		// Check if file info was sent
+		changedFile := r.URL.Query().Get("file")
+		if changedFile != "" {
+			fmt.Printf("[SERVER] HMR update for: %s\n", changedFile)
+			broker.SendUpdate(changedFile)
+		} else {
+			fmt.Printf("[SERVER] Full reload (no file info)\n")
+			broker.SendReload()
+		}
+
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("OK"))
+		_, _ = w.Write([]byte("OK"))
 	}
 }
-

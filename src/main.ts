@@ -1,9 +1,11 @@
 import Alpine from "alpinejs";
+import htmx from "htmx.org";
 import { initializeThemeStore } from "./theme";
-import { initializeThemeToggleComponent } from "./theme_toggle";
+import { initializeThemeToggleComponent } from "./theme-toggle";
 
-// Make Alpine available globally for HTMX integration
+// Make Alpine and HTMX available globally
 window.Alpine = Alpine;
+window.htmx = htmx;
 
 initializeThemeStore(Alpine);
 initializeThemeToggleComponent(Alpine);

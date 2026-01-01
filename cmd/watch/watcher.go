@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,7 +13,8 @@ import (
 )
 
 type rebuildRequest struct {
-	kind buildKind
+	kind        buildKind
+	changedFile string
 }
 
 func shouldWatch(path string) bool {
@@ -89,19 +91,28 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 				continue
 			}
 
+			log.Printf("[WATCHER] File changed: %s (op: %s)\n", event.Name, event.Op)
+
 			debounceMu.Lock()
 			if debounceTimer != nil {
 				debounceTimer.Stop()
 			}
 
 			kind := buildKindFull
+			if os.Getenv("DEV_SSR") == "true" {
+				kind = buildKindSSR
+			}
 			if isTypeScriptFile(event.Name) {
 				kind = buildKindTypeScriptOnly
 			}
 
+			changedFile := event.Name
+			log.Printf("[WATCHER] Queuing rebuild: kind=%v file=%s\n", kind, changedFile)
+
 			debounceTimer = time.AfterFunc(200*time.Millisecond, func() {
+				log.Printf("[WATCHER] Sending rebuild request for: %s\n", changedFile)
 				select {
-				case out <- rebuildRequest{kind: kind}:
+				case out <- rebuildRequest{kind: kind, changedFile: changedFile}:
 				case <-ctx.Done():
 				default:
 				}

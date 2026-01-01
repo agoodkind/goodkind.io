@@ -12,11 +12,15 @@ const isProduction = process.env["NODE_ENV"] === "production" || !isDev;
  */
 export const entryPoints = [
   {
+    in: "src/theme-init.ts",
+    out: "theme-init",
+  },
+  {
     in: "src/main.ts",
     out: "main",
   },
   {
-    in: "src/livereload.ts",
+    in: "src/live-reload.ts",
     out: "livereload",
   },
 ];

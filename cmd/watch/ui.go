@@ -16,7 +16,8 @@ import (
 )
 
 type buildStartMsg struct {
-	kind buildKind
+	kind        buildKind
+	changedFile string
 }
 
 type buildStepResultMsg struct {
@@ -40,10 +41,11 @@ type buildStepMsg struct {
 type model struct {
 	spin bspinner.Model
 
-	active  bool
-	kind    buildKind
-	start   time.Time
-	pending *buildKind
+	active      bool
+	kind        buildKind
+	changedFile string
+	start       time.Time
+	pending     *buildKind
 
 	steps      []string
 	stepStates map[string]buildStepMsg
@@ -96,6 +98,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.active = true
 		m.kind = v.kind
+		m.changedFile = v.changedFile
 		m.start = time.Now()
 		m.pending = nil
 		m.lastError = nil
@@ -144,7 +147,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			time.Since(m.start).Milliseconds())
 		m.lastError = nil
 
-		triggerReload()
+		debugLog(fmt.Sprintf("[UI] Build complete, triggering reload with file: %q", m.changedFile))
+		triggerReloadWithFile(m.changedFile)
 
 		if m.pending != nil {
 			next := *m.pending

@@ -52,6 +52,8 @@ type model struct {
 
 	lastStatus string
 	lastError  []byte
+
+	serverURL string
 }
 
 func newModel() model {
@@ -62,7 +64,19 @@ func newModel() model {
 		spin:       sp,
 		stepStates: make(map[string]buildStepMsg),
 		lastStatus: "ready",
+		serverURL:  devServerURL(),
 	}
+}
+
+func devServerURL() string {
+	port := "3000"
+	if data, err := os.ReadFile(".build/.dev-server-port"); err == nil {
+		if p := strings.TrimSpace(string(data)); p != "" {
+			port = p
+		}
+	}
+
+	return fmt.Sprintf("http://localhost:%s", port)
 }
 
 func (m model) Init() tea.Cmd {
@@ -75,12 +89,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch v.Type {
 		case tea.KeyCtrlC:
 			stopDevServer()
-			interruptProcessGroup()
 			return m, tea.Quit
 		case tea.KeyEsc:
+			stopDevServer()
 			return m, tea.Quit
 		}
 	case buildStartMsg:
+		m.serverURL = devServerURL()
 		if time.Since(lastRebuild) < 500*time.Millisecond {
 			return m, nil
 		}
@@ -170,15 +185,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func interruptProcessGroup() {
-	pgrp := syscall.Getpgrp()
-	if pgrp <= 0 {
-		return
-	}
-
-	_ = syscall.Kill(-pgrp, syscall.SIGINT)
-}
-
 func stopDevServer() {
 	data, err := os.ReadFile(".build/.dev-server-pid")
 	if err != nil {
@@ -202,6 +208,8 @@ func (m model) View() string {
 	dimStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("243"))
 
 	lines := make([]string, 0, len(m.steps)+1)
+	lines = append(lines, dimStyle.Render("Server: "+m.serverURL))
+	lines = append(lines, "")
 
 	// Find the current phase by checking which phase has incomplete steps
 	currentPhaseStart := 0

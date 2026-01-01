@@ -10,6 +10,7 @@
 	help \
 	install \
 	serve \
+	serve-build \
 	serve-only \
 	templ \
 	ts \
@@ -39,6 +40,7 @@ help:
 		'  ts           build JS bundle' \
 		'  copy-assets  copy images/favicon into $(DIST_DIR)/' \
 		'  serve        all + run dev server' \
+		'  serve-build  build $(BUILD_DIR)/serve' \
 		'  watch        run watcher (expects dev server separately)' \
 		'  dev          run serve + watch in parallel' \
 		'  fmt          format templ + prettier'
@@ -76,7 +78,14 @@ copy-assets:
 serve: all serve-only
 
 serve-only:
-	@$(GO) run ./cmd/serve
+	@$(MAKE) serve-build
+	@./$(BUILD_DIR)/serve; status=$$?; \
+	if [ $$status -eq 130 ] || [ $$status -eq 2 ]; then exit 0; fi; \
+	exit $$status
+
+serve-build:
+	@mkdir -p $(BUILD_DIR)
+	@$(GO) build -o $(BUILD_DIR)/serve ./cmd/serve
 
 watch: watch-only
 
@@ -84,7 +93,15 @@ watch-only:
 	@TEMPL_CMD=$(TEMPL) $(GO) run ./cmd/watch
 
 dev: clean install
-	@$(MAKE) -j2 serve-only watch-only
+	@set -eu; \
+	$(MAKE) serve-build; \
+	./$(BUILD_DIR)/serve & srv_pid="$$!"; \
+	trap 'kill -TERM "$$srv_pid" 2>/dev/null || true; \
+		wait "$$srv_pid" 2>/dev/null || true' INT TERM EXIT; \
+	TEMPL_CMD=$(TEMPL) $(GO) run ./cmd/watch; \
+	status="$$?"; \
+	if [ "$$status" -eq 130 ] || [ "$$status" -eq 2 ]; then exit 0; fi; \
+	exit "$$status"
 
 fmt:
 	@echo "Formatting files..."

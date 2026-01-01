@@ -10,7 +10,7 @@ const (
 templ Section(variant SectionVariant, className string) {
 	<section
 		class={
-			"section animate-surfaced text-slate-950 bg-white rounded-xl shadow-md border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-50",
+			"section motion-safe:animate-surfaced text-slate-950 bg-white rounded-xl shadow-md border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-50",
 			templ.KV("p-0", variant == WithoutPadding),
 			templ.KV("p-7", variant == WithPadding),
 			className,

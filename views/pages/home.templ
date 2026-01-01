@@ -32,12 +32,17 @@ var heroData = HeroProps{
 
 templ Hero(hero HeroProps) {
 	@components.Section(components.WithoutPadding, "overflow-hidden relative") {
-		<div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-32 bg-cover dark:from-indigo-600 dark:to-purple-600"></div>
+		<div
+			class={
+				"h-32 bg-cover bg-gradient-to-r from-indigo-500 to-purple-500",
+				"dark:from-indigo-600 dark:to-purple-600",
+			}
+		></div>
 		<div class="sm:hidden absolute top-2 right-2 z-10">
 			@components.ThemeToggle()
 		</div>
 		<div class="relative p-7 pt-14">
-			<picture class="animate-surfaced">
+			<picture class="motion-safe:animate-surfaced">
 				<source srcSet={ hero.Avatar } type="image/webp"/>
 				<source srcSet={ hero.AvatarFallback } type="image/jpeg"/>
 				<img
@@ -81,7 +86,9 @@ var informationData = []InfoItem{
 templ InformationItem(item InfoItem) {
 	<li class="flex justify-between">
 		<div class="text-gray-400 dark:text-gray-400">{ item.Title }</div>
-		<div class="text-gray-600 text-right font-medium dark:text-gray-300">{ item.Answer }</div>
+		<div class="text-gray-600 text-right font-medium dark:text-gray-300">
+			{ item.Answer }
+		</div>
 	</li>
 }
 
@@ -117,7 +124,13 @@ templ Skills() {
 		<div class="-m-2 flex flex-wrap">
 			<ul>
 				for _, skill := range skillsData {
-					<li class="text-indigo-700 bg-indigo-100 m-1 inline-flex rounded-lg px-4 py-1 text-sm font-medium border border-indigo-200 dark:text-indigo-300 dark:bg-indigo-900 dark:border-indigo-700">
+					<li
+						class={
+							"m-1 inline-flex rounded-lg border px-4 py-1 text-sm font-medium",
+							"text-indigo-700 bg-indigo-100 border-indigo-200",
+							"dark:text-indigo-300 dark:bg-indigo-900 dark:border-indigo-700",
+						}
+					>
 						{ skill }
 					</li>
 				}
@@ -128,14 +141,26 @@ templ Skills() {
 
 templ Home() {
 	@layouts.Base("Alexander Goodkind") {
-		<div class="masonry-grid">
-			<div class="masonry-item masonry-item--hero">
+		<div
+			class={
+				"masonry-grid grid grid-cols-1 gap-5 md:grid-cols-2",
+				"transition-[grid-template-columns,grid-template-rows] duration-200",
+				"ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none",
+				"motion-reduce:duration-0",
+			}
+		>
+			<div class="masonry-item masonry-item--hero md:col-start-1 md:row-start-1">
 				@Hero(heroData)
 			</div>
-			<div class="masonry-item masonry-item--info">
+			<div class="masonry-item masonry-item--info md:col-start-1 md:row-start-2">
 				@Information()
 			</div>
-			<div class="masonry-item masonry-item--skills">
+			<div
+				class={
+					"masonry-item masonry-item--skills md:col-start-2 md:row-start-1",
+					"md:row-span-2",
+				}
+			>
 				@Skills()
 			</div>
 		</div>

@@ -17,13 +17,15 @@ templ LinkButtonIcon(iconName string) {
 templ LinkButton(url string, text string, iconName string) {
 	<a href={ templ.URL(url) } class="group flex flex-1">
 		<button
-			class="btn text-white bg-indigo-500 w-full rounded-lg px-4 py-2 text-center text-sm font-medium transition-all hover:bg-indigo-600 hover:shadow-md dark:bg-indigo-700 dark:hover:bg-indigo-800 hover:cursor-pointer inline-flex items-center justify-center gap-2"
+			class={
+				"btn w-full inline-flex items-center justify-center gap-2",
+				"rounded-lg px-4 py-2 text-center text-sm font-medium transition-all",
+				"text-white bg-indigo-500 hover:bg-indigo-600 hover:shadow-md",
+				"hover:cursor-pointer dark:bg-indigo-700 dark:hover:bg-indigo-800",
+			}
 		>
 			@LinkButtonIcon(iconName)
 			<span>{ text }</span>
 		</button>
 	</a>
 }
-
-
-

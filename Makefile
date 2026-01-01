@@ -5,6 +5,7 @@
 	copy-assets \
 	css \
 	dev \
+	dev-clean \
 	fmt \
 	generate \
 	help \
@@ -42,7 +43,8 @@ help:
 		'  serve        all + run dev server' \
 		'  serve-build  build $(BUILD_DIR)/serve' \
 		'  watch        run watcher (expects dev server separately)' \
-		'  dev          run serve + watch in parallel' \
+		'  dev          run serve + watch (graceful shutdown)' \
+		'  dev-clean    stop dev server from $(BUILD_DIR)/.dev-server-pid' \
 		'  fmt          format templ + prettier'
 
 clean:
@@ -93,15 +95,15 @@ watch-only:
 	@TEMPL_CMD=$(TEMPL) $(GO) run ./cmd/watch
 
 dev: clean install
-	@set -eu; \
-	$(MAKE) serve-build; \
-	./$(BUILD_DIR)/serve & srv_pid="$$!"; \
-	trap 'kill -TERM "$$srv_pid" 2>/dev/null || true; \
-		wait "$$srv_pid" 2>/dev/null || true' INT TERM EXIT; \
-	TEMPL_CMD=$(TEMPL) $(GO) run ./cmd/watch; \
-	status="$$?"; \
-	if [ "$$status" -eq 130 ] || [ "$$status" -eq 2 ]; then exit 0; fi; \
-	exit "$$status"
+	@$(MAKE) -j2 serve-only watch-only
+
+dev-clean:
+	@printf 'Stopping orphaned dev servers...\n'
+	@pkill -TERM -f '\.build/serve' 2>/dev/null || true
+	@pkill -TERM -f 'go run ./cmd/serve' 2>/dev/null || true
+	@pkill -TERM -f 'go run ./cmd/watch' 2>/dev/null || true
+	@sleep 1
+	@printf 'Cleanup complete.\n'
 
 fmt:
 	@echo "Formatting files..."

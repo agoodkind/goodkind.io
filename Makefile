@@ -1,54 +1,92 @@
-.PHONY: all clean install templ build generate css ts copy-assets serve serve-only watch watch-only dev fmt
+.PHONY: \
+	all \
+	build \
+	clean \
+	copy-assets \
+	css \
+	dev \
+	fmt \
+	generate \
+	help \
+	install \
+	serve \
+	serve-only \
+	templ \
+	ts \
+	watch \
+	watch-only
 
-TEMPL := $(shell which templ || echo ~/go/bin/templ)
+PNPM ?= pnpm
+GO ?= go
+DIST_DIR ?= dist
+BUILD_DIR ?= .build
+ASSETS_DIR ?= assets
+
+TEMPL ?= $(shell command -v templ 2>/dev/null || printf '%s\n' "$$HOME/go/bin/templ")
 
 all: clean install templ build generate css ts copy-assets
 
+help:
+	@printf '%s\n' \
+		'Targets:' \
+		'  all          clean install templ build generate css ts copy-assets' \
+		'  clean        reset $(DIST_DIR)/' \
+		'  install      pnpm install' \
+		'  templ        generate Go from .templ' \
+		'  build        build $(BUILD_DIR)/builder' \
+		'  generate     run $(BUILD_DIR)/builder' \
+		'  css          build Tailwind CSS' \
+		'  ts           build JS bundle' \
+		'  copy-assets  copy images/favicon into $(DIST_DIR)/' \
+		'  serve        all + run dev server' \
+		'  watch        run watcher (expects dev server separately)' \
+		'  dev          run serve + watch in parallel' \
+		'  fmt          format templ + prettier'
+
 clean:
-	@rm -rf dist && mkdir -p dist
+	@rm -rf $(DIST_DIR) && mkdir -p $(DIST_DIR)
 
 install:
-	@pnpm install
+	@$(PNPM) install
 
 templ:
 	@$(TEMPL) generate > /dev/null 2>&1
 
 build:
-	@mkdir -p .build
-	@go build -o .build/builder ./cmd/builder
+	@mkdir -p $(BUILD_DIR)
+	@$(GO) build -o $(BUILD_DIR)/builder ./cmd/builder
 
 generate: build
-	@./.build/builder > /dev/null 2>&1
+	@./$(BUILD_DIR)/builder > /dev/null 2>&1
 
 css: install
-	@pnpm exec tailwindcss -i assets/css/input.css -o dist/styles.css --minify
+	@$(PNPM) exec tailwindcss \
+		-i $(ASSETS_DIR)/css/input.css \
+		-o $(DIST_DIR)/styles.css \
+		--minify
 
 ts: install
-	@pnpm run build:js > /dev/null 2>&1
+	@$(PNPM) run build:js > /dev/null 2>&1
 
 copy-assets:
-	@mkdir -p dist/images
-	@cp -r assets/images/* dist/images/
-	@cp -f assets/images/favicon.ico dist/favicon.ico
+	@mkdir -p $(DIST_DIR)/images
+	@cp -r $(ASSETS_DIR)/images/* $(DIST_DIR)/images/
+	@cp -f $(ASSETS_DIR)/images/favicon.ico $(DIST_DIR)/favicon.ico
 
 serve: all serve-only
 
 serve-only:
-	@go run ./cmd/serve
-
-serve-ssr:
-	@DEV_SSR=true go run ./cmd/serve
+	@$(GO) run ./cmd/serve
 
 watch: watch-only
 
 watch-only:
-	@TEMPL_CMD=$(TEMPL) go run ./cmd/watch
+	@TEMPL_CMD=$(TEMPL) $(GO) run ./cmd/watch
 
 dev: clean install
-	@echo "Starting development server with SSR..."
-	@make -j2 serve-ssr watch-only
+	@$(MAKE) -j2 serve-only watch-only
 
 fmt:
 	@echo "Formatting files..."
 	@$(TEMPL) fmt .
-	@pnpm run format
+	@$(PNPM) run format

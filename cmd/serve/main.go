@@ -26,6 +26,20 @@ func findAvailablePort(start int) (int, error) {
 }
 
 func main() {
+	// Log dev server events to the same file as the watcher.
+	if err := os.MkdirAll(".build", 0755); err == nil {
+		logFile, _ := os.OpenFile(
+			".build/watcher-debug.log",
+			os.O_CREATE|os.O_WRONLY|os.O_APPEND,
+			0644,
+		)
+		if logFile != nil {
+			defer logFile.Close()
+			log.SetOutput(logFile)
+			log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
+		}
+	}
+
 	preferredPort := 3000
 	if p := os.Getenv("PORT"); p != "" {
 		if parsed, err := strconv.Atoi(p); err == nil {
@@ -55,9 +69,9 @@ func main() {
 	// Server info
 	addr := fmt.Sprintf(":%d", port)
 	if port != preferredPort {
-		fmt.Printf("🚀 Server: http://localhost:%d (port %d was busy)\n", port, preferredPort)
+		log.Printf("🚀 Server: http://localhost:%d (port %d was busy)", port, preferredPort)
 	} else {
-		fmt.Printf("🚀 Server: http://localhost:%d\n", port)
+		log.Printf("🚀 Server: http://localhost:%d", port)
 	}
 
 	// Write port to file for watcher

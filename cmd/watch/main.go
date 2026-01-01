@@ -28,9 +28,6 @@ func main() {
 
 	// Determine build mode
 	initialBuildKind := buildKindFull
-	if os.Getenv("DEV_SSR") == "true" {
-		initialBuildKind = buildKindSSR
-	}
 
 	rebuildRequests := make(chan rebuildRequest, 1)
 

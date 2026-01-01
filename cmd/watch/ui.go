@@ -75,6 +75,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch v.Type {
 		case tea.KeyCtrlC:
 			stopDevServer()
+			interruptProcessGroup()
 			return m, tea.Quit
 		case tea.KeyEsc:
 			return m, tea.Quit
@@ -167,6 +168,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	return m, nil
+}
+
+func interruptProcessGroup() {
+	pgrp := syscall.Getpgrp()
+	if pgrp <= 0 {
+		return
+	}
+
+	_ = syscall.Kill(-pgrp, syscall.SIGINT)
 }
 
 func stopDevServer() {

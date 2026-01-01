@@ -99,6 +99,9 @@ func watchFiles(ctx context.Context, out chan<- rebuildRequest) error {
 			}
 
 			kind := buildKindFull
+			if os.Getenv("DEV_SSR") == "true" {
+				kind = buildKindSSR
+			}
 			if isTypeScriptFile(event.Name) {
 				kind = buildKindTypeScriptOnly
 			}

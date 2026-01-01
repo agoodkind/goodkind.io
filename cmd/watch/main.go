@@ -55,7 +55,9 @@ func main() {
 			case <-appCtx.Done():
 				return
 			case req := <-rebuildRequests:
-				_ = runPipelineWithFile(appCtx, req.kind, req.changedFile)
+				if err := runPipelineWithFile(appCtx, req.kind, req.changedFile); err == nil {
+					triggerReloadWithFile(req.changedFile)
+				}
 			}
 		}
 	}

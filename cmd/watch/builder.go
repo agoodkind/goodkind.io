@@ -168,24 +168,36 @@ func runPipeline(ctx context.Context, kind buildKind) error {
 }
 
 func runPipelineWithFile(ctx context.Context, kind buildKind, changedFile string) error {
+	debugLog(fmt.Sprintf("[PIPELINE] Starting build: kind=%v file=%s", kind, changedFile))
 	phases := buildPhases(kind)
+	debugLog(fmt.Sprintf("[PIPELINE] Total phases: %d", len(phases)))
 
-	for _, phase := range phases {
+	for phaseIdx, phase := range phases {
+		debugLog(fmt.Sprintf("[PIPELINE] Starting phase %d with %d steps", phaseIdx, len(phase.steps)))
 		g, gctx := errgroup.WithContext(ctx)
 
 		for _, step := range phase.steps {
 			step := step // capture loop variable
 			g.Go(func() error {
-				_, err := step.run(gctx)
+				debugLog(fmt.Sprintf("[STEP] Starting: %s", step.label))
+				output, err := step.run(gctx)
+				if err != nil {
+					debugLog(fmt.Sprintf("[STEP] FAILED: %s - error: %v - output: %s", step.label, err, string(output)))
+				} else {
+					debugLog(fmt.Sprintf("[STEP] Complete: %s", step.label))
+				}
 				return err
 			})
 		}
 
 		if err := g.Wait(); err != nil {
+			debugLog(fmt.Sprintf("[PIPELINE] Phase %d failed: %v", phaseIdx, err))
 			return err
 		}
+		debugLog(fmt.Sprintf("[PIPELINE] Phase %d complete", phaseIdx))
 	}
 
-	// Don't trigger reload here - UI handles it after showing completion
+	debugLog(fmt.Sprintf("[PIPELINE] All phases complete for file: %s", changedFile))
+	// Don't trigger reload here - caller handles it
 	return nil
 }

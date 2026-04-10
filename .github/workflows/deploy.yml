@@ -5,6 +5,9 @@ on: ["push"]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
     outputs:
       deployment-url: ${{ steps.deploy.outputs.deployment-url }}
       pages-deployment-alias-url: ${{ steps.deploy.outputs.alias }}

@@ -24,7 +24,7 @@
     "@types/node": "^25.6.0",
     "esbuild": "^0.28.0",
     "prettier": "^3.8.2",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
   }
 }

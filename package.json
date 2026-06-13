@@ -15,7 +15,7 @@
   "dependencies": {
     "alpinejs": "^3.15.12",
     "htmx.org": "^2.0.10",
-    "ua-parser-js": "^2.0.9"
+    "ua-parser-js": "^2.0.10"
   },
   "devDependencies": {
     "@heroicons/react": "^2.2.0",

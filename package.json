@@ -23,7 +23,7 @@
     "@types/alpinejs": "^3.13.11",
     "@types/node": "^26.1.1",
     "esbuild": "^0.28.1",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2"
   }

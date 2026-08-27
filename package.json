@@ -13,7 +13,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "alpinejs": "^3.16.2",
+    "alpinejs": "^3.16.3",
     "htmx.org": "^2.0.10",
     "ua-parser-js": "^2.0.9"
   },

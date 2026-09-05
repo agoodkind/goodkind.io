@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       alpinejs:
-        specifier: ^3.17.0
-        version: 3.17.0
+        specifier: ^3.17.1
+        version: 3.17.1
       htmx.org:
         specifier: ^2.0.10
         version: 2.0.10
@@ -535,8 +535,8 @@ packages:
   '@vue/shared@3.5.42':
     resolution: {integrity: sha512-2rPxex1jQf4jvl9MOHl6YaXCPcrNqz/FstMOEh3QWY+/OME9nQTvl9WYeCwhW7AFjaR0SnngZGlp/wkR6rkI6g==}
 
-  alpinejs@3.17.0:
-    resolution: {integrity: sha512-LDLcfqFsiQrdFCNqK7zWyfjx2QE2sjPw0bIPThLVHMIQATAp1dNRKga1xPSqC+71UYFiosIYblLszzzo9r9k6A==}
+  alpinejs@3.17.1:
+    resolution: {integrity: sha512-HDUhA9juSA/pNYZ5FAAlW4qNsdeVORFSVONEIu0hVasqCOqLitf15R9tCr5GBCV0ZxiZW2Qx6BYdMSF7iGLT/Q==}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -1032,7 +1032,7 @@ snapshots:
 
   '@vue/shared@3.5.42': {}
 
-  alpinejs@3.17.0:
+  alpinejs@3.17.1:
     dependencies:
       '@vue/reactivity': 3.5.42
 

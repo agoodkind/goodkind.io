@@ -21,7 +21,7 @@
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/cli": "^4.3.3",
     "@types/alpinejs": "^3.13.11",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.1",
     "esbuild": "^0.28.2",
     "prettier": "^3.9.7",
     "tailwindcss": "^4.3.3",

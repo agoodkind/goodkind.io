@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "alpinejs": "^3.17.3",
-    "htmx.org": "^2.0.10",
+    "htmx.org": "^4.0.0",
     "ua-parser-js": "^2.0.9"
   },
   "devDependencies": {

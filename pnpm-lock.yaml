@@ -12,8 +12,8 @@ importers:
         specifier: ^3.17.3
         version: 3.17.3
       htmx.org:
-        specifier: ^2.0.10
-        version: 2.0.10
+        specifier: ^4.0.0
+        version: 4.0.0
       ua-parser-js:
         specifier: ^2.0.9
         version: 2.0.9
@@ -570,8 +570,9 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  htmx.org@2.0.10:
-    resolution: {integrity: sha512-kdeJe7ZVwaS6QMz/ebBIVtZdpwen6L0OQ5GOhPV9MKBb196TCZeZu4yA7ZIQsaLKv7EpXz+So7KSXNuHXhj7Cw==}
+  htmx.org@4.0.0:
+    resolution: {integrity: sha512-T/171FUY93Kdfp8t+DnHdk45QvKRiBhVhhrwSzrXgUi4pHKvhp77dUA/qg8FAjsFWPIHNbmUuIdCrcVHuiZWng==}
+    hasBin: true
 
   is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
@@ -1086,7 +1087,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  htmx.org@2.0.10: {}
+  htmx.org@4.0.0: {}
 
   is-extglob@2.1.1: {}
 

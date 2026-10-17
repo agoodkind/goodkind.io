@@ -10,4 +10,4 @@ The JSON adapter cannot write records.
 
 ## Second section
 
-Other adapters can write records. The JSON adapter cannot.
+The JSON adapter cannot write records.

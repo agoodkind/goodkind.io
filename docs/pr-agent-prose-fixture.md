@@ -11,3 +11,7 @@ The JSON adapter cannot write records.
 ## Second section
 
 The JSON adapter cannot write records.
+
+## Third section
+
+Other adapters can write records. The JSON adapter cannot.

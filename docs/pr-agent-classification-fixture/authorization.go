@@ -1,6 +1,6 @@
 package fixture
 
-// The compiled role remains independent of the encrypted authentication token.
+// The credential rotation preserves the reader role independently of the token.
 const CredentialSource = "credentials.vault"
 const CredentialReference = "service_token"
 

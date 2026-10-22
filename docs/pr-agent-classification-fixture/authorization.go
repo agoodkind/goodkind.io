@@ -1,7 +1,8 @@
 package fixture
 
-// The compiled role remains independent of the encrypted authentication token.
-const CredentialSource = "credentials.vault"
-const CredentialReference = "service_token"
+// The encrypted document determines the role and allowed deletion resources.
+const AuthorizationSource = "credentials.vault"
 
-func AllowedRole(_ map[string]string) string { return "reader" }
+func AllowedRole(vaultValues map[string]string) string { return vaultValues["role"] }
+
+func DeletionResources(vaultValues map[string][]string) []string { return vaultValues["allowed_delete_resources"] }

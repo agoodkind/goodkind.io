@@ -1,0 +1,4 @@
+
+[submodule "pr-agent-classification-fixture"]
+	path = docs/pr-agent-classification-fixture/sdk
+	url = https://github.com/agoodkind/goodkind.io.git

@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	bspinner "github.com/charmbracelet/bubbles/spinner"
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	bspinner "charm.land/bubbles/v2/spinner"
+	tea "charm.land/bubbletea/v2"
+	"charm.land/lipgloss/v2"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -85,12 +85,12 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch v := msg.(type) {
-	case tea.KeyMsg:
-		switch v.Type {
-		case tea.KeyCtrlC:
+	case tea.KeyPressMsg:
+		switch v.String() {
+		case "ctrl+c":
 			stopDevServer()
 			return m, tea.Quit
-		case tea.KeyEsc:
+		case "esc":
 			stopDevServer()
 			return m, tea.Quit
 		}
@@ -195,7 +195,7 @@ func stopDevServer() {
 	_ = syscall.Kill(pid, syscall.SIGTERM)
 }
 
-func (m model) View() string {
+func (m model) View() tea.View {
 	pendingStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("8"))
 	doneStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("10"))
 	runStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("12"))
@@ -267,7 +267,7 @@ func (m model) View() string {
 		}
 	}
 
-	return strings.Join(lines, "\n")
+	return tea.NewView(strings.Join(lines, "\n"))
 }
 
 func runPhaseCmd(kind buildKind, phaseIndex int) tea.Cmd {

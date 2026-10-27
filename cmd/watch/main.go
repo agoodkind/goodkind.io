@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
+	tea "charm.land/bubbletea/v2"
 	"golang.org/x/term"
 )
 
@@ -67,7 +67,7 @@ func main() {
 		signalCh := make(chan os.Signal, 1)
 		signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
 		<-signalCh
-		program.Send(tea.KeyMsg{Type: tea.KeyCtrlC})
+		program.Send(tea.KeyPressMsg{Code: 'c', Mod: tea.ModCtrl})
 	}()
 
 	go func() {
